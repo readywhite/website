@@ -73,7 +73,23 @@ Railway detects this as a Node.js app from `package.json` and runs the start com
 npm start
 ```
 
-The Express server in `server.js` serves the static website files and mounts the GoHighLevel lead endpoint at `/api/ghl-lead`. Add these Railway variables after the first deploy succeeds:
+The Express server in `server.js` serves the static website files and mounts the GoHighLevel lead endpoint at `/api/ghl-lead`.
+
+### Railway new-project screen
+
+On Railway's **New project** screen, choose **GitHub Repository**. Do **not** choose **Empty Project**, because an empty project has no GitHub code for Railway to build.
+
+Use this sequence:
+
+1. Click **GitHub Repository**.
+2. Authorize Railway to access GitHub if prompted.
+3. Select the Ready White repository that contains `package.json`, `server.js`, `index.html`, `script.js`, `styles.css`, and `api/ghl-lead.js`.
+4. Let Railway deploy from the selected branch.
+5. Open the generated Railway domain and verify `/health` returns an `ok` response.
+6. Add the GoHighLevel variables below in the Railway service settings.
+7. Redeploy, then submit a test lead from the live Railway URL and confirm the contact appears in GoHighLevel.
+
+Add these Railway variables after the first deploy succeeds:
 
 ```bash
 GHL_PRIVATE_INTEGRATION_TOKEN=pit_your_private_integration_token_here
@@ -81,6 +97,8 @@ GHL_LOCATION_ID=your_highlevel_location_id
 GHL_PIPELINE_ID=your_ready_white_pipeline_id          # optional
 GHL_PIPELINE_STAGE_ID=your_new_lead_stage_id          # optional
 ```
+
+If the Ready White repo does not appear in Railway's GitHub Repository list, the app files have not been pushed to GitHub yet or Railway has not been granted access to that repository. Push the files first, then refresh Railway's repository picker.
 
 ## Local preview
 
