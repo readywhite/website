@@ -129,5 +129,7 @@ Create a pipeline named **Ready White Leads** with these stages:
 ## Website Embed Notes
 
 - Do not use a raw standalone HTML form.
+- Do not paste a GHL Private Integration Token/API key into the static website; the public page only needs the hosted form iframe.
 - The GoHighLevel Form Builder iframe is already in the quote section of `index.html`; replace the `XXXXXXXX` placeholder with the live form ID.
+- If you have a GHL token locally, run `GHL_API_KEY="<token>" scripts/find-ghl-form-id.sh` to find the **Ready White Quote Request** form ID without committing the token.
 - Use the uploaded kitchen image as `assets/kitchen-hero.jpg` for the hero/trust-building visual.
