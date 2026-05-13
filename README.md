@@ -99,3 +99,52 @@ npm start
 Then open <http://localhost:3000>. Localhost form submissions intentionally stay in demo mode so a private token is never needed in the browser.
 
 You can also run a static-only preview with `python3 -m http.server 4173`, but Railway should use the Node server.
+
+## Crostini / GitHub push troubleshooting
+
+If `git` works but `git add`, `git commit`, or `git push` says `fatal: not a git repository`, you are not inside the cloned project folder. Run these checks first:
+
+```bash
+pwd
+ls -la
+git status
+```
+
+If your home folder is empty, clone the GitHub repo before running commit commands. Replace the URL with the real Ready White repository URL shown in GitHub:
+
+```bash
+cd ~
+git clone https://github.com/YOUR-GITHUB-USER/YOUR-READYWHITE-REPO.git
+cd YOUR-READYWHITE-REPO
+git status
+```
+
+If GitHub prompts for a username/password over HTTPS, use one of these authentication options:
+
+1. Use GitHub CLI:
+
+   ```bash
+   sudo apt install gh -y
+   gh auth login
+   git clone https://github.com/YOUR-GITHUB-USER/YOUR-READYWHITE-REPO.git
+   ```
+
+2. Use SSH keys and clone with an SSH URL:
+
+   ```bash
+   ssh-keygen -t ed25519 -C "your-email@example.com"
+   cat ~/.ssh/id_ed25519.pub
+   git clone git@github.com:YOUR-GITHUB-USER/YOUR-READYWHITE-REPO.git
+   ```
+
+3. Use a GitHub personal access token when Git asks for the HTTPS password.
+
+After you are inside the cloned repo and the Ready White files exist, push the app:
+
+```bash
+git add .
+git commit -m "Deploy Ready White app"
+git push
+```
+
+Do not type `readywhite` by itself; it is a folder name, not a command. Use `cd readywhite` to enter it. If you see paste characters like `^[[200~cd`, type the command manually instead of pasting with bracketed-paste artifacts.
