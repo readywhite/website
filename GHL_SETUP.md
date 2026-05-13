@@ -129,5 +129,5 @@ Create a pipeline named **Ready White Leads** with these stages:
 ## Website Embed Notes
 
 - Do not use a raw standalone HTML form.
-- Embed the GoHighLevel Form Builder form in the quote section of `index.html`.
+- The GoHighLevel Form Builder iframe is already in the quote section of `index.html`; replace the `XXXXXXXX` placeholder with the live form ID.
 - Use the uploaded kitchen image as `assets/kitchen-hero.jpg` for the hero/trust-building visual.
