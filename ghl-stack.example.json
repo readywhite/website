@@ -1,0 +1,66 @@
+{
+  "integrationStatus": "server-route-ready",
+  "importantNote": "This file documents the intended GoHighLevel stack. Store the Private Integration Token in GHL_PRIVATE_INTEGRATION_TOKEN; do not commit the real token.",
+  "webhook": {
+    "configuredIn": "api/ghl-lead.js",
+    "frontendEndpoint": "/api/ghl-lead",
+    "requiredEnvironmentVariables": [
+      "GHL_PRIVATE_INTEGRATION_TOKEN",
+      "GHL_LOCATION_ID"
+    ],
+    "optionalEnvironmentVariables": [
+      "GHL_PIPELINE_ID",
+      "GHL_PIPELINE_STAGE_ID"
+    ],
+    "highLevelContactEndpoint": "POST /contacts/upsert",
+    "highLevelOpportunityEndpoint": "POST /opportunities/"
+  },
+  "contactTags": [
+    "Website Lead",
+    "Property Refresh",
+    "Interior Estimate"
+  ],
+  "pipeline": {
+    "name": "Ready White Property Quotes",
+    "defaultStage": "New Lead",
+    "stages": [
+      "New Lead",
+      "Reviewing Photos",
+      "Quote Sent",
+      "Scheduled",
+      "Completed"
+    ]
+  },
+  "workflowActions": [
+    {
+      "name": "Create or update contact",
+      "trigger": "Website quote form submitted",
+      "notes": "Map name, email, phone, propertyAddress, propertyType, notes, and tags from the website payload."
+    },
+    {
+      "name": "Create opportunity",
+      "trigger": "Contact created or updated",
+      "notes": "Place the opportunity in the Ready White Property Quotes pipeline at the New Lead stage."
+    },
+    {
+      "name": "Send instant SMS",
+      "message": "Hi {{contact.first_name}}, thanks for contacting Ready White. We received your property request and are reviewing your photos now. We'll follow up shortly with next steps."
+    },
+    {
+      "name": "Send confirmation email",
+      "subject": "Ready White received your property request",
+      "message": "Hi {{contact.first_name}}, thanks for reaching out to Ready White. We\u2019ve received your property refresh request and our team is reviewing the details now."
+    },
+    {
+      "name": "Send internal notification",
+      "notes": "Notify the Ready White team with contact details, property address, property type, notes, and submitted photo file names."
+    }
+  ],
+  "futureEnhancements": [
+    "AI estimator",
+    "Instant pricing logic",
+    "Automated quote builder",
+    "Calendar scheduling",
+    "Review request automation"
+  ]
+}
