@@ -67,14 +67,18 @@ Redirect to `thank-you.html` or show this popup message:
 
 ## Workflow Automation
 
-Create a workflow named **New Lead Submission**.
+Create a workflow named **New Website Lead Workflow**.
 
-**Trigger:** Form Submitted → Ready White Quote Request
+**Trigger:** Opportunity Created
 
-### 1. Assign Opportunity
+**Condition:** Pipeline = Ready White Customer Jobs
 
-- Pipeline: Ready White Leads
-- Stage: New Quote Request
+### 1. Confirm Opportunity Routing
+
+The Railway endpoint creates the opportunity directly in GoHighLevel using these Railway variables:
+
+- Pipeline: Ready White Customer Jobs (`GHL_PIPELINE_ID`)
+- Stage: New Lead (`GHL_PIPELINE_STAGE_ID`, optional but recommended)
 
 ### 2. Send Internal Notification
 
@@ -113,7 +117,7 @@ Use a simple, clean response confirming receipt and next steps.
 
 ## Pipeline
 
-Create a pipeline named **Ready White Leads** with these stages:
+Create or confirm the pipeline named **Ready White Customer Jobs** with these stages:
 
 1. New Lead
 2. Photos Received
@@ -126,10 +130,11 @@ Create a pipeline named **Ready White Leads** with these stages:
 9. Closed Won
 10. Closed Lost
 
-## Website Embed Notes
+## Website and Railway Notes
 
-- Do not use a raw standalone HTML form.
-- Do not paste a GHL Private Integration Token/API key into the static website; the public page only needs the hosted form iframe.
-- The GoHighLevel Form Builder iframe is already in the quote section of `index.html`; replace the `XXXXXXXX` placeholder with the live form ID.
+- Do not use a raw standalone HTML form when using the GoHighLevel-hosted form embed.
+- Do not paste a GHL Private Integration Token/API key into frontend code; Railway stores the token as `GHL_PRIVATE_INTEGRATION_TOKEN`.
+- If this page uses the GoHighLevel Form Builder iframe, replace the `XXXXXXXX` placeholder in `index.html` with the live form ID.
+- If Squarespace owns the public form, point its submission/webhook to `https://YOUR-RAILWAY-URL/api/ghl-lead`; `server.js` will upsert the contact and create the opportunity via the GoHighLevel API.
 - If you have a GHL token locally, run `GHL_API_KEY="<token>" scripts/find-ghl-form-id.sh` to find the **Ready White Quote Request** form ID without committing the token.
 - Use the uploaded kitchen image as `assets/kitchen-hero.jpg` for the hero/trust-building visual.
