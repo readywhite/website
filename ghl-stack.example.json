@@ -1,11 +1,19 @@
 {
-  "integrationStatus": "template-only",
-  "importantNote": "This file documents the intended GoHighLevel stack. It does not create or update anything in GoHighLevel until a webhook/API integration applies it.",
+  "integrationStatus": "server-route-ready",
+  "importantNote": "This file documents the intended GoHighLevel stack. Store the Private Integration Token in GHL_PRIVATE_INTEGRATION_TOKEN; do not commit the real token.",
   "webhook": {
-    "configuredIn": "script.js",
-    "variable": "GHL_WEBHOOK_URL",
-    "expectedMethod": "POST",
-    "expectedContentType": "application/json"
+    "configuredIn": "api/ghl-lead.js",
+    "frontendEndpoint": "/api/ghl-lead",
+    "requiredEnvironmentVariables": [
+      "GHL_PRIVATE_INTEGRATION_TOKEN",
+      "GHL_LOCATION_ID"
+    ],
+    "optionalEnvironmentVariables": [
+      "GHL_PIPELINE_ID",
+      "GHL_PIPELINE_STAGE_ID"
+    ],
+    "highLevelContactEndpoint": "POST /contacts/upsert",
+    "highLevelOpportunityEndpoint": "POST /opportunities/"
   },
   "contactTags": [
     "Website Lead",
@@ -41,7 +49,7 @@
     {
       "name": "Send confirmation email",
       "subject": "Ready White received your property request",
-      "message": "Hi {{contact.first_name}}, thanks for reaching out to Ready White. We’ve received your property refresh request and our team is reviewing the details now."
+      "message": "Hi {{contact.first_name}}, thanks for reaching out to Ready White. We\u2019ve received your property refresh request and our team is reviewing the details now."
     },
     {
       "name": "Send internal notification",

@@ -166,10 +166,10 @@
           <p class="eyebrow">Custom GHL-ready intake</p>
           <h2>Get My Property Quote</h2>
           <p>
-            This branded form is built to post directly to a webhook or API endpoint instead of relying on a basic embedded form. Configure your GoHighLevel webhook URL in <code>script.js</code> when you are ready to connect live automation.
+            This branded form posts to a secure server-side API route instead of exposing GoHighLevel credentials in the browser. Configure the deployment environment variables when you are ready to connect live automation.
           </p>
           <p class="integration-note">
-            Integration status: this site prepares and submits a GHL-ready payload, but it does not create GoHighLevel pipelines, workflows, tags, or contacts until a live webhook/API handler is connected.
+            Integration status: this site submits to the secure /api/ghl-lead route when deployed. Add the private token as a server-side environment variable so contacts can be upserted in GoHighLevel without exposing the token in the browser.
           </p>
         </div>
         <form class="quote-form" id="quote-form">

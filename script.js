@@ -1,4 +1,4 @@
-const GHL_WEBHOOK_URL = "";
+const LEAD_ENDPOINT = "/api/ghl-lead";
 
 const quoteForm = document.querySelector("#quote-form");
 const formStatus = document.querySelector("#form-status");
@@ -26,13 +26,17 @@ function buildPayload(form) {
   };
 }
 
+function isLocalPreview() {
+  return ["localhost", "127.0.0.1", ""].includes(window.location.hostname);
+}
+
 async function submitLead(payload) {
-  if (!GHL_WEBHOOK_URL) {
+  if (isLocalPreview()) {
     console.info("Ready White lead payload", payload);
     return { demoMode: true };
   }
 
-  const response = await fetch(GHL_WEBHOOK_URL, {
+  const response = await fetch(LEAD_ENDPOINT, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -59,7 +63,7 @@ quoteForm.addEventListener("submit", async (event) => {
     quoteForm.reset();
 
     if (result.demoMode) {
-      setStatus("Demo mode: your request was captured locally. Add your GoHighLevel webhook URL in script.js to send it live.");
+      setStatus("Demo mode: your request was captured locally. Deploy with the GHL environment variables to send it live.");
     } else {
       setStatus("Thanks! Ready White received your request and will follow up shortly.");
     }
