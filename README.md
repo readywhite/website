@@ -65,10 +65,37 @@ Before this form can drive live CRM automation, configure these items in GoHighL
 5. Add workflow actions for confirmation SMS, confirmation email, and internal notification.
 6. Add production photo upload handling if actual image files need to be stored, reviewed, or attached to opportunities.
 
-## Local preview
+## Railway deployment
+
+Railway detects this as a Node.js app from `package.json` and runs the start command:
 
 ```bash
-python3 -m http.server 4173
+npm start
 ```
 
-Then open <http://localhost:4173>. Local form submissions intentionally stay in demo mode so a private token is never needed in the browser.
+The Express server in `server.js` serves the static website files and mounts the GoHighLevel lead endpoint at `/api/ghl-lead`. Add these Railway variables after the first deploy succeeds:
+
+```bash
+GHL_PRIVATE_INTEGRATION_TOKEN=pit_your_private_integration_token_here
+GHL_LOCATION_ID=your_highlevel_location_id
+GHL_PIPELINE_ID=your_ready_white_pipeline_id          # optional
+GHL_PIPELINE_STAGE_ID=your_new_lead_stage_id          # optional
+```
+
+## Local preview
+
+Install dependencies once:
+
+```bash
+npm install
+```
+
+Run the same server Railway uses:
+
+```bash
+npm start
+```
+
+Then open <http://localhost:3000>. Localhost form submissions intentionally stay in demo mode so a private token is never needed in the browser.
+
+You can also run a static-only preview with `python3 -m http.server 4173`, but Railway should use the Node server.
