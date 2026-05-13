@@ -451,6 +451,14 @@ code {
   border-radius: 0.35rem;
 }
 
+.integration-note {
+  padding: 1rem;
+  color: var(--navy);
+  background: #fff8e6;
+  border: 1px solid rgba(198, 133, 18, 0.25);
+  border-radius: 1rem;
+}
+
 @media (max-width: 920px) {
   .header-nav a:not(.nav-cta) {
     display: none;
