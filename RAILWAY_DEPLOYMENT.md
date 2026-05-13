@@ -21,10 +21,12 @@ GHL_LOCATION_ID=wXwmRjNVCUq1DCIy4Lqc
 GHL_PIPELINE_ID=wtwJBdMmtrUDQX0PU5Z7
 ```
 
-Optional but recommended if you want the opportunity to land in a specific first stage immediately:
+Optional but recommended if you want the opportunity to land in a specific first stage and control GHL tags/source behavior:
 
 ```text
 GHL_PIPELINE_STAGE_ID=YOUR_NEW_LEAD_STAGE_ID
+GHL_CONTACT_TAGS=Website Lead,Property Refresh,Interior Estimate,ready-white
+GHL_CONTACT_ENDPOINT=/contacts/upsert
 ALLOWED_ORIGIN=https://your-squarespace-domain.com
 ```
 
@@ -70,7 +72,7 @@ The endpoint accepts either `application/json` or `application/x-www-form-urlenc
 
 Submit one test lead from Squarespace and confirm in GoHighLevel that:
 
-- contact created
+- contact created or updated
 - opportunity created
 - opportunity is in the **Ready White Customer Jobs** pipeline
 

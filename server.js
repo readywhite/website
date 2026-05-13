@@ -7,6 +7,8 @@ const PORT = Number(process.env.PORT || 3000);
 const PUBLIC_DIR = __dirname;
 const GHL_API_BASE = process.env.GHL_API_BASE || 'https://services.leadconnectorhq.com';
 const GHL_API_VERSION = process.env.GHL_API_VERSION || '2023-02-21';
+const GHL_CONTACT_ENDPOINT = process.env.GHL_CONTACT_ENDPOINT || '/contacts/upsert';
+const DEFAULT_GHL_TAGS = ['Website Lead', 'Property Refresh', 'Interior Estimate', 'ready-white'];
 const MAX_BODY_BYTES = 1024 * 1024;
 
 const STATIC_TYPES = {
@@ -73,6 +75,15 @@ function normalizeLead(input) {
     notes,
     photoUrls
   };
+}
+
+function getGhlTags() {
+  if (!process.env.GHL_CONTACT_TAGS) return DEFAULT_GHL_TAGS;
+
+  return process.env.GHL_CONTACT_TAGS
+    .split(',')
+    .map((tag) => tag.trim())
+    .filter(Boolean);
 }
 
 function buildOpportunityName(lead) {
@@ -172,7 +183,7 @@ async function handleGhlLead(req, res) {
       return sendJson(res, 400, { error: 'Email or phone is required.' });
     }
 
-    const contact = await ghlFetch('/contacts/', {
+    const contact = await ghlFetch(GHL_CONTACT_ENDPOINT, {
       locationId,
       firstName: lead.firstName,
       lastName: lead.lastName,
@@ -181,8 +192,8 @@ async function handleGhlLead(req, res) {
       phone: lead.phone,
       companyName: lead.companyName,
       address1: lead.propertyAddress,
-      source: 'Ready White Website',
-      tags: ['ready-white', 'website-lead'],
+      source: 'Ready White Squarespace Form',
+      tags: getGhlTags(),
       additionalEmails: [],
       additionalPhones: []
     });
@@ -196,7 +207,7 @@ async function handleGhlLead(req, res) {
       contactId,
       name: buildOpportunityName(lead),
       status: 'open',
-      source: 'Ready White Website',
+      source: 'Ready White Squarespace Form',
       notes: buildNotes(lead)
     };
 

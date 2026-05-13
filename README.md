@@ -14,7 +14,7 @@ Landing page and Railway API bridge for Ready White's property refresh painting 
 
 ## API Endpoint
 
-`POST /api/ghl-lead` accepts JSON or URL-encoded form submissions from Squarespace, creates a GoHighLevel contact, then creates an opportunity in the configured pipeline.
+`POST /api/ghl-lead` accepts JSON or URL-encoded form submissions from Squarespace, upserts a GoHighLevel contact, then creates an opportunity in the configured pipeline.
 
 Required environment variables:
 
@@ -28,6 +28,8 @@ Optional environment variables:
 - `ALLOWED_ORIGIN`
 - `GHL_API_VERSION`
 - `GHL_API_BASE`
+- `GHL_CONTACT_ENDPOINT`
+- `GHL_CONTACT_TAGS`
 
 ## GoHighLevel Form ID Helper
 
