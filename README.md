@@ -87,6 +87,19 @@ Notes:
 - DNS propagation can take several minutes to 24 hours. After adding the records, return to GoHighLevel and click the domain verification/check button.
 - `ghl-email-dns.example.zone` contains the same records in a zone-file style format for reference.
 
+## Operations handoff
+
+Use `operations-handoff.md` as the working checklist for Jason and June. It separates repo/Railway/DNS ownership from GHL pipeline and customer workflow automation ownership.
+
+- Jason owns GitHub, Railway variables, public domain checks, DNS records, and live website test submissions.
+- June owns GHL pipeline stages, tags, customer workflow automation, SMS/email language, internal notifications, and package alignment.
+
+The app also exposes `/readiness` to show whether required Railway variables are present. Use it after deployment:
+
+```bash
+curl https://YOUR-RAILWAY-DOMAIN/readiness
+```
+
 ## GoHighLevel setup checklist
 
 Before this form can drive live CRM automation, configure these items in GoHighLevel or in your middleware/integration layer:
