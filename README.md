@@ -6,7 +6,7 @@ A lightweight static landing page for the Ready White property-refresh funnel. T
 
 ## Funnel stack
 
-- **Website frontend:** premium operational brand, standardized package cards, workflow visuals, who-we-serve cards, FAQ, testimonials placeholders, and property refresh intake.
+- **Website frontend:** premium operational brand, a dedicated `/services` page, standardized package cards, workflow visuals, who-we-serve cards, FAQ, testimonials placeholders, and property refresh intake.
 - **GoHighLevel backend:** lead capture, contact upsert, photo review workflow, package confirmation, quote approval, vendor assignment, scheduling, and pipeline management.
 - **Custom integration:** form submissions post to `api/ghl-lead.js`, which uses a GoHighLevel Private Integration Token from server-side environment variables.
 
@@ -38,7 +38,7 @@ This repo configures the public website experience, the browser-side operational
 
 | Area | Included in this repo | Must be configured in GoHighLevel |
 | --- | --- | --- |
-| Landing page | Hero, package system, process, gallery placeholders, who-we-serve cards, quote intake, testimonials, FAQ, final CTA | Domain/Railway publishing |
+| Website pages | Homepage plus `/services` package-detail page with package matrix, lifecycle categories, add-ons, operational handoff, and CTAs | Domain/Railway publishing |
 | Lead payload | First name, contact details, property details, occupancy status, timeline, package interest, tags, workflow status, photo file names | Production file storage if actual photo uploads are required |
 | Contact sync | `api/ghl-lead.js` calls `/contacts/upsert` with the server-side token | `GHL_PRIVATE_INTEGRATION_TOKEN` and `GHL_LOCATION_ID` deployment variables |
 | Automations | Operational SMS/email language for photo review, scope verification, package fit, vendor assignment, and scheduling | Actual GHL workflow steps, senders, notifications, timing, and pipeline movement |
@@ -97,7 +97,7 @@ Use this sequence:
 
 1. Click **GitHub Repository**.
 2. Authorize Railway to access GitHub if prompted.
-3. Select the Ready White repository that contains `package.json`, `server.js`, `index.html`, `script.js`, `style.css`, and `api/ghl-lead.js`.
+3. Select the Ready White repository that contains `package.json`, `server.js`, `index.html`, `services.html`, `script.js`, `style.css`, and `api/ghl-lead.js`.
 4. Let Railway deploy from the selected branch.
 5. Open the generated Railway domain and verify `/health` returns an `ok` response.
 6. Add the GoHighLevel variables below in the Railway service settings.

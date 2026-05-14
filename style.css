@@ -175,3 +175,111 @@ code { padding: 0.18rem 0.35rem; background: rgba(9,17,31,0.08); border-radius: 
   h1 { font-size: clamp(2.8rem, 15vw, 4.2rem); }
   .section-pad { padding-top: 3.5rem; padding-bottom: 3.5rem; }
 }
+
+.service-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.55fr);
+  gap: clamp(2rem, 6vw, 5rem);
+  align-items: center;
+  color: #fff;
+  background:
+    radial-gradient(circle at 78% 20%, rgba(159,231,209,0.22), transparent 30%),
+    linear-gradient(135deg, #08111f 0%, #14213a 58%, #1b2e4e 100%);
+}
+.service-hero-copy p { max-width: 820px; color: #cbd5e1; font-size: 1.12rem; }
+.service-command-card {
+  padding: 1.35rem;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.16);
+  border-radius: 1.35rem;
+  box-shadow: var(--shadow);
+}
+.service-checklist {
+  display: grid;
+  gap: 0.85rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.service-checklist li {
+  padding: 0.9rem;
+  color: #dbe5f2;
+  background: rgba(255,255,255,0.08);
+  border-radius: 0.95rem;
+}
+.services-page-section, .service-workflow-section { background: var(--soft); }
+.service-detail-section { background: #fff; }
+.service-tier-grid, .service-category-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1rem;
+}
+.service-tier-card, .service-category-grid article {
+  padding: 1.25rem;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 1.35rem;
+  box-shadow: var(--shadow);
+}
+.service-tier-card span {
+  display: inline-flex;
+  margin-bottom: 1rem;
+  color: var(--accent);
+  font-weight: 900;
+}
+.service-tier-card.spotlight {
+  color: #fff;
+  background: linear-gradient(135deg, var(--dark), #1e3152);
+  border-color: transparent;
+}
+.service-tier-card.spotlight p,
+.service-tier-card.spotlight dd { color: #dbe5f2; }
+.service-tier-card.exception { border-color: rgba(168,85,42,0.35); }
+.service-tier-card dl {
+  display: grid;
+  gap: 0.8rem;
+  margin: 1rem 0 0;
+}
+.service-tier-card dt {
+  color: var(--muted);
+  font-size: 0.74rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.service-tier-card dd { margin: 0.2rem 0 0; color: var(--ink); font-weight: 800; }
+.scope-section {
+  color: #fff;
+  background: linear-gradient(135deg, var(--dark), #1d3153);
+}
+.scope-section p { color: #cbd5e1; }
+.scope-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: start;
+}
+.scope-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.85rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.scope-list li {
+  padding: 1rem;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.14);
+  border-radius: 1rem;
+  font-weight: 800;
+}
+
+@media (max-width: 1080px) {
+  .service-hero, .scope-grid { grid-template-columns: 1fr; }
+  .service-tier-grid, .service-category-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 640px) {
+  .service-tier-grid, .service-category-grid, .scope-list { grid-template-columns: 1fr; }
+}

@@ -18,6 +18,10 @@ app.get("/health", (_req, res) => {
 
 app.post("/api/ghl-lead", ghlLeadHandler);
 
+app.get("/services", (_req, res) => {
+  res.sendFile(path.join(__dirname, "services.html"));
+});
+
 app.get("/", (_req, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
 });
