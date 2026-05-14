@@ -87,10 +87,10 @@ curl https://YOUR-RAILWAY-DOMAIN/readiness
 
 ## 4. Railway → GHL test lead
 
-Run the automated smoke test from a local clone or any terminal with Node:
+Run the automated smoke test from a local clone or any terminal with Node. Use the Railway backend URL for `/health`, `/readiness`, and `/api/ghl-lead`; `https://www.readywhite.com/` is the Squarespace marketing layer unless it is configured to proxy backend routes.
 
 ```bash
-READYWHITE_BASE_URL=https://YOUR-RAILWAY-DOMAIN npm run smoke:ghl
+READYWHITE_RAILWAY_BASE_URL=https://YOUR-RAILWAY-DOMAIN npm run smoke:ghl
 ```
 
 Or manually post a test lead:

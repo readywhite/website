@@ -123,6 +123,8 @@ The report checks active pipelines, stage order, tags, workflow status, automati
 - Jason owns GitHub, Railway variables, public domain checks, DNS records, and live website test submissions.
 - June owns GHL pipeline stages, tags, customer workflow automation, SMS/email language, internal notifications, and package alignment.
 
+For live smoke tests, set `READYWHITE_RAILWAY_BASE_URL` to the Railway backend domain. `https://www.readywhite.com/` is the Squarespace marketing layer unless it proxies `/health`, `/readiness`, and `/api/ghl-lead` to Railway.
+
 The app also exposes `/readiness` to show whether required Railway variables are present. Use it after deployment:
 
 ```bash

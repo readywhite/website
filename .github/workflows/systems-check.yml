@@ -10,6 +10,7 @@ jobs:
   systems-check:
     runs-on: ubuntu-latest
     env:
+      READYWHITE_RAILWAY_BASE_URL: ${{ secrets.READYWHITE_RAILWAY_BASE_URL }}
       READYWHITE_BASE_URL: ${{ secrets.READYWHITE_BASE_URL }}
       GHL_PRIVATE_INTEGRATION_TOKEN: ${{ secrets.GHL_PRIVATE_INTEGRATION_TOKEN }}
       GHL_LOCATION_ID: ${{ secrets.GHL_LOCATION_ID }}
@@ -23,7 +24,7 @@ jobs:
       - run: npm run check
       - run: npm run audit:ops
       - name: Live GHL smoke test
-        if: ${{ env.READYWHITE_BASE_URL != '' }}
+        if: ${{ env.READYWHITE_RAILWAY_BASE_URL != '' || env.READYWHITE_BASE_URL != '' }}
         run: npm run smoke:ghl
       - name: Generate GHL setup report
         if: ${{ env.GHL_PRIVATE_INTEGRATION_TOKEN != '' && env.GHL_LOCATION_ID != '' }}

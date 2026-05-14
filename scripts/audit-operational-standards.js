@@ -51,6 +51,10 @@ const checks = [
     required: ["stale_lead_recovery", "missed_call_text_back", "property_manager_nurture", "vertical:property-management"],
   },
   {
+    file: "scripts/smoke-test-ghl.js",
+    required: ["READYWHITE_RAILWAY_BASE_URL", "Squarespace marketing layer", "Railway backend orchestration layer"],
+  },
+  {
     file: "scripts/estimate-paint-materials.js",
     required: ["estimatePaintMaterials", "gallonsRequired", "totalMaterialCost", "material-pricing.json"],
   },
@@ -60,7 +64,7 @@ const checks = [
   },
   {
     file: ".github/workflows/systems-check.yml",
-    required: ["0 5,17,23 * * *", "Generate GHL setup report", "Upload GHL setup report"],
+    required: ["0 5,17,23 * * *", "READYWHITE_RAILWAY_BASE_URL", "Generate GHL setup report", "Upload GHL setup report"],
   },
   {
     file: "config/kpi-reporting.yaml",
