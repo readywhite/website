@@ -5,7 +5,8 @@
   "description": "Ready White landing page and Railway API bridge for GoHighLevel leads.",
   "scripts": {
     "start": "node server.js",
-    "check": "node --check server.js"
+    "check": "node --check server.js",
+    "audit:ghl": "node scripts/audit-ghl.mjs"
   },
   "engines": {
     "node": ">=18"

@@ -40,6 +40,18 @@ Optional environment variables:
 - `GHL_CONTACT_ENDPOINT`
 - `GHL_CONTACT_TAGS`
 
+## Company Optimization
+
+- `docs/GHL_COMPANY_OPTIMIZATION.md` defines the North Star, COO/SDR operating cadence, pipeline structure, tags, workflows, and weekly audit checklist.
+- `docs/GHL_OUTREACH_PLAYBOOK.md` contains SMS, email, call, voicemail, follow-up, COO, and SDR scripts to build into GoHighLevel templates and workflows.
+- `docs/GHL_AUDIT_RULES.md` lists the weekly broken-connection checks for forms, workflows, pipeline stages, tags, opportunities, and webhook security.
+
+Run a GHL connection audit from a secure shell with:
+
+```bash
+GHL_PRIVATE_INTEGRATION_TOKEN="<token>" GHL_LOCATION_ID="<location>" npm run audit:ghl
+```
+
 ## GoHighLevel Form ID Helper
 
 To look up the live form ID locally, run:

@@ -70,6 +70,10 @@ function normalizeLead(input) {
   const vacant = input.vacant || input.isVacant || input.is_vacant || '';
   const propertyType = input.propertyType || input.property_type || '';
   const photoUrls = input.photoUrls || input.photo_urls || input.photos || '';
+  const leadSource = input.leadSource || input.lead_source || input.source || 'Squarespace';
+  const utmSource = input.utmSource || input.utm_source || '';
+  const utmMedium = input.utmMedium || input.utm_medium || '';
+  const utmCampaign = input.utmCampaign || input.utm_campaign || '';
 
   return {
     fullName: String(fullName).trim(),
@@ -84,17 +88,35 @@ function normalizeLead(input) {
     timeline,
     vacant,
     notes,
-    photoUrls
+    photoUrls,
+    leadSource,
+    utmSource,
+    utmMedium,
+    utmCampaign
   };
 }
 
-function getGhlTags() {
-  if (!process.env.GHL_CONTACT_TAGS) return DEFAULT_GHL_TAGS;
+function slugify(value) {
+  return String(value || '')
+    .trim()
+    .toLowerCase()
+    .replace(/&/g, 'and')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+}
 
-  return process.env.GHL_CONTACT_TAGS
-    .split(',')
-    .map((tag) => tag.trim())
-    .filter(Boolean);
+function getGhlTags(lead) {
+  const configuredTags = process.env.GHL_CONTACT_TAGS
+    ? process.env.GHL_CONTACT_TAGS.split(',').map((tag) => tag.trim()).filter(Boolean)
+    : DEFAULT_GHL_TAGS;
+
+  const dynamicTags = [];
+  if (lead.leadSource) dynamicTags.push(`source-${slugify(lead.leadSource)}`);
+  if (lead.timeline) dynamicTags.push(`timeline-${slugify(lead.timeline)}`);
+  if (lead.vacant) dynamicTags.push(`vacant-${slugify(lead.vacant)}`);
+  if (lead.serviceNeeded) dynamicTags.push(`service-${slugify(lead.serviceNeeded)}`);
+
+  return [...new Set([...configuredTags, ...dynamicTags].filter(Boolean))];
 }
 
 function buildOpportunityName(lead) {
@@ -112,6 +134,10 @@ function buildNotes(lead) {
     `Timeline: ${lead.timeline || 'Not provided'}`,
     `Vacant: ${lead.vacant || 'Not provided'}`,
     `Company: ${lead.companyName || 'Not provided'}`,
+    `Lead Source: ${lead.leadSource || 'Not provided'}`,
+    `UTM Source: ${lead.utmSource || 'Not provided'}`,
+    `UTM Medium: ${lead.utmMedium || 'Not provided'}`,
+    `UTM Campaign: ${lead.utmCampaign || 'Not provided'}`,
     lead.photoUrls ? `Photo URLs: ${Array.isArray(lead.photoUrls) ? lead.photoUrls.join(', ') : lead.photoUrls}` : 'Photo URLs: Not provided',
     '',
     'Project Notes:',
@@ -207,8 +233,8 @@ async function handleGhlLead(req, res) {
       phone: lead.phone,
       companyName: lead.companyName,
       address1: lead.propertyAddress,
-      source: 'Ready White Squarespace Form',
-      tags: getGhlTags(),
+      source: lead.leadSource || 'Ready White Squarespace Form',
+      tags: getGhlTags(lead),
       additionalEmails: [],
       additionalPhones: []
     });
@@ -222,7 +248,7 @@ async function handleGhlLead(req, res) {
       contactId,
       name: buildOpportunityName(lead),
       status: 'open',
-      source: 'Ready White Squarespace Form',
+      source: lead.leadSource || 'Ready White Squarespace Form',
       notes: buildNotes(lead)
     };
 
