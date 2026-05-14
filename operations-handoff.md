@@ -13,7 +13,7 @@ The Ready White repo is prepared for a connected workflow, but the repo alone do
 - Express server with `/health`, `/services`, and `POST /api/ghl-lead`.
 - Secure GHL lead endpoint that reads credentials from server-side environment variables.
 - Contact upsert logic for GoHighLevel.
-- Optional opportunity creation when pipeline and stage IDs are configured.
+- Optional opportunity creation when `GHL_PIPELINE_ID` is configured, using `GHL_PIPELINE_STAGE_ID` when available or resolving `GHL_PIPELINE_STAGE_NAME=New Lead` from the live GHL pipeline.
 - Railway deployment config with `npm start` and `/health` healthcheck.
 - GHL email DNS documentation for the LeadConnector/Mailgun sending subdomain.
 - GHL setup report generator that audits live pipelines, stages, tags, workflows, automation signals, missing objects, and drift recommendations.
@@ -33,15 +33,20 @@ The Ready White repo is prepared for a connected workflow, but the repo alone do
      - `GHL_PRIVATE_INTEGRATION_TOKEN`
      - `GHL_LOCATION_ID`
      - `GHL_PIPELINE_ID` if opportunities should be created
-     - `GHL_PIPELINE_STAGE_ID` if opportunities should be created
+     - `GHL_PIPELINE_STAGE_ID` if known, or `GHL_PIPELINE_STAGE_NAME=New Lead` to let Railway resolve the stage from `GHL_PIPELINE_ID`
    - Redeploy after variables are added.
    - Add `GHL_REPORT_OUTPUT=reports/ghl-setup-report.md` only when a file artifact is desired for local or CI reports.
 
-3. **Domain / DNS**
+3. **Squarespace → GHL handoff**
+   - Keep Squarespace as the marketing layer and Railway as the backend orchestration layer.
+   - Point Squarespace forms or embeds to the Railway `/api/ghl-lead` endpoint, not directly to GHL.
+   - Do not place the GHL Private Integration Token in Squarespace custom code, hidden fields, or public settings.
+
+4. **Domain / DNS**
    - Add the GHL email DNS records at the domain DNS provider, not Railway.
    - Verify the records in GoHighLevel after propagation.
 
-4. **Live test**
+5. **Live test**
    - Submit one test lead from the public website.
    - Confirm the lead reaches Railway without errors.
    - Confirm the contact appears in GHL.

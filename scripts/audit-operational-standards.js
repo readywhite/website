@@ -51,6 +51,10 @@ const checks = [
     required: ["stale_lead_recovery", "missed_call_text_back", "property_manager_nurture", "vertical:property-management"],
   },
   {
+    file: "api/ghl-lead.js",
+    required: ["GHL_PIPELINE_STAGE_NAME", "DEFAULT_PIPELINE_STAGE_NAME", "resolvePipelineStageId", "resolvedStageCache"],
+  },
+  {
     file: "scripts/smoke-test-ghl.js",
     required: ["READYWHITE_RAILWAY_BASE_URL", "Squarespace marketing layer", "Railway backend orchestration layer"],
   },

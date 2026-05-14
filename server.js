@@ -20,6 +20,7 @@ function getReadinessPayload() {
   const optional = {
     GHL_PIPELINE_ID: hasEnv("GHL_PIPELINE_ID"),
     GHL_PIPELINE_STAGE_ID: hasEnv("GHL_PIPELINE_STAGE_ID"),
+    GHL_PIPELINE_STAGE_NAME: hasEnv("GHL_PIPELINE_STAGE_NAME"),
   };
   const missingRequired = Object.entries(required)
     .filter(([, configured]) => !configured)

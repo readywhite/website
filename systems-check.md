@@ -115,7 +115,8 @@ curl -X POST https://YOUR-RAILWAY-DOMAIN/api/ghl-lead \
 
 - API response includes `"ok": true`.
 - GHL contact is created or updated.
-- If pipeline variables are set, GHL opportunity is created.
+- If `GHL_PIPELINE_ID` is set, GHL opportunity is created.
+- If `GHL_PIPELINE_STAGE_ID` is not set, the backend resolves `GHL_PIPELINE_STAGE_NAME` (`New Lead` by default) from the Ready White Customer Jobs pipeline.
 
 ## 5. GHL setup report
 

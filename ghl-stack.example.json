@@ -10,10 +10,12 @@
     ],
     "optionalEnvironmentVariables": [
       "GHL_PIPELINE_ID",
-      "GHL_PIPELINE_STAGE_ID"
+      "GHL_PIPELINE_STAGE_ID",
+      "GHL_PIPELINE_STAGE_NAME"
     ],
     "highLevelContactEndpoint": "POST /contacts/upsert",
-    "highLevelOpportunityEndpoint": "POST /opportunities/"
+    "highLevelOpportunityEndpoint": "POST /opportunities/",
+    "opportunityStageResolution": "Use GHL_PIPELINE_STAGE_ID when configured; otherwise resolve GHL_PIPELINE_STAGE_NAME (New Lead by default) from GHL_PIPELINE_ID and cache it server-side for speed-to-lead."
   },
   "pipeline": {
     "name": "Ready White Customer Jobs",

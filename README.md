@@ -63,11 +63,12 @@ Add your GoHighLevel credentials as deployment environment variables. The privat
 ```bash
 GHL_PRIVATE_INTEGRATION_TOKEN=pit_your_private_integration_token_here
 GHL_LOCATION_ID=your_highlevel_location_id
-GHL_PIPELINE_ID=your_ready_white_pipeline_id          # optional
-GHL_PIPELINE_STAGE_ID=your_new_lead_stage_id          # optional
+GHL_PIPELINE_ID=your_ready_white_pipeline_id          # optional, enables opportunity creation
+GHL_PIPELINE_STAGE_ID=your_new_lead_stage_id          # optional preferred explicit stage ID
+GHL_PIPELINE_STAGE_NAME=New Lead                      # optional fallback resolver when stage ID is not set
 ```
 
-The browser posts property refresh review requests to `/api/ghl-lead`. That route uses the token to call HighLevel's `/contacts/upsert` endpoint and, when both pipeline variables are present, creates an opportunity through `/opportunities/`.
+The browser posts property refresh review requests to `/api/ghl-lead`. That route uses the token to call HighLevel's `/contacts/upsert` endpoint and creates an opportunity through `/opportunities/` when `GHL_PIPELINE_ID` is configured. When `GHL_PIPELINE_ID` is set without `GHL_PIPELINE_STAGE_ID`, the backend resolves `GHL_PIPELINE_STAGE_NAME` (`New Lead` by default) from the live GHL pipeline list and caches the resolved stage ID for speed-to-lead.
 
 With no deployed backend, local preview submissions run in demo mode and log the operational lead payload in the browser console.
 
@@ -123,6 +124,8 @@ The report checks active pipelines, stage order, tags, workflow status, automati
 - Jason owns GitHub, Railway variables, public domain checks, DNS records, and live website test submissions.
 - June owns GHL pipeline stages, tags, customer workflow automation, SMS/email language, internal notifications, and package alignment.
 
+Squarespace GHL handoff: keep Squarespace as the marketing layer and post/embed forms to the Railway `/api/ghl-lead` endpoint; do not paste `GHL_PRIVATE_INTEGRATION_TOKEN` into Squarespace custom code.
+
 For live smoke tests, set `READYWHITE_RAILWAY_BASE_URL` to the Railway backend domain. `https://www.readywhite.com/` is the Squarespace marketing layer unless it proxies `/health`, `/readiness`, and `/api/ghl-lead` to Railway.
 
 The app also exposes `/readiness` to show whether required Railway variables are present. Use it after deployment:
@@ -171,8 +174,9 @@ Add these Railway variables after the first deploy succeeds:
 ```bash
 GHL_PRIVATE_INTEGRATION_TOKEN=pit_your_private_integration_token_here
 GHL_LOCATION_ID=your_highlevel_location_id
-GHL_PIPELINE_ID=your_ready_white_pipeline_id          # optional
-GHL_PIPELINE_STAGE_ID=your_new_lead_stage_id          # optional
+GHL_PIPELINE_ID=your_ready_white_pipeline_id          # optional, enables opportunity creation
+GHL_PIPELINE_STAGE_ID=your_new_lead_stage_id          # optional preferred explicit stage ID
+GHL_PIPELINE_STAGE_NAME=New Lead                      # optional fallback resolver when stage ID is not set
 ```
 
 If the Ready White repo does not appear in Railway's GitHub Repository list, the app files have not been pushed to GitHub yet or Railway has not been granted access to that repository. Push the files first, then refresh Railway's repository picker.
