@@ -23,6 +23,7 @@ jobs:
       - run: npm ci
       - run: npm run check
       - run: npm run audit:ops
+      - run: npm run audit:seo
       - name: Live GHL smoke test
         if: ${{ env.READYWHITE_RAILWAY_BASE_URL != '' || env.READYWHITE_BASE_URL != '' }}
         run: npm run smoke:ghl

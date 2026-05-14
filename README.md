@@ -104,7 +104,7 @@ Notes:
 
 ## Squarespace SEO readiness
 
-The site now follows the Squarespace SEO checklist with the site title `Ready White | Fast Interior Property Refreshes`, page titles using `Page Name | Ready White`, unique page descriptions, canonical URLs, Open Graph metadata, descriptive before/after image filenames, alt text, readable slugs, a custom 404 page, sitemap, robots file, and internal links between Home, Services, Vendors, Locations, Gallery, Get Started, and Contact. Use `docs/seo-launch-checklist.md` before and after publishing the Squarespace marketing layer.
+The site now follows the Squarespace SEO checklist with the site title `Ready White | Fast Interior Property Refreshes`, page titles using `Page Name | Ready White`, unique page descriptions, canonical URLs, Open Graph metadata, JSON-LD structured data, descriptive before/after image filenames, alt text, readable slugs, a custom 404 page, sitemap, robots file, and internal links between Home, Services, Vendors, Locations, Gallery, Get Started, and Contact. Use `docs/seo-launch-checklist.md` before and after publishing the Squarespace marketing layer.
 
 ## Operations handoff
 
@@ -112,7 +112,7 @@ Use `operations-handoff.md` as the working checklist for Jason and June. It sepa
 
 Use `systems-check.md` to prove the stack is operational end-to-end. It includes GitHub → Railway, Railway → website, Railway → GHL, GHL setup reporting, GHL workflow, Squarespace → backend, and final green-light tests. The scheduled GitHub Actions systems check runs at 00:00, 12:00, and 18:00 EST daily (`0 5,17,23 * * *` UTC).
 
-Use `docs/sops/photo-intake-policy.md`, `docs/sops/vendor-policy.md`, `config/outreach.yaml`, `config/kpi-reporting.yaml`, `docs/seo-launch-checklist.md`, and `npm run audit:ops` to preserve operational and SEO standards as workflows change.
+Use `docs/sops/photo-intake-policy.md`, `docs/sops/vendor-policy.md`, `config/outreach.yaml`, `config/kpi-reporting.yaml`, `docs/seo-launch-checklist.md`, `npm run audit:ops`, and `npm run audit:seo` to preserve operational and SEO standards as workflows change.
 
 Generate a live GoHighLevel setup report with:
 

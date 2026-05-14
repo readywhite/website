@@ -66,10 +66,14 @@ const checks = [
     file: "scripts/estimate-paint-materials.js",
     required: ["estimatePaintMaterials", "gallonsRequired", "totalMaterialCost", "material-pricing.json"],
   },
+  {
+    file: "scripts/audit-seo.js",
+    required: ["Squarespace SEO audit passed", "SITE_TITLE", "SITE_DESCRIPTION", "MAX_IMAGE_BYTES", "MAX_PAGE_BYTES"],
+  },
 
   {
     file: "index.html",
-    required: ["Ready White | Fast Interior Property Refreshes", "og:title", "og:description", "og:image", "canonical", "Request Property Refresh", "Join Vendor Network"],
+    required: ["Ready White | Fast Interior Property Refreshes", "og:title", "og:description", "og:image", "canonical", "application/ld+json", "Apartment Turnover Painting", "Request Property Refresh", "Join Vendor Network"],
   },
   {
     file: "services.html",
@@ -109,7 +113,7 @@ const checks = [
   },
   {
     file: ".github/workflows/systems-check.yml",
-    required: ["0 5,17,23 * * *", "READYWHITE_RAILWAY_BASE_URL", "Generate GHL setup report", "Upload GHL setup report"],
+    required: ["0 5,17,23 * * *", "READYWHITE_RAILWAY_BASE_URL", "npm run audit:seo", "Generate GHL setup report", "Upload GHL setup report"],
   },
   {
     file: "config/kpi-reporting.yaml",

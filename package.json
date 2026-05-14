@@ -5,11 +5,12 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "check": "node --check server.js && node --check script.js && node --check api/ghl-lead.js && node --check api/vendor-lead.js && node --check scripts/smoke-test-ghl.js && node --check scripts/audit-operational-standards.js && node --check scripts/report-ghl-setup.js && node --check scripts/estimate-paint-materials.js",
+    "check": "node --check server.js && node --check script.js && node --check api/ghl-lead.js && node --check api/vendor-lead.js && node --check scripts/smoke-test-ghl.js && node --check scripts/audit-operational-standards.js && node --check scripts/audit-seo.js && node --check scripts/report-ghl-setup.js && node --check scripts/estimate-paint-materials.js",
     "smoke:ghl": "node scripts/smoke-test-ghl.js",
     "audit:ops": "node scripts/audit-operational-standards.js",
     "report:ghl": "node scripts/report-ghl-setup.js",
-    "estimate:paint": "node scripts/estimate-paint-materials.js"
+    "estimate:paint": "node scripts/estimate-paint-materials.js",
+    "audit:seo": "node scripts/audit-seo.js"
   },
   "engines": {
     "node": ">=18"
