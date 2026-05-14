@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Contact Ready White to request a fast interior repaint review for rental turnovers, move-out painting, apartments, and property manager refreshes in Central PA." />
+    <meta name="application-name" content="Ready White | Fast Interior Property Refreshes" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://www.readywhite.com/contact" />
+    <meta property="og:title" content="Contact | Ready White" />
+    <meta property="og:description" content="Contact Ready White to request a fast interior repaint review for rental turnovers, move-out painting, apartments, and property manager refreshes in Central PA." />
+    <meta property="og:image" content="https://www.readywhite.com/assets/ready-white-before-after-property-refresh.svg" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://www.readywhite.com/contact" />
+    <title>Contact | Ready White</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="logo" href="/" aria-label="Ready White home"><span class="logo-mark">RW</span><span><strong>Ready White</strong><small>Fast Interior Refreshes</small></span></a>
+      <nav class="header-nav" aria-label="Primary navigation"><a href="/services">Services</a><a href="/locations">Locations</a><a href="/gallery">Gallery</a><a href="/vendors">Vendors</a><a href="/contact">Contact</a><a class="nav-cta" href="/get-started">Request Property Refresh</a></nav>
+    </header>
+    <main id="top">
+      <section class="section-pad quote-section">
+        <div class="quote-copy">
+          <p class="eyebrow">Fast quote intake</p>
+          <h1>Request Property Refresh</h1>
+          <p>Send the property details, timeline, room count, and photos. Ready White routes rental repaint requests into photo review, scope verification, package confirmation, and scheduling.</p>
+          <p class="integration-note">Photo policy: upload 1 wide photo of each room, 1 worst-wall photo per room, and photos of ceilings, trim, stains, peeling paint, water damage, smoke damage, holes, and heavy prep areas.</p>
+        </div>
+        <form class="quote-form" id="quote-form">
+          <div class="form-row two-col"><div><label for="first-name">Name</label><input id="first-name" name="firstName" autocomplete="name" required /></div><div><label for="email">Email</label><input id="email" name="email" type="email" autocomplete="email" required /></div></div>
+          <div class="form-row two-col"><div><label for="phone">Phone</label><input id="phone" name="phone" type="tel" autocomplete="tel" required /></div><div><label for="timeline">Requested Timeline</label><select id="timeline" name="desiredTimeline" required><option value="">Select timeline</option><option>ASAP turnover</option><option>This week</option><option>1–2 weeks</option><option>Planning ahead</option></select></div></div>
+          <div class="form-row"><label for="address">Property Address</label><input id="address" name="propertyAddress" autocomplete="street-address" required /></div>
+          <div class="form-row two-col"><div><label for="property-type">Property Type</label><select id="property-type" name="propertyType" required><option value="">Select one</option><option>Apartment rental</option><option>Single-family rental</option><option>Multifamily unit</option><option>Move-out repaint</option><option>Investor property</option><option>Property manager portfolio</option></select></div><div><label for="occupied-status">Occupied or Vacant</label><select id="occupied-status" name="occupiedStatus" required><option value="">Select status</option><option>Vacant</option><option>Occupied</option><option>Tenant moving out</option><option>Unknown / needs verification</option></select></div></div>
+          <div class="form-row two-col"><div><label for="rooms">Number of Rooms</label><input id="rooms" name="numberOfRooms" type="number" min="1" step="1" placeholder="4" /></div><div><label for="photos">Upload Photos</label><input id="photos" name="photos" type="file" accept="image/*" multiple /></div></div>
+          <div class="form-row"><label for="notes">Additional Notes</label><textarea id="notes" name="notes" rows="4" placeholder="Room list, stains, holes, ceilings, trim, access notes, lockbox, vacancy date, or property manager instructions."></textarea></div>
+          <button class="button primary full-width" type="submit">Start Property Refresh Review</button>
+          <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+        </form>
+      </section>
+    </main>
+    <footer class="site-footer"><p>© 2026 Ready White. Fast interior repainting for Central Pennsylvania rental turnovers.</p><a href="/services">Services</a> · <a href="/gallery">Gallery</a> · <a href="/vendors">Vendor Network</a></footer>
+    <script src="/script.js"></script>
+  </body>
+</html>

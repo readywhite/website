@@ -49,6 +49,8 @@ function buildContactPayload(lead, locationId) {
     ],
     customFields: [
       { key: "property_type", field_value: lead.propertyType },
+      { key: "number_of_rooms", field_value: lead.numberOfRooms },
+      { key: "service_scope", field_value: lead.serviceScope || "Interior only" },
       { key: "occupied_status", field_value: lead.occupiedStatus },
       { key: "desired_timeline", field_value: lead.desiredTimeline },
       { key: "package_interest", field_value: packageInterest },

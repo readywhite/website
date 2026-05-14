@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">Ready White apartment turnover repaint before and after</title>
+  <desc id="desc">Split before and after interior repaint scene for a rental turnover with lived-in walls on the left and fresh white empty room on the right.</desc>
+  <rect width="1200" height="630" fill="#f4f7fb"/>
+  <rect x="48" y="54" width="520" height="522" rx="34" fill="#d7dde6"/>
+  <rect x="632" y="54" width="520" height="522" rx="34" fill="#ffffff"/>
+  <text x="86" y="116" font-family="Inter, Arial, sans-serif" font-size="38" font-weight="800" fill="#334155">Before</text>
+  <text x="670" y="116" font-family="Inter, Arial, sans-serif" font-size="38" font-weight="800" fill="#0f172a">After</text>
+  <rect x="90" y="158" width="430" height="292" fill="#b7beca"/>
+  <path d="M90 450h430v78H90z" fill="#9aa3b2"/>
+  <rect x="130" y="210" width="128" height="86" rx="8" fill="#8f98a6"/>
+  <rect x="305" y="198" width="154" height="112" rx="8" fill="#a8b0bd"/>
+  <path d="M172 393c62-38 172-38 252 0v57H172z" fill="#7d8796"/>
+  <circle cx="244" cy="192" r="20" fill="#8c6570" opacity=".55"/>
+  <path d="M387 173l32 54h-64z" fill="#745a63" opacity=".45"/>
+  <rect x="674" y="158" width="430" height="292" fill="#fbfdff" stroke="#dbe4ef" stroke-width="4"/>
+  <path d="M674 450h430v78H674z" fill="#eef3f8"/>
+  <rect x="720" y="204" width="156" height="96" rx="8" fill="#ffffff" stroke="#e2e8f0" stroke-width="4"/>
+  <rect x="920" y="204" width="120" height="178" rx="8" fill="#ffffff" stroke="#e2e8f0" stroke-width="4"/>
+  <path d="M728 407h306" stroke="#dbe4ef" stroke-width="10" stroke-linecap="round"/>
+  <text x="90" y="548" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="700" fill="#334155">Occupied apartment before interior repaint</text>
+  <text x="674" y="548" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="700" fill="#0f172a">Empty apartment after Ready White repaint</text>
+</svg>

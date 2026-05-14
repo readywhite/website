@@ -49,7 +49,7 @@ async function main() {
   if (isLikelySquarespaceMarketingUrl && !process.env.READYWHITE_RAILWAY_BASE_URL) {
     console.warn(
       "WARN: readywhite.com is the Squarespace marketing layer. " +
-      "The smoke test requires the Railway backend URL because it validates /health, /readiness, and /api/ghl-lead. " +
+      "The smoke test requires the Railway backend URL because it validates /health, SEO pages, /readiness, and /api/ghl-lead. " +
       "Set READYWHITE_RAILWAY_BASE_URL to the Railway domain for the live backend test."
     );
   }
@@ -60,6 +60,14 @@ async function main() {
 
   if (!health.response.ok || health.body.ok !== true) {
     throw new Error("Healthcheck failed");
+  }
+
+  for (const page of ["/", "/services", "/vendors", "/locations", "/gallery", "/get-started", "/contact", "/sitemap.xml"]) {
+    const pageResult = await request(page);
+    console.log(page, pageResult.response.status, pageResult.contentType);
+    if (!pageResult.response.ok) {
+      throw new Error(`${page} did not load from the Railway backend`);
+    }
   }
 
   const readiness = await request("/readiness");

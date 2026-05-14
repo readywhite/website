@@ -215,3 +215,13 @@ The stack is operational only when:
 - Workflow starts.
 - SMS/email automation sends.
 - Internal notification sends.
+
+## SEO launch checks
+
+Run the SEO checklist before launch and during monthly reviews:
+
+```bash
+npm run audit:ops
+```
+
+Pass criteria include readable slugs, unique SEO descriptions, Open Graph metadata, descriptive image alt text, custom 404 links, sitemap availability, and local Central PA service-area language. Manual post-publish steps live in `docs/seo-launch-checklist.md`.

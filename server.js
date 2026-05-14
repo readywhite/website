@@ -4,6 +4,7 @@ const path = require("path");
 require("dotenv").config();
 
 const ghlLeadHandler = require("./api/ghl-lead");
+const vendorLeadHandler = require("./api/vendor-lead");
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -32,7 +33,14 @@ function getReadinessPayload() {
     website: {
       homepage: true,
       servicesPage: true,
+      locationsPage: true,
+      galleryPage: true,
+      getStartedPage: true,
+      contactPage: true,
+      vendorsPage: true,
+      notFoundPage: true,
       leadEndpoint: "/api/ghl-lead",
+      vendorEndpoint: "/api/vendor-lead",
     },
     railway: {
       required,
@@ -59,13 +67,38 @@ app.get("/readiness", (_req, res) => {
 });
 
 app.post("/api/ghl-lead", ghlLeadHandler);
+app.post("/api/vendor-lead", vendorLeadHandler);
 
 app.get("/services", (_req, res) => {
   res.sendFile(path.join(__dirname, "services.html"));
 });
 
+app.get("/locations", (_req, res) => {
+  res.sendFile(path.join(__dirname, "locations.html"));
+});
+
+app.get("/gallery", (_req, res) => {
+  res.sendFile(path.join(__dirname, "gallery.html"));
+});
+
+app.get("/get-started", (_req, res) => {
+  res.sendFile(path.join(__dirname, "get-started.html"));
+});
+
+app.get("/contact", (_req, res) => {
+  res.sendFile(path.join(__dirname, "contact.html"));
+});
+
+app.get("/vendors", (_req, res) => {
+  res.sendFile(path.join(__dirname, "vendors.html"));
+});
+
 app.get("/", (_req, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
+});
+
+app.use((_req, res) => {
+  res.status(404).sendFile(path.join(__dirname, "404.html"));
 });
 
 app.listen(port, () => {

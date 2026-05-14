@@ -102,13 +102,17 @@ Notes:
 - DNS propagation can take several minutes to 24 hours. After adding the records, return to GoHighLevel and click the domain verification/check button.
 - `ghl-email-dns.example.zone` contains the same records in a zone-file style format for reference.
 
+## Squarespace SEO readiness
+
+The site now follows the Squarespace SEO checklist with the site title `Ready White | Fast Interior Property Refreshes`, page titles using `Page Name | Ready White`, unique page descriptions, canonical URLs, Open Graph metadata, descriptive before/after image filenames, alt text, readable slugs, a custom 404 page, sitemap, robots file, and internal links between Home, Services, Vendors, Locations, Gallery, Get Started, and Contact. Use `docs/seo-launch-checklist.md` before and after publishing the Squarespace marketing layer.
+
 ## Operations handoff
 
 Use `operations-handoff.md` as the working checklist for Jason and June. It separates repo/Railway/DNS ownership from GHL pipeline and customer workflow automation ownership.
 
 Use `systems-check.md` to prove the stack is operational end-to-end. It includes GitHub → Railway, Railway → website, Railway → GHL, GHL setup reporting, GHL workflow, Squarespace → backend, and final green-light tests. The scheduled GitHub Actions systems check runs at 00:00, 12:00, and 18:00 EST daily (`0 5,17,23 * * *` UTC).
 
-Use `docs/sops/photo-intake-policy.md`, `docs/sops/vendor-policy.md`, `config/outreach.yaml`, `config/kpi-reporting.yaml`, and `npm run audit:ops` to preserve operational standards as workflows change.
+Use `docs/sops/photo-intake-policy.md`, `docs/sops/vendor-policy.md`, `config/outreach.yaml`, `config/kpi-reporting.yaml`, `docs/seo-launch-checklist.md`, and `npm run audit:ops` to preserve operational and SEO standards as workflows change.
 
 Generate a live GoHighLevel setup report with:
 
@@ -163,7 +167,7 @@ Use this sequence:
 
 1. Click **GitHub Repository**.
 2. Authorize Railway to access GitHub if prompted.
-3. Select the Ready White repository that contains `package.json`, `server.js`, `index.html`, `services.html`, `script.js`, `style.css`, and `api/ghl-lead.js`.
+3. Select the Ready White repository that contains `package.json`, `server.js`, `index.html`, `services.html`, `vendors.html`, `locations.html`, `gallery.html`, `get-started.html`, `contact.html`, `404.html`, `sitemap.xml`, `robots.txt`, `script.js`, `style.css`, `api/ghl-lead.js`, and `api/vendor-lead.js`.
 4. Let Railway deploy from the selected branch.
 5. Open the generated Railway domain and verify `/health` returns an `ok` response.
 6. Add the GoHighLevel variables below in the Railway service settings.

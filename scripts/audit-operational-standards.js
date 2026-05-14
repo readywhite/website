@@ -52,7 +52,11 @@ const checks = [
   },
   {
     file: "api/ghl-lead.js",
-    required: ["GHL_PIPELINE_STAGE_NAME", "DEFAULT_PIPELINE_STAGE_NAME", "resolvePipelineStageId", "resolvedStageCache"],
+    required: ["GHL_PIPELINE_STAGE_NAME", "DEFAULT_PIPELINE_STAGE_NAME", "resolvePipelineStageId", "resolvedStageCache", "service_scope", "number_of_rooms"],
+  },
+  {
+    file: "api/vendor-lead.js",
+    required: ["source:vendor-page", "vendor:new", "service:interior-only", "Vendor Application Received"],
   },
   {
     file: "scripts/smoke-test-ghl.js",
@@ -61,6 +65,43 @@ const checks = [
   {
     file: "scripts/estimate-paint-materials.js",
     required: ["estimatePaintMaterials", "gallonsRequired", "totalMaterialCost", "material-pricing.json"],
+  },
+
+  {
+    file: "index.html",
+    required: ["Ready White | Fast Interior Property Refreshes", "og:title", "og:description", "og:image", "canonical", "Request Property Refresh", "Join Vendor Network"],
+  },
+  {
+    file: "services.html",
+    required: ["Services | Ready White", "Interior repaint services", "og:url", "/get-started"],
+  },
+  {
+    file: "locations.html",
+    required: ["Locations | Ready White", "apartment painting Harrisburg PA", "rental repaint Harrisburg", "property manager painting Central PA", "apartment turnover repainting Pennsylvania", "move-out painting services"],
+  },
+  {
+    file: "gallery.html",
+    required: ["Gallery | Ready White", "Occupied apartment before interior repaint", "Empty apartment after Ready White repaint", "Rental turnover room with fresh white walls", "Apartment move-out repaint before and after"],
+  },
+  {
+    file: "vendors.html",
+    required: ["Vendor Network | Ready White", "Join the Ready White Vendor Network", "Vendor Sign-Up", "response SLAs", "photo proof"],
+  },
+  {
+    file: "get-started.html",
+    required: ["Get Started | Ready White", "Number of Rooms", "Upload Photos", "Requested Timeline", "Occupied or Vacant"],
+  },
+  {
+    file: "contact.html",
+    required: ["Contact | Ready White", "https://www.readywhite.com/contact", "Start Property Refresh Review"],
+  },
+  {
+    file: "404.html",
+    required: ["Page Not Found | Ready White", "/services", "/get-started", "/vendors", "/contact"],
+  },
+  {
+    file: "docs/seo-launch-checklist.md",
+    required: ["Google Search Console", "Bing Webmaster Tools", "Submit `https://www.readywhite.com/sitemap.xml`", "Apartment Turnover Painting", "missing alt text"],
   },
   {
     file: "scripts/report-ghl-setup.js",
