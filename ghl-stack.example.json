@@ -1,6 +1,6 @@
 {
   "integrationStatus": "server-route-ready",
-  "importantNote": "Ready White is positioned as a standardized property refresh operating system. Store the Private Integration Token in GHL_PRIVATE_INTEGRATION_TOKEN; do not commit the real token.",
+  "importantNote": "Ready White is an AI-native standardized property-turnover operating system. Store the Private Integration Token in GHL_PRIVATE_INTEGRATION_TOKEN; do not commit the real token.",
   "webhook": {
     "configuredIn": "api/ghl-lead.js",
     "frontendEndpoint": "/api/ghl-lead",
@@ -15,45 +15,79 @@
     "highLevelContactEndpoint": "POST /contacts/upsert",
     "highLevelOpportunityEndpoint": "POST /opportunities/"
   },
-  "contactTags": [
-    "Website Lead",
-    "Property Refresh",
-    "Ready White OS",
-    "Photo Review",
-    "Package Confirmation"
-  ],
   "pipeline": {
-    "name": "Ready White Property Refresh Pipeline",
+    "name": "Ready White Customer Jobs",
     "defaultStage": "New Lead",
     "stages": [
       "New Lead",
-      "Photo Review",
-      "Scope Verification",
-      "Package Confirmation",
-      "Quote Approval",
+      "Photos Requested",
+      "Photos Received",
+      "Scope Review",
+      "Quote Sent",
+      "Follow-Up",
+      "Approved",
       "Vendor Assignment",
-      "Scheduling",
-      "Refresh Completion"
+      "Scheduled",
+      "In Progress",
+      "Photo Proof Review",
+      "Completed",
+      "Review Requested",
+      "Closed Won",
+      "Closed Lost"
     ]
   },
+  "contactTags": [
+    "source:squarespace",
+    "vertical:property-management",
+    "vertical:investor",
+    "timeline:asap",
+    "vacant:true",
+    "lead:new",
+    "lead:quoted",
+    "lead:won"
+  ],
   "standardizedPackages": [
     {
       "name": "Basic Turn White",
-      "positioning": "Light-prep rerent white repaint for entry-level turnover work"
+      "positioning": "Light-prep rerent white repaint for entry-level turnover work",
+      "pricingModel": "preset package buy rate with standard size bands"
     },
     {
       "name": "Standard Market Ready",
-      "positioning": "Moderate-prep core offer for clean market presentation"
+      "positioning": "Moderate-prep core offer for clean market presentation",
+      "pricingModel": "preset package buy rate with standard add-ons"
     },
     {
       "name": "Premium Listing Ready",
-      "positioning": "Enhanced prep and finish quality for higher-end resale presentation"
+      "positioning": "Enhanced prep and finish quality for higher-end resale presentation",
+      "pricingModel": "preset package buy rate with listing-ready add-ons"
     },
     {
       "name": "Heavy Turn Reset",
-      "positioning": "Damage-heavy and high-prep exception lane requiring scope verification"
+      "positioning": "Damage-heavy and high-prep exception lane requiring scope verification",
+      "pricingModel": "exception escalation workflow; hourly/change-order rates only for approved severe prep or custom repairs"
     }
   ],
+  "photoPolicy": {
+    "required": [
+      "1 wide photo of each room",
+      "1 photo of the worst wall in each room",
+      "ceilings",
+      "trim",
+      "stains",
+      "peeling paint",
+      "water damage",
+      "smoke damage",
+      "holes",
+      "heavy prep areas"
+    ],
+    "purpose": [
+      "prevent scope drift",
+      "protect margins",
+      "detect exception jobs",
+      "preserve quote speed"
+    ]
+  },
   "workflowActions": [
     {
       "name": "Create or update contact",
@@ -63,31 +97,67 @@
     {
       "name": "Create opportunity",
       "trigger": "Contact created or updated",
-      "notes": "Place the opportunity in the Ready White Property Refresh Pipeline at the New Lead stage when pipeline environment variables are configured."
+      "notes": "Place the opportunity in Ready White Customer Jobs at New Lead when pipeline environment variables are configured."
     },
     {
-      "name": "Photo review",
-      "message": "Photos received. Scope verification is in progress."
+      "name": "Photos requested",
+      "message": "Please upload 1 wide photo of each room and 1 photo of the worst wall in each room so we can verify scope quickly."
     },
     {
-      "name": "Package confirmation",
-      "message": "Package fit confirmed. We are preparing the next operating step for quote approval and scheduling."
+      "name": "Photos received",
+      "message": "Photos received. Scope review is in progress."
+    },
+    {
+      "name": "Quote sent",
+      "message": "Package fit confirmed. Your Ready White quote is ready for review."
     },
     {
       "name": "Vendor assignment",
-      "message": "Your property refresh request has moved into vendor assignment. Scheduling details will follow."
+      "message": "Your refresh is moving into vendor assignment. Scheduling details will follow."
+    },
+    {
+      "name": "Photo proof review",
+      "message": "Completion photos are under review before the job is marked complete."
+    },
+    {
+      "name": "Review requested",
+      "message": "Your Ready White refresh is complete. We would appreciate a quick review of the experience."
     },
     {
       "name": "Send internal notification",
       "notes": "Notify the operations team with property details, occupancy status, desired timeline, package interest, notes, and submitted photo file names."
     }
   ],
+  "vendorStandards": [
+    "preset package buy rates",
+    "standard size bands",
+    "standard add-ons",
+    "exception escalation workflows",
+    "vendor scorecards",
+    "response SLAs",
+    "photo proof requirements",
+    "callback tracking",
+    "operational redundancy"
+  ],
+  "kpis": [
+    "speed-to-lead",
+    "photo completion rate",
+    "quote approval rate",
+    "time to vendor assignment",
+    "time to scheduled",
+    "vacancy turnover time",
+    "callback rate",
+    "review request conversion",
+    "property-manager repeat rate"
+  ],
   "futureEnhancements": [
-    "Package-fit scoring",
-    "Photo-based scope verification",
-    "Vendor capacity routing",
-    "Automated quote approval",
-    "Calendar scheduling",
-    "Completion and review automation"
+    "missed-call text-back",
+    "stale-lead recovery",
+    "package-fit scoring",
+    "photo-based scope verification",
+    "vendor capacity routing",
+    "automated quote approval",
+    "calendar scheduling",
+    "completion and review automation"
   ]
 }

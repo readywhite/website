@@ -1,0 +1,25 @@
+kpis:
+  speed_to_lead:
+    target: "under 5 minutes"
+    source: "GHL workflow timestamps"
+  photo_completion_rate:
+    target: "80%+ of new leads submit required photos"
+    source: "Photos Received stage conversion"
+  quote_approval_rate:
+    target: "track by package lane and source"
+    source: "Quote Sent to Approved conversion"
+  time_to_vendor_assignment:
+    target: "same day after approval when capacity exists"
+    source: "Approved to Vendor Assignment stage duration"
+  vacancy_turnover_time:
+    target: "reduce average days from New Lead to Completed"
+    source: "pipeline stage duration"
+  callback_rate:
+    target: "track by vendor and package lane"
+    source: "completed job QA notes"
+  review_request_conversion:
+    target: "track Completed to Review Requested outcomes"
+    source: "GHL review workflow"
+  property_manager_repeat_rate:
+    target: "track recurring PM account usage"
+    source: "closed won jobs by company/account"

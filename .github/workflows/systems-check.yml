@@ -1,0 +1,25 @@
+name: Ready White Systems Check
+
+on:
+  schedule:
+    # 00:00, 12:00, and 18:00 EST (UTC-5) daily.
+    - cron: "0 5,17,23 * * *"
+  workflow_dispatch:
+
+jobs:
+  systems-check:
+    runs-on: ubuntu-latest
+    env:
+      READYWHITE_BASE_URL: ${{ secrets.READYWHITE_BASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npm run check
+      - run: npm run audit:ops
+      - name: Live GHL smoke test
+        if: ${{ env.READYWHITE_BASE_URL != '' }}
+        run: npm run smoke:ghl

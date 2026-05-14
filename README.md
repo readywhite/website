@@ -7,7 +7,7 @@ A lightweight static landing page for the Ready White property-refresh funnel. T
 ## Funnel stack
 
 - **Website frontend:** premium operational brand, a dedicated `/services` page, standardized package cards, workflow visuals, who-we-serve cards, FAQ, testimonials placeholders, and property refresh intake.
-- **GoHighLevel backend:** lead capture, contact upsert, photo review workflow, package confirmation, quote approval, vendor assignment, scheduling, and pipeline management.
+- **GoHighLevel backend:** lead capture, contact upsert, photo requests, photo receipt, scope review, quote sent, follow-up, approval, vendor assignment, scheduling, in-progress tracking, photo proof review, completion, review requests, and closeout management.
 - **Custom integration:** form submissions post to `api/ghl-lead.js`, which uses a GoHighLevel Private Integration Token from server-side environment variables.
 
 ## Core positioning
@@ -29,8 +29,8 @@ The website uses four fixed-scope package lanes instead of generic custom estima
 
 1. Visitor clicks **Get My Property Quote** or **Upload Property Photos**.
 2. The form collects first name, email, phone, property address, property type, occupied/vacant status, desired timeline, likely package, notes, and uploaded photo names.
-3. The payload includes the tags `Website Lead`, `Property Refresh`, `Ready White OS`, `Photo Review`, and `Package Confirmation`.
-4. The lead starts in the `New Lead` pipeline stage for photo review, scope verification, package confirmation, quote approval, vendor assignment, scheduling, and refresh completion.
+3. The payload applies standardized operational tags such as `source:squarespace`, `vertical:property-management`, `vertical:investor`, `timeline:asap`, `vacant:true`, and `lead:new`.
+4. The lead starts in the `New Lead` pipeline stage for photo requests, photo receipt, scope review, quote sent, follow-up, approval, vendor assignment, scheduling, in-progress tracking, photo proof review, completion, review request, and closeout.
 
 ## What is configured here
 
@@ -41,7 +41,7 @@ This repo configures the public website experience, the browser-side operational
 | Website pages | Homepage plus `/services` package-detail page with package matrix, lifecycle categories, add-ons, operational handoff, and CTAs | Domain/Railway publishing |
 | Lead payload | First name, contact details, property details, occupancy status, timeline, package interest, tags, workflow status, photo file names | Production file storage if actual photo uploads are required |
 | Contact sync | `api/ghl-lead.js` calls `/contacts/upsert` with the server-side token | `GHL_PRIVATE_INTEGRATION_TOKEN` and `GHL_LOCATION_ID` deployment variables |
-| Automations | Operational SMS/email language for photo review, scope verification, package fit, vendor assignment, and scheduling | Actual GHL workflow steps, senders, notifications, timing, and pipeline movement |
+| Automations | Operational SMS/email language for photo requests, scope review, quote follow-up, vendor assignment, scheduling, photo proof review, and review requests | Actual GHL workflow steps, senders, notifications, timing, and pipeline movement |
 | Pipeline | Optional opportunity creation when pipeline env vars are set | Real pipeline ID, stage ID, assignee rules, and workflow automations |
 | Packages | Basic Turn White, Standard Market Ready, Premium Listing Ready, Heavy Turn Reset | Any matching GHL custom fields, forms, or workflow branches |
 
@@ -93,6 +93,8 @@ Use `operations-handoff.md` as the working checklist for Jason and June. It sepa
 
 Use `systems-check.md` to prove the stack is operational end-to-end. It includes GitHub → Railway, Railway → website, Railway → GHL, GHL workflow, Squarespace → backend, and final green-light tests.
 
+Use `docs/sops/photo-intake-policy.md`, `docs/sops/vendor-policy.md`, `config/outreach.yaml`, `config/kpi-reporting.yaml`, and `npm run audit:ops` to preserve operational standards as workflows change.
+
 - Jason owns GitHub, Railway variables, public domain checks, DNS records, and live website test submissions.
 - June owns GHL pipeline stages, tags, customer workflow automation, SMS/email language, internal notifications, and package alignment.
 
@@ -106,11 +108,11 @@ curl https://YOUR-RAILWAY-DOMAIN/readiness
 
 Before this form can drive live CRM automation, configure these items in GoHighLevel or in your middleware/integration layer:
 
-1. Create the tags `Website Lead`, `Property Refresh`, `Ready White OS`, `Photo Review`, and `Package Confirmation`.
-2. Create a Ready White pipeline with `New Lead`, `Photo Review`, `Scope Verification`, `Package Confirmation`, `Quote Approval`, `Vendor Assignment`, `Scheduling`, and `Refresh Completion` stages.
+1. Create standardized tags including `source:squarespace`, `vertical:property-management`, `vertical:investor`, `timeline:asap`, `vacant:true`, `lead:new`, `lead:quoted`, and `lead:won`.
+2. Create a Ready White pipeline with `New Lead`, `Photos Requested`, `Photos Received`, `Scope Review`, `Quote Sent`, `Follow-Up`, `Approved`, `Vendor Assignment`, `Scheduled`, `In Progress`, `Photo Proof Review`, `Completed`, `Review Requested`, `Closed Won`, and `Closed Lost` stages.
 3. Deploy the included `/api/ghl-lead` route with `GHL_PRIVATE_INTEGRATION_TOKEN` and `GHL_LOCATION_ID` set.
 4. Add `GHL_PIPELINE_ID` and `GHL_PIPELINE_STAGE_ID` if the route should create opportunities after contact upsert.
-5. Add workflow actions for photo review, package confirmation, quote approval, vendor assignment, scheduling, confirmation SMS, confirmation email, and internal notification.
+5. Add workflow actions for photos requested, photos received, scope review, quote sent, follow-up, approval, vendor assignment, scheduled, in progress, photo proof review, completed, review requested, confirmation SMS, confirmation email, and internal notification.
 6. Add production photo upload handling if actual image files need to be stored, reviewed, or attached to opportunities.
 
 ## Railway deployment

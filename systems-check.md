@@ -170,8 +170,8 @@ Package: Standard Market Ready
 The stack is operational only when:
 
 - Contact appears in GHL.
-- Opportunity appears in the correct pipeline stage, if configured.
-- Tags are applied.
+- Opportunity appears in Ready White Customer Jobs at the correct pipeline stage, if configured.
+- Standardized tags such as source:squarespace, vertical:property-management, timeline:asap, vacant:true, and lead:new are applied.
 - Workflow starts.
 - SMS/email automation sends.
 - Internal notification sends.

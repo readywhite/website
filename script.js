@@ -8,6 +8,29 @@ function setStatus(message, type = "success") {
   formStatus.className = `form-status ${type}`;
 }
 
+
+function propertyTypeTag(propertyType = "") {
+  const value = propertyType.toLowerCase();
+
+  if (value.includes("rental") || value.includes("multifamily")) {
+    return "vertical:property-management";
+  }
+
+  if (value.includes("investment")) {
+    return "vertical:investor";
+  }
+
+  return null;
+}
+
+function timelineTag(timeline = "") {
+  return timeline.toLowerCase().includes("asap") ? "timeline:asap" : null;
+}
+
+function occupiedStatusTag(status = "") {
+  return status.toLowerCase() === "vacant" ? "vacant:true" : null;
+}
+
 function buildPayload(form) {
   const formData = new FormData(form);
   const photos = formData.getAll("photos").filter((file) => file.name);
@@ -26,18 +49,19 @@ function buildPayload(form) {
     packageInterest,
     notes: formData.get("notes"),
     tags: [
-      "Website Lead",
-      "Property Refresh",
-      "Ready White OS",
-      "Photo Review",
-      "Package Confirmation",
-    ],
+      "source:squarespace",
+      "lead:new",
+      propertyTypeTag(formData.get("propertyType")),
+      timelineTag(formData.get("desiredTimeline")),
+      occupiedStatusTag(formData.get("occupiedStatus")),
+    ].filter(Boolean),
+    pipelineName: "Ready White Customer Jobs",
     pipelineStage: "New Lead",
-    workflowStatus: "Scope Verification in Progress",
+    workflowStatus: "Photos Requested",
     automationMessages: {
-      sms: "Your property refresh request is under review. Photos received. Scope verification is in progress.",
+      sms: "Your property refresh request is under review. Please upload 1 wide photo of each room and 1 photo of the worst wall in each room.",
       emailSubject: "Ready White received your property refresh request",
-      emailPreview: "Photos received. Scope verification is in progress, and we will confirm package fit shortly.",
+      emailPreview: "Photos requested. Scope review starts after we receive room photos, worst-wall photos, and any damage/prep photos.",
     },
     photoFileNames: photos.map((file) => file.name),
     submittedAt: new Date().toISOString(),
@@ -71,7 +95,7 @@ async function submitLead(payload) {
 
 quoteForm.addEventListener("submit", async (event) => {
   event.preventDefault();
-  setStatus("Photos received. Scope verification in progress...", "success");
+  setStatus("Property refresh request received. Photo requirements and scope review are next...", "success");
 
   const submitButton = quoteForm.querySelector('button[type="submit"]');
   submitButton.disabled = true;
@@ -83,7 +107,7 @@ quoteForm.addEventListener("submit", async (event) => {
     if (result.demoMode) {
       setStatus("Demo mode: property refresh request captured locally. Deploy with GHL environment variables to send it live.");
     } else {
-      setStatus("Your property refresh request is under review. Package fit confirmation is next.");
+      setStatus("Your property refresh request is under review. Photos requested and scope review are next.");
     }
   } catch (error) {
     console.error(error);

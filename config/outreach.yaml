@@ -1,0 +1,24 @@
+segments:
+  property_managers:
+    tags:
+      - vertical:property-management
+    promise: "standardized turnover refresh packages that reduce vacancy time"
+    cta: "Send us the next vacant unit for photo-based scope review"
+  investors:
+    tags:
+      - vertical:investor
+    promise: "package-based refresh lanes for acquisition, flip, hold, and resale workflows"
+    cta: "Upload photos for a Standard Market Ready review"
+  realtors:
+    tags:
+      - vertical:realtor
+    promise: "listing-ready refresh packages without estimate chaos"
+    cta: "Start a Premium Listing Ready review"
+
+follow_up:
+  stale_lead_recovery:
+    day_1: "Photos requested — reply with room photos so we can keep your quote moving."
+    day_3: "Still want us to review this property refresh? Send photos and timeline when ready."
+    day_7: "Closing this review for now. Reply reopen when the property is ready."
+  missed_call_text_back:
+    message: "Sorry we missed you — Ready White can review your property refresh by photos. Send the address, timeline, and room photos."

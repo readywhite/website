@@ -49,34 +49,45 @@ The Ready White repo is prepared for a connected workflow, but the repo alone do
 1. **GHL pipeline**
    - Create or confirm the Ready White pipeline with these stages:
      1. New Lead
-     2. Photo Review
-     3. Scope Verification
-     4. Package Confirmation
-     5. Quote Approval
-     6. Vendor Assignment
-     7. Scheduling
-     8. Refresh Completion
+     2. Photos Requested
+     3. Photos Received
+     4. Scope Review
+     5. Quote Sent
+     6. Follow-Up
+     7. Approved
+     8. Vendor Assignment
+     9. Scheduled
+     10. In Progress
+     11. Photo Proof Review
+     12. Completed
+     13. Review Requested
+     14. Closed Won
+     15. Closed Lost
 
 2. **GHL tags**
    - Create or confirm these tags:
-     - Website Lead
-     - Property Refresh
-     - Ready White OS
-     - Photo Review
-     - Package Confirmation
+     - source:squarespace
+     - vertical:property-management
+     - vertical:investor
+     - timeline:asap
+     - vacant:true
+     - lead:new
+     - lead:quoted
+     - lead:won
 
 3. **Customer workflow automation**
    - Trigger from website lead/contact creation.
    - Send immediate customer SMS/email using operational language.
    - Notify internal operations team.
-   - Move or branch based on photo review, package fit, quote approval, vendor assignment, and scheduling.
+   - Move or branch based on photos requested, photos received, scope review, quote sent, follow-up, approval, vendor assignment, scheduled, in progress, photo proof review, completed, review requested, and closeout.
 
 4. **Automation language**
    - Use:
      - "Your property refresh request is under review."
+     - "Photos requested."
      - "Photos received."
-     - "Scope verification is in progress."
-     - "Package fit confirmed."
+     - "Scope review is in progress."
+     - "Quote sent."
      - "Your refresh is moving into vendor assignment."
      - "Scheduling details will follow."
    - Do not use painter/handyman language.
@@ -97,11 +108,11 @@ The Ready White repo is prepared for a connected workflow, but the repo alone do
 - GHL opportunity is created if pipeline variables are configured.
 - GHL customer receives the first confirmation message.
 - Internal team receives the lead notification.
-- Lead can move through the full pipeline from New Lead to Refresh Completion.
+- Lead can move through the full Ready White Customer Jobs pipeline from New Lead to Closed Won or Closed Lost.
 - DNS records verify in GHL for email sending.
 
 ## Message to use with Codex
 
 Use this prompt when asking Codex for future changes:
 
-> Update the Ready White system so the website intake, Railway API, and GoHighLevel workflow stay aligned around the standardized property refresh operating system. Do not use painter/handyman language. Keep the pipeline stages as New Lead, Photo Review, Scope Verification, Package Confirmation, Quote Approval, Vendor Assignment, Scheduling, and Refresh Completion. Keep credentials server-side only.
+> Update the Ready White system so the website intake, Railway API, and GoHighLevel workflow stay aligned around the standardized property refresh operating system. Do not use painter/handyman language. Keep the pipeline stages as New Lead, Photos Requested, Photos Received, Scope Review, Quote Sent, Follow-Up, Approved, Vendor Assignment, Scheduled, In Progress, Photo Proof Review, Completed, Review Requested, Closed Won, and Closed Lost. Keep credentials server-side only.
