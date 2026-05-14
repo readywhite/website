@@ -18,6 +18,10 @@ GoHighLevel CRM + pipelines + workflows
 Automations / SMS / Email
 ```
 
+## Automated cadence
+
+GitHub Actions runs the Ready White Systems Check at 00:00, 12:00, and 18:00 EST daily using `0 5,17,23 * * *` UTC. The scheduled run validates deterministic scripts every time, runs the live GHL smoke test when `READYWHITE_BASE_URL` is configured, and uploads a GHL setup report when `GHL_PRIVATE_INTEGRATION_TOKEN` and `GHL_LOCATION_ID` secrets are configured.
+
 Codex works through repo access:
 
 ```text
@@ -113,7 +117,26 @@ curl -X POST https://YOUR-RAILWAY-DOMAIN/api/ghl-lead \
 - GHL contact is created or updated.
 - If pipeline variables are set, GHL opportunity is created.
 
-## 5. GHL workflow trigger
+## 5. GHL setup report
+
+Generate a structured report of current GHL pipelines, stages, tags, workflows, missing steps, and recommendations:
+
+```bash
+GHL_PRIVATE_INTEGRATION_TOKEN=your_token \
+GHL_LOCATION_ID=your_location_id \
+GHL_REPORT_OUTPUT=reports/ghl-setup-report.md \
+npm run report:ghl
+```
+
+**Pass if**
+
+- Ready White Customer Jobs exists.
+- All required stages exist in order.
+- Required tags exist.
+- Workflow names/signals cover photos requested, photos received, scope review, quote sent, follow-up, approved, vendor assignment, scheduled, photo proof, completed, and review requested.
+- Automation coverage includes speed-to-lead, missed-call text-back, stale-lead recovery, internal notification, stage movement, package fit, photo policy, exception escalation, vendor scorecard, callback tracking, review flywheel, and property-manager nurture.
+
+## 6. GHL workflow trigger
 
 **Test inside GHL**
 
@@ -131,7 +154,7 @@ curl -X POST https://YOUR-RAILWAY-DOMAIN/api/ghl-lead \
 - Internal notification fires.
 - Lead enters the correct pipeline stage.
 
-## 6. Squarespace → backend, if Squarespace is used as the public frontend
+## 7. Squarespace → backend, if Squarespace is used as the public frontend
 
 **Test**
 
@@ -147,13 +170,14 @@ curl -X POST https://YOUR-RAILWAY-DOMAIN/api/ghl-lead \
 - Squarespace only displays static content and does not post to Railway.
 - CORS or form-action issues block the request.
 
-## 7. Biggest failure points
+## 8. Biggest failure points
 
 - Missing Railway variables.
 - Wrong `GHL_LOCATION_ID`.
 - Invalid or rotated private integration token.
 - Pipeline variables missing, so contact is created but opportunity is not.
 - GHL workflow trigger is not connected to the website lead/contact event.
+- Missing GHL report credentials, so scheduled systems checks cannot audit live pipeline/tag/workflow drift.
 - Squarespace form is not actually posting to Railway.
 
 ## Final green-light test

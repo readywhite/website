@@ -24,6 +24,10 @@ const checks = [
       "lead:new",
       "lead:quoted",
       "lead:won",
+      "missed call text back",
+      "stale lead recovery",
+      "property manager nurture",
+      "00:00, 12:00, and 18:00 EST daily",
     ],
   },
   {
@@ -36,11 +40,19 @@ const checks = [
   },
   {
     file: "config/outreach.yaml",
-    required: ["stale_lead_recovery", "missed_call_text_back", "vertical:property-management"],
+    required: ["stale_lead_recovery", "missed_call_text_back", "property_manager_nurture", "vertical:property-management"],
+  },
+  {
+    file: "scripts/report-ghl-setup.js",
+    required: ["REQUIRED_AUTOMATION_SIGNALS", "stageOrderIssues", "Automation coverage checklist", "Ready White Customer Jobs"],
+  },
+  {
+    file: ".github/workflows/systems-check.yml",
+    required: ["0 5,17,23 * * *", "Generate GHL setup report", "Upload GHL setup report"],
   },
   {
     file: "config/kpi-reporting.yaml",
-    required: ["speed_to_lead", "vacancy_turnover_time", "property_manager_repeat_rate"],
+    required: ["speed_to_lead", "vacancy_turnover_time", "property_manager_repeat_rate", "pipeline_integrity_score", "automation_coverage_score"],
   },
 ];
 

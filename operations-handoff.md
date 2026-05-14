@@ -16,6 +16,8 @@ The Ready White repo is prepared for a connected workflow, but the repo alone do
 - Optional opportunity creation when pipeline and stage IDs are configured.
 - Railway deployment config with `npm start` and `/health` healthcheck.
 - GHL email DNS documentation for the LeadConnector/Mailgun sending subdomain.
+- GHL setup report generator that audits live pipelines, stages, tags, workflows, automation signals, missing objects, and drift recommendations.
+- GitHub Actions systems check scheduled at 00:00, 12:00, and 18:00 EST daily.
 
 ## Jason responsibilities
 
@@ -33,6 +35,7 @@ The Ready White repo is prepared for a connected workflow, but the repo alone do
      - `GHL_PIPELINE_ID` if opportunities should be created
      - `GHL_PIPELINE_STAGE_ID` if opportunities should be created
    - Redeploy after variables are added.
+   - Add `GHL_REPORT_OUTPUT=reports/ghl-setup-report.md` only when a file artifact is desired for local or CI reports.
 
 3. **Domain / DNS**
    - Add the GHL email DNS records at the domain DNS provider, not Railway.
@@ -99,6 +102,11 @@ The Ready White repo is prepared for a connected workflow, but the repo alone do
      - Premium Listing Ready
      - Heavy Turn Reset
 
+6. **Workflow report review**
+   - Run or review the generated GHL setup report after pipeline, tag, workflow, or automation changes.
+   - Resolve missing stages, missing tags, stage-order inconsistencies, stale workflow names, inactive workflows, and missing automation signals before scale-up.
+   - Confirm missed-call text-back, stale-lead recovery, review flywheel, property-manager nurture, vendor scorecard, callback tracking, and exception escalation remain active.
+
 ## Shared final acceptance checklist
 
 - Railway `/health` works on the public URL.
@@ -109,6 +117,7 @@ The Ready White repo is prepared for a connected workflow, but the repo alone do
 - GHL customer receives the first confirmation message.
 - Internal team receives the lead notification.
 - Lead can move through the full Ready White Customer Jobs pipeline from New Lead to Closed Won or Closed Lost.
+- GHL setup report shows no missing required stages, tags, workflow signals, automation signals, or stage-order inconsistencies.
 - DNS records verify in GHL for email sending.
 
 ## Message to use with Codex

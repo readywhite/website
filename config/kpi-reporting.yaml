@@ -23,3 +23,12 @@ kpis:
   property_manager_repeat_rate:
     target: "track recurring PM account usage"
     source: "closed won jobs by company/account"
+  pipeline_integrity_score:
+    target: "100% required Ready White stages and tags present in GHL setup report"
+    source: "npm run report:ghl"
+  automation_coverage_score:
+    target: "100% required workflow and automation signals covered"
+    source: "GHL setup report automation checklist"
+  systems_check_cadence:
+    target: "00:00, 12:00, and 18:00 EST daily"
+    source: "GitHub Actions Ready White Systems Check"

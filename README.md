@@ -67,6 +67,9 @@ Use `ghl-stack.example.json` as the implementation checklist for the real GoHigh
 - HighLevel Contacts API: <https://marketplace.gohighlevel.com/docs/ghl/contacts/contacts-api/index.html>
 - Upsert Contact endpoint: <https://marketplace.gohighlevel.com/docs/ghl/contacts/upsert-contact/index.html>
 - Create Opportunity endpoint: <https://marketplace.gohighlevel.com/docs/ghl/opportunities/create-opportunity/>
+- Get Pipelines endpoint: <https://marketplace.gohighlevel.com/docs/ghl/opportunities/get-pipelines/>
+- Get Tags endpoint: <https://marketplace.gohighlevel.com/docs/ghl/locations/get-location-tags/>
+- Get Workflow endpoint: <https://marketplace.gohighlevel.com/docs/ghl/workflows/get-workflow/>
 
 ## GoHighLevel email domain DNS records
 
@@ -91,9 +94,20 @@ Notes:
 
 Use `operations-handoff.md` as the working checklist for Jason and June. It separates repo/Railway/DNS ownership from GHL pipeline and customer workflow automation ownership.
 
-Use `systems-check.md` to prove the stack is operational end-to-end. It includes GitHub → Railway, Railway → website, Railway → GHL, GHL workflow, Squarespace → backend, and final green-light tests.
+Use `systems-check.md` to prove the stack is operational end-to-end. It includes GitHub → Railway, Railway → website, Railway → GHL, GHL setup reporting, GHL workflow, Squarespace → backend, and final green-light tests. The scheduled GitHub Actions systems check runs at 00:00, 12:00, and 18:00 EST daily (`0 5,17,23 * * *` UTC).
 
 Use `docs/sops/photo-intake-policy.md`, `docs/sops/vendor-policy.md`, `config/outreach.yaml`, `config/kpi-reporting.yaml`, and `npm run audit:ops` to preserve operational standards as workflows change.
+
+Generate a live GoHighLevel setup report with:
+
+```bash
+GHL_PRIVATE_INTEGRATION_TOKEN=your_token \
+GHL_LOCATION_ID=your_location_id \
+GHL_REPORT_OUTPUT=reports/ghl-setup-report.md \
+npm run report:ghl
+```
+
+The report checks active pipelines, stage order, tags, workflow status, automation coverage, missing objects, and recommendations against the Ready White Customer Jobs standard.
 
 - Jason owns GitHub, Railway variables, public domain checks, DNS records, and live website test submissions.
 - June owns GHL pipeline stages, tags, customer workflow automation, SMS/email language, internal notifications, and package alignment.

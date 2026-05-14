@@ -22,3 +22,21 @@ follow_up:
     day_7: "Closing this review for now. Reply reopen when the property is ready."
   missed_call_text_back:
     message: "Sorry we missed you — Ready White can review your property refresh by photos. Send the address, timeline, and room photos."
+
+
+automation_standards:
+  speed_to_lead:
+    target: "first SMS/email and internal notification within 5 minutes"
+    ghl_signal: "speed to lead"
+  missed_call_text_back:
+    target: "text every missed call immediately with photo-based intake instructions"
+    ghl_signal: "missed call text back"
+  stale_lead_recovery:
+    target: "recover unsubmitted photos and unsent approvals before the lead goes stale"
+    ghl_signal: "stale lead recovery"
+  review_flywheel:
+    target: "request review after completion proof is accepted"
+    ghl_signal: "review flywheel"
+  property_manager_nurture:
+    target: "route PM contacts into recurring relationship follow-up after each completed turn"
+    ghl_signal: "property manager nurture"

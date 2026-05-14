@@ -126,6 +126,36 @@
     {
       "name": "Send internal notification",
       "notes": "Notify the operations team with property details, occupancy status, desired timeline, package interest, notes, and submitted photo file names."
+    },
+    {
+      "name": "Speed to lead",
+      "trigger": "Website property refresh review submitted",
+      "notes": "Send customer SMS/email and internal notification within 5 minutes to protect close rate."
+    },
+    {
+      "name": "Missed call text back",
+      "trigger": "Inbound call missed",
+      "notes": "Reply immediately with address, timeline, package lane, and required photo intake instructions."
+    },
+    {
+      "name": "Stale lead recovery",
+      "trigger": "No required photos or approval after follow-up SLA",
+      "notes": "Recover unsubmitted photos and quote approvals at day 1, day 3, and day 7 before closing the review."
+    },
+    {
+      "name": "Stage movement guardrails",
+      "trigger": "Pipeline stage changes",
+      "notes": "Apply deterministic tags, customer messaging, internal notifications, and next-step tasks for each standardized stage."
+    },
+    {
+      "name": "Property manager nurture",
+      "trigger": "Closed Won or Completed property-management job",
+      "notes": "Route recurring PM contacts into repeat-turn follow-up and next-vacancy outreach."
+    },
+    {
+      "name": "Review flywheel",
+      "trigger": "Completed job with accepted photo proof",
+      "notes": "Request a review and notify operations to capture reusable proof for recurring relationship sales."
     }
   ],
   "vendorStandards": [
@@ -159,5 +189,30 @@
     "automated quote approval",
     "calendar scheduling",
     "completion and review automation"
-  ]
+  ],
+  "automationStandards": [
+    "speed to lead",
+    "missed call text back",
+    "stale lead recovery",
+    "internal notification",
+    "stage movement",
+    "package fit",
+    "photo policy",
+    "exception escalation",
+    "vendor scorecard",
+    "callback tracking",
+    "review flywheel",
+    "property manager nurture"
+  ],
+  "systemsCheckSchedule": {
+    "cadence": "00:00, 12:00, and 18:00 EST daily",
+    "workflow": ".github/workflows/systems-check.yml",
+    "checks": [
+      "npm ci",
+      "npm run check",
+      "npm run audit:ops",
+      "npm run smoke:ghl when READYWHITE_BASE_URL is set",
+      "npm run report:ghl when GHL credentials are set"
+    ]
+  }
 }
