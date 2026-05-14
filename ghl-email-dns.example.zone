@@ -1,0 +1,8 @@
+; GoHighLevel / LeadConnector Mailgun DNS records for the lc subdomain.
+; Replace example.com with your real domain if your DNS host requires fully-qualified names.
+
+lc                         TXT    "v=spf1 include:spf.leadconnectorhq.com include:mailgun.org ~all"
+pic._domainkey.lc          TXT    "k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDnYtVvDEpd1ZbyrmOjnzZ4TItFudyR3Skrh4bDOdT57Xzr2H+NO2711sd/iHlu8e3CuOwX4VGYfqVt4dfbXnMhLWuysygCc4khWZTMOvrfXGLzuu1n4LGntD51ng2sdZka/4l4agLaBO1bPm7jIcu/vlyKL/kvIldlUclr4EKYawIDAQAB"
+email.lc                   CNAME  mailgun.org.
+lc                         MX     10 mxa.mailgun.org.
+lc                         MX     10 mxb.mailgun.org.
