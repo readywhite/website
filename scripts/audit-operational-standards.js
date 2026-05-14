@@ -39,8 +39,20 @@ const checks = [
     required: ["preset package buy rates", "vendor scorecards", "response SLAs", "callback tracking"],
   },
   {
+    file: "docs/sops/material-cost-estimating-template.md",
+    required: ["Sherwin-Williams", "required gallons", "totalMaterialCost", "approved exception workflows"],
+  },
+  {
+    file: "config/material-pricing.json",
+    required: ["pricingLastReviewed", "Sherwin-Williams", "pricePerGallon", "coverageSqFtPerGallon"],
+  },
+  {
     file: "config/outreach.yaml",
     required: ["stale_lead_recovery", "missed_call_text_back", "property_manager_nurture", "vertical:property-management"],
+  },
+  {
+    file: "scripts/estimate-paint-materials.js",
+    required: ["estimatePaintMaterials", "gallonsRequired", "totalMaterialCost", "material-pricing.json"],
   },
   {
     file: "scripts/report-ghl-setup.js",
@@ -52,7 +64,7 @@ const checks = [
   },
   {
     file: "config/kpi-reporting.yaml",
-    required: ["speed_to_lead", "vacancy_turnover_time", "property_manager_repeat_rate", "pipeline_integrity_score", "automation_coverage_score"],
+    required: ["speed_to_lead", "vacancy_turnover_time", "property_manager_repeat_rate", "pipeline_integrity_score", "automation_coverage_score", "material_cost_variance"],
   },
 ];
 

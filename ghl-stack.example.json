@@ -178,7 +178,8 @@
     "vacancy turnover time",
     "callback rate",
     "review request conversion",
-    "property-manager repeat rate"
+    "property-manager repeat rate",
+    "material-cost variance"
   ],
   "futureEnhancements": [
     "missed-call text-back",
@@ -213,6 +214,24 @@
       "npm run audit:ops",
       "npm run smoke:ghl when READYWHITE_BASE_URL is set",
       "npm run report:ghl when GHL credentials are set"
+    ]
+  },
+  "materialEstimating": {
+    "template": "scripts/estimate-paint-materials.js",
+    "pricingConfig": "config/material-pricing.json",
+    "sop": "docs/sops/material-cost-estimating-template.md",
+    "purpose": [
+      "protect margins",
+      "preserve package standardization",
+      "verify material exposure by room size",
+      "reduce vacancy turnover time"
+    ],
+    "exceptionControls": [
+      "severe prep",
+      "water damage",
+      "smoke/stain blocking",
+      "custom repairs",
+      "approved scope exceptions"
     ]
   }
 }

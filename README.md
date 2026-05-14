@@ -45,6 +45,17 @@ This repo configures the public website experience, the browser-side operational
 | Pipeline | Optional opportunity creation when pipeline env vars are set | Real pipeline ID, stage ID, assignee rules, and workflow automations |
 | Packages | Basic Turn White, Standard Market Ready, Premium Listing Ready, Heavy Turn Reset | Any matching GHL custom fields, forms, or workflow branches |
 
+
+## Paint material cost template
+
+Use the deterministic paint material estimator to calculate required gallons and estimated Sherwin-Williams material cost from room size or known wall square footage:
+
+```bash
+npm run estimate:paint -- --length=12 --width=10 --height=8 --coats=2 --product=property_solution_interior_flat --format=markdown
+```
+
+Pricing assumptions live in `config/material-pricing.json` and should be updated with current Ready White Sherwin-Williams account pricing before production quote locks. The calculator keeps package quoting standardized by estimating material exposure only; severe prep, water damage, smoke/stain blocking, holes, and custom repairs still require approved exception workflows.
+
 ## Connect GoHighLevel
 
 Add your GoHighLevel credentials as deployment environment variables. The private token belongs on the server only; never put it in `script.js` or `index.html`.

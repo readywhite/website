@@ -32,3 +32,6 @@ kpis:
   systems_check_cadence:
     target: "00:00, 12:00, and 18:00 EST daily"
     source: "GitHub Actions Ready White Systems Check"
+  material_cost_variance:
+    target: "actual material spend within package allowance by product lane"
+    source: "paint material estimator vs job closeout receipts"

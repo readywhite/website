@@ -136,7 +136,21 @@ npm run report:ghl
 - Workflow names/signals cover photos requested, photos received, scope review, quote sent, follow-up, approved, vendor assignment, scheduled, photo proof, completed, and review requested.
 - Automation coverage includes speed-to-lead, missed-call text-back, stale-lead recovery, internal notification, stage movement, package fit, photo policy, exception escalation, vendor scorecard, callback tracking, review flywheel, and property-manager nurture.
 
-## 6. GHL workflow trigger
+## 6. Paint material estimator
+
+**Test**
+
+```bash
+npm run estimate:paint -- --length=12 --width=10 --height=8 --coats=2 --product=property_solution_interior_flat --format=markdown
+```
+
+**Pass if**
+
+- Output includes paintable square footage, adjusted square footage, raw gallons, required gallons, container plan, and total material cost.
+- Pricing assumptions come from `config/material-pricing.json`.
+- Exception conditions remain constrained to approved scope workflows instead of hourly drift.
+
+## 7. GHL workflow trigger
 
 **Test inside GHL**
 
@@ -154,7 +168,7 @@ npm run report:ghl
 - Internal notification fires.
 - Lead enters the correct pipeline stage.
 
-## 7. Squarespace → backend, if Squarespace is used as the public frontend
+## 8. Squarespace → backend, if Squarespace is used as the public frontend
 
 **Test**
 
@@ -170,7 +184,7 @@ npm run report:ghl
 - Squarespace only displays static content and does not post to Railway.
 - CORS or form-action issues block the request.
 
-## 8. Biggest failure points
+## 9. Biggest failure points
 
 - Missing Railway variables.
 - Wrong `GHL_LOCATION_ID`.
@@ -179,6 +193,7 @@ npm run report:ghl
 - GHL workflow trigger is not connected to the website lead/contact event.
 - Missing GHL report credentials, so scheduled systems checks cannot audit live pipeline/tag/workflow drift.
 - Squarespace form is not actually posting to Railway.
+- Stale Sherwin-Williams material pricing, which can erode margins and package buy-rate accuracy.
 
 ## Final green-light test
 

@@ -1,0 +1,59 @@
+{
+  "pricingLastReviewed": "2026-05-14",
+  "pricingPolicy": "Sherwin-Williams public pro pages require sign-in to confirm account-specific pricing and availability. These Ready White defaults are conservative estimating allowances and must be replaced with the current Ready White Sherwin-Williams account/net prices during pricing reviews.",
+  "coveragePolicy": "Use the low end of the Sherwin-Williams published 350-400 sq ft per gallon coverage range to preserve margin and reduce exception risk.",
+  "currency": "USD",
+  "defaultWastePercent": 10,
+  "products": {
+    "property_solution_interior_flat": {
+      "label": "Sherwin-Williams Property Solution Interior Latex Flat",
+      "category": "turnover_wall_paint",
+      "pricePerGallon": 62,
+      "fiveGallonPrice": 295,
+      "coverageSqFtPerGallon": 350,
+      "defaultCoats": 2,
+      "sourceUrl": "https://www.sherwin-williams.com/homeowners/products/property-solution-interior-latex-flat-finish-pl-9520128",
+      "notes": "Default turnover-flat estimating allowance. Replace with Ready White account pricing before production quote locks."
+    },
+    "builders_solution_interior_flat": {
+      "label": "Sherwin-Williams Builders Solution Interior Latex Flat",
+      "category": "turnover_wall_paint",
+      "pricePerGallon": 58,
+      "fiveGallonPrice": 275,
+      "coverageSqFtPerGallon": 350,
+      "defaultCoats": 2,
+      "sourceUrl": "https://www.sherwin-williams.com/painting-contractors/products/builders-solution-interior-latex",
+      "notes": "Builder/turnover estimating allowance. Sherwin-Williams page requires sign-in for current price."
+    },
+    "promar_200_zero_voc_eg_shel": {
+      "label": "Sherwin-Williams ProMar 200 Zero VOC Interior Latex Eg-Shel",
+      "category": "standard_wall_paint",
+      "pricePerGallon": 78,
+      "fiveGallonPrice": 370,
+      "coverageSqFtPerGallon": 350,
+      "defaultCoats": 2,
+      "sourceUrl": "https://www.sherwin-williams.com/painting-contractors/products/promar-200-zero-voc-interior-latex",
+      "notes": "Standard Market Ready / Premium Listing Ready estimating allowance. Coverage based on published 350-400 sq ft per gallon product data."
+    },
+    "promar_400_zero_voc_flat": {
+      "label": "Sherwin-Williams ProMar 400 Zero VOC Interior Latex Flat",
+      "category": "basic_wall_paint",
+      "pricePerGallon": 65,
+      "fiveGallonPrice": 310,
+      "coverageSqFtPerGallon": 350,
+      "defaultCoats": 2,
+      "sourceUrl": "https://www.sherwin-williams.com/painting-contractors/products/promar-400-zero-voc-interior-latex",
+      "notes": "Basic Turn White estimating allowance; confirm availability and account price with Sherwin-Williams rep."
+    },
+    "stain_blocking_primer": {
+      "label": "Sherwin-Williams stain-blocking primer allowance",
+      "category": "exception_add_on",
+      "pricePerGallon": 68,
+      "fiveGallonPrice": 325,
+      "coverageSqFtPerGallon": 300,
+      "defaultCoats": 1,
+      "sourceUrl": "https://www.sherwin-williams.com/painting-contractors/products",
+      "notes": "Exception-only allowance for stains, smoke, water damage, heavy prep, and approved scope exceptions."
+    }
+  }
+}
