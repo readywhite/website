@@ -110,17 +110,17 @@ If everything looks good, would you be open to leaving us a quick review or send
 
 ## SDR Daily Workflow
 
-1. Start with New Lead and Contact Attempted stages.
+1. Start with New Lead and Photos Requested stages.
 2. Call every untouched lead first.
 3. Text every no-answer lead immediately after voicemail.
-4. Move missing-photo leads to Photos Needed.
+4. Move missing-photo leads to Photos Requested.
 5. Move responsive/photo-ready leads to Photos Received.
 6. Log every touch in notes.
 7. End the day with no overdue tasks.
 
 ## COO Daily Workflow
 
-1. Review Photos Received and Quote In Progress first.
+1. Review Photos Received and Quote Sent first.
 2. Clear quote bottlenecks.
 3. Check Quote Sent and Follow-Up for stale opportunities.
 4. Review Approved and Scheduled for operational handoff.

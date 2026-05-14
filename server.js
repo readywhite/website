@@ -8,7 +8,7 @@ const PUBLIC_DIR = __dirname;
 const GHL_API_BASE = process.env.GHL_API_BASE || 'https://services.leadconnectorhq.com';
 const GHL_API_VERSION = process.env.GHL_API_VERSION || '2023-02-21';
 const GHL_CONTACT_ENDPOINT = process.env.GHL_CONTACT_ENDPOINT || '/contacts/upsert';
-const DEFAULT_GHL_TAGS = ['Website Lead', 'Property Refresh', 'Interior Estimate', 'ready-white'];
+const DEFAULT_GHL_TAGS = ['source:squarespace', 'lead:new'];
 const MAX_BODY_BYTES = 1024 * 1024;
 
 const STATIC_TYPES = {
@@ -30,7 +30,7 @@ function sendJson(res, status, body) {
     'Content-Type': 'application/json; charset=utf-8',
     'Access-Control-Allow-Origin': process.env.ALLOWED_ORIGIN || '*',
     'Access-Control-Allow-Methods': 'POST, OPTIONS',
-    'Access-Control-Allow-Headers': 'Content-Type'
+    'Access-Control-Allow-Headers': 'Content-Type, Authorization, x-readywhite-webhook-secret'
   });
   res.end(JSON.stringify(body));
 }
@@ -105,16 +105,45 @@ function slugify(value) {
     .replace(/^-+|-+$/g, '');
 }
 
+
+function canonicalTimeline(value) {
+  return slugify(value || '').replace(/^asap$/, 'asap');
+}
+
+function canonicalVacant(value) {
+  const normalized = slugify(value || '');
+  if (['yes', 'true', 'vacant'].includes(normalized)) return 'true';
+  if (['no', 'false', 'occupied'].includes(normalized)) return 'false';
+  return normalized;
+}
+
+function canonicalService(value) {
+  const normalized = slugify(value || '');
+  const serviceMap = {
+    'rental-repainting': 'rental-repaint',
+    'rental-repaint': 'rental-repaint',
+    'vacant-turnover-painting': 'vacant-turnover-painting',
+    'investor-refresh': 'investor-refresh',
+    'move-out-painting': 'move-out-painting',
+    'wall-repainting': 'wall-repainting',
+    'wall-ceiling': 'wall-ceiling',
+    'wall-and-ceiling': 'wall-ceiling',
+    'trim-repainting': 'trim-repainting',
+    'heavy-reset': 'heavy-reset'
+  };
+  return serviceMap[normalized] || normalized;
+}
+
 function getGhlTags(lead) {
   const configuredTags = process.env.GHL_CONTACT_TAGS
     ? process.env.GHL_CONTACT_TAGS.split(',').map((tag) => tag.trim()).filter(Boolean)
     : DEFAULT_GHL_TAGS;
 
   const dynamicTags = [];
-  if (lead.leadSource) dynamicTags.push(`source-${slugify(lead.leadSource)}`);
-  if (lead.timeline) dynamicTags.push(`timeline-${slugify(lead.timeline)}`);
-  if (lead.vacant) dynamicTags.push(`vacant-${slugify(lead.vacant)}`);
-  if (lead.serviceNeeded) dynamicTags.push(`service-${slugify(lead.serviceNeeded)}`);
+  if (lead.leadSource) dynamicTags.push(`source:${slugify(lead.leadSource)}`);
+  if (lead.timeline) dynamicTags.push(`timeline:${canonicalTimeline(lead.timeline)}`);
+  if (lead.vacant) dynamicTags.push(`vacant:${canonicalVacant(lead.vacant)}`);
+  if (lead.serviceNeeded) dynamicTags.push(`service:${canonicalService(lead.serviceNeeded)}`);
 
   return [...new Set([...configuredTags, ...dynamicTags].filter(Boolean))];
 }
@@ -270,6 +299,26 @@ async function handleGhlLead(req, res) {
   }
 }
 
+
+async function handleGhlWebhook(req, res) {
+  try {
+    if (!isAuthorizedLeadRequest(req)) {
+      return sendJson(res, 401, { error: 'Unauthorized webhook submission.' });
+    }
+
+    const rawBody = await readBody(req);
+    const payload = rawBody ? JSON.parse(rawBody) : {};
+    return sendJson(res, 202, {
+      ok: true,
+      received: true,
+      event: payload.type || payload.event || payload.eventType || 'unknown',
+      message: 'Webhook received. Add event-specific orchestration after live GHL webhook payloads are confirmed.'
+    });
+  } catch (error) {
+    return sendJson(res, 400, { error: error.message });
+  }
+}
+
 async function serveStatic(req, res) {
   const url = new URL(req.url, `http://${req.headers.host}`);
   const requestedPath = url.pathname === '/' ? '/index.html' : decodeURIComponent(url.pathname);
@@ -295,12 +344,16 @@ async function serveStatic(req, res) {
 }
 
 const server = http.createServer(async (req, res) => {
-  if (req.method === 'OPTIONS' && req.url.startsWith('/api/ghl-lead')) {
+  if (req.method === 'OPTIONS' && (req.url.startsWith('/api/ghl-lead') || req.url.startsWith('/api/ghl-webhook'))) {
     return sendJson(res, 204, {});
   }
 
   if (req.method === 'POST' && req.url.startsWith('/api/ghl-lead')) {
     return handleGhlLead(req, res);
+  }
+
+  if (req.method === 'POST' && req.url.startsWith('/api/ghl-webhook')) {
+    return handleGhlWebhook(req, res);
   }
 
   if (req.method === 'GET' || req.method === 'HEAD') {

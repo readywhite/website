@@ -121,20 +121,42 @@ We received your property refresh request and will review your photos shortly.
 
 Use a simple, clean response confirming receipt and next steps.
 
+## Required High-ROI Automations
+
+Create these workflows using the exact names so Codex audits and future automation scripts can rely on stable naming:
+
+1. **New Website Lead Workflow**
+   - Trigger: Opportunity Created
+   - Condition: Pipeline = Ready White Customer Jobs
+   - Action: notify COO + SDR, create SDR 5-minute call task, send lead auto-reply
+2. **Missed Lead Rescue**
+   - Trigger: no response activity within 5 minutes
+   - Action: notify COO, notify SDR, create urgent task, trigger escalation SMS
+3. **Stale Pipeline Detection**
+   - Trigger: open opportunity idle for more than 48 hours
+   - Action: create COO recovery task and alert SDR if the lead is still in a sales stage
+4. **Photo Reminder Automation**
+   - Trigger: opportunity enters Photos Requested
+   - Action: send immediate SMS, 2-hour task, 24-hour reminder, 72-hour follow-up move
+5. **Quote Follow-Up Sequence**
+   - Trigger: opportunity enters Quote Sent
+   - Action: day 1, 3, 7, and 14 SMS/email/call/voicemail follow-up
+
 ## Pipeline
 
 Create or confirm the pipeline named **Ready White Customer Jobs** with these stages:
 
 1. New Lead
-2. Photos Received
-3. Quote Sent
-4. Follow-Up
-5. Approved
-6. Scheduled
-7. In Progress
-8. Completed
-9. Closed Won
-10. Closed Lost
+2. Photos Requested
+3. Photos Received
+4. Quote Sent
+5. Follow-Up
+6. Approved
+7. Scheduled
+8. In Progress
+9. Completed
+10. Closed Won
+11. Closed Lost
 
 ## Website and Railway Notes
 

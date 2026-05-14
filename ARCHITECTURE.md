@@ -52,9 +52,12 @@ Optional Railway variables:
 
 ```text
 GHL_PIPELINE_STAGE_ID=YOUR_NEW_LEAD_STAGE_ID
-GHL_CONTACT_TAGS=Website Lead,Property Refresh,Interior Estimate,ready-white
+GHL_CONTACT_TAGS=source:squarespace,lead:new
 GHL_CONTACT_ENDPOINT=/contacts/upsert
 ALLOWED_ORIGIN=https://your-squarespace-domain.com
+LEAD_WEBHOOK_SECRET=YOUR_RANDOM_WEBHOOK_SECRET
+GHL_COO_USER_ID=YOUR_COO_USER_ID
+GHL_SDR_USER_ID=YOUR_SDR_USER_ID
 ```
 
 Do not paste the private integration token or generated Squarespace API key into Squarespace page code, frontend scripts, or committed repo files.
@@ -91,13 +94,17 @@ Pipeline = Ready White Customer Jobs
 ```text
 Squarespace marketing form
     ↓
-Railway backend endpoint (/api/ghl-lead)
+Railway API layer (/api/ghl-lead + /api/ghl-webhook)
     ↓
-GoHighLevel contact upsert
+GoHighLevel contact upsert + opportunity creation
     ↓
-GoHighLevel opportunity creation
+Operational automations
     ↓
-GoHighLevel workflows, notifications, SMS/email, and pipeline management
+VA execution
+    ↓
+Metrics + audits
+    ↓
+Codex optimization loop
 ```
 
 This separation keeps the public website flexible, the private API credentials secure, and Ready White's operations centralized in GoHighLevel.

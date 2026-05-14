@@ -33,41 +33,29 @@ Use one primary operations pipeline for sales and job flow:
 Stages:
 
 1. New Lead
-2. Contact Attempted
-3. Photos Needed
-4. Photos Received
-5. Quote In Progress
-6. Quote Sent
-7. Follow-Up
-8. Approved
-9. Scheduled
-10. In Progress
-11. Completed
-12. Closed Won
-13. Closed Lost
+2. Photos Requested
+3. Photos Received
+4. Quote Sent
+5. Follow-Up
+6. Approved
+7. Scheduled
+8. In Progress
+9. Completed
+10. Closed Won
+11. Closed Lost
 
 ### Core Tags
 
 Use tags to segment automations without creating too many pipelines:
 
-- `Website Lead`
-- `Property Refresh`
-- `Interior Estimate`
-- `ready-white`
-- `source-squarespace`
-- `timeline-asap`
-- `timeline-3-days`
-- `timeline-1-week`
-- `vacant-yes`
-- `vacant-no`
-- `service-vacant-turnover-painting`
-- `service-rental-repainting`
-- `service-investor-refresh`
-- `service-move-out-painting`
-- `service-wall-repainting`
-- `service-wall-ceiling`
-- `service-trim-repainting`
-- `service-heavy-reset`
+- `source:squarespace`
+- `source:facebook`
+- `timeline:asap`
+- `service:rental-repaint`
+- `vacant:true`
+- `lead:new`
+- `lead:quoted`
+- `lead:won`
 
 ### Required Custom Fields
 
@@ -105,20 +93,49 @@ Pipeline = Ready White Customer Jobs
 
 Actions:
 
-1. Add tags: `Website Lead`, `Property Refresh`, `Interior Estimate`, `source-squarespace`.
+1. Add tags: `source:squarespace`, `lead:new`, `service:rental-repaint`.
 2. Send internal notification to COO + SDR.
 3. Create SDR task: call within 5 minutes.
 4. Send auto-reply SMS.
 5. Send auto-reply email.
-6. If photos are missing, move to **Photos Needed** and trigger photo-request sequence.
+6. If photos are missing, move to **Photos Requested** and trigger Photo Reminder Automation.
 7. If photos are present, move to **Photos Received** and create COO quote-review task.
 
-### 2. Photos Needed Sequence
+### 2. Missed Lead Rescue
 
 Trigger:
 
 ```text
-Opportunity Stage Changed → Photos Needed
+Opportunity Created and no outbound call/SMS activity within 5 minutes
+```
+
+Actions:
+
+1. Notify COO.
+2. Notify SDR.
+3. Create urgent SDR task.
+4. Send escalation SMS if appropriate.
+
+### 3. Stale Pipeline Detection
+
+Trigger:
+
+```text
+Open opportunity idle for more than 48 hours
+```
+
+Actions:
+
+1. Create COO recovery task.
+2. Alert SDR if opportunity is in New Lead, Photos Requested, Quote Sent, or Follow-Up.
+3. Add note: stale pipeline recovery needed.
+
+### 4. Photo Reminder Automation
+
+Trigger:
+
+```text
+Opportunity Stage Changed → Photos Requested
 ```
 
 Actions:
@@ -129,7 +146,7 @@ Actions:
 4. If no reply after 24 hours, send reminder SMS.
 5. If no reply after 72 hours, move to Follow-Up.
 
-### 3. Quote Sent Follow-Up
+### 5. Quote Follow-Up Sequence
 
 Trigger:
 
@@ -139,41 +156,12 @@ Opportunity Stage Changed → Quote Sent
 
 Actions:
 
-1. SMS quote confirmation.
-2. Email quote confirmation.
-3. SDR call task for next business day.
-4. Reminder sequence on day 2, day 4, and day 7.
-5. COO review task if no response after 7 days.
-
-### 4. Approved to Scheduled
-
-Trigger:
-
-```text
-Opportunity Stage Changed → Approved
-```
-
-Actions:
-
-1. Notify COO.
-2. Create scheduling task.
-3. Send customer next-step confirmation.
-4. Move to Scheduled after date is confirmed.
-
-### 5. Completed Job Review Loop
-
-Trigger:
-
-```text
-Opportunity Stage Changed → Completed
-```
-
-Actions:
-
-1. Send thank-you message.
-2. Request review/referral.
-3. Create internal task to upload completion notes/photos.
-4. Move to Closed Won after admin completion.
+1. Day 1: SMS + call task.
+2. Day 3: SMS + email.
+3. Day 7: call + voicemail + SMS.
+4. Day 14: final follow-up and COO review.
+5. If approved, move to Approved.
+6. If unresponsive after review, close lost with reason.
 
 ## COO Role
 
@@ -181,7 +169,7 @@ The COO owns operational quality and pipeline integrity.
 
 Daily responsibilities:
 
-- check every opportunity in New Lead, Photos Received, Quote In Progress, Quote Sent, and Approved
+- check every opportunity in New Lead, Photos Requested, Photos Received, Quote Sent, Follow-Up, and Approved
 - make sure every active opportunity has a next task
 - verify quote review within 24 hours of receiving photos
 - review lost reasons weekly

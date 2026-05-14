@@ -40,6 +40,23 @@ Optional environment variables:
 - `GHL_CONTACT_ENDPOINT`
 - `GHL_CONTACT_TAGS`
 
+## AI-Native Operating System
+
+- `docs/NORTHSTAR.md` defines mission, customer, speed standards, operational rules, and what winning means.
+- `docs/GHL_OBJECT_STANDARDS.md` is the single source of truth for GHL pipeline, stages, tags, and custom fields.
+- `docs/SOP/` contains the COO/SDR operating procedures for lead intake, quoting, follow-up, and closeout.
+- `docs/data/outreach.yml` stores machine-readable outreach templates for Codex-assisted rewrite, testing, and workflow buildout.
+
+Deterministic Codex entrypoints:
+
+```bash
+npm run check
+npm run audit:ghl
+npm run audit:full
+npm run fix:pipeline
+npm run report:kpi
+```
+
 ## Company Optimization
 
 - `docs/GHL_COMPANY_OPTIMIZATION.md` defines the North Star, COO/SDR operating cadence, pipeline structure, tags, workflows, and weekly audit checklist.

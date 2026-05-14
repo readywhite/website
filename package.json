@@ -5,8 +5,11 @@
   "description": "Ready White landing page and Railway API bridge for GoHighLevel leads.",
   "scripts": {
     "start": "node server.js",
-    "check": "node --check server.js",
-    "audit:ghl": "node scripts/audit-ghl.mjs"
+    "check": "node scripts/check.mjs",
+    "audit:ghl": "node scripts/audit-ghl.mjs",
+    "audit:full": "node scripts/full-company-audit.mjs",
+    "fix:pipeline": "node scripts/fix-pipeline.mjs",
+    "report:kpi": "node scripts/generate-kpi-report.mjs"
   },
   "engines": {
     "node": ">=18"

@@ -35,10 +35,12 @@ Optional but recommended if you want the opportunity to land in a specific first
 
 ```text
 GHL_PIPELINE_STAGE_ID=YOUR_NEW_LEAD_STAGE_ID
-GHL_CONTACT_TAGS=Website Lead,Property Refresh,Interior Estimate,ready-white
+GHL_CONTACT_TAGS=source:squarespace,lead:new
 GHL_CONTACT_ENDPOINT=/contacts/upsert
 ALLOWED_ORIGIN=https://your-squarespace-domain.com
 LEAD_WEBHOOK_SECRET=YOUR_RANDOM_WEBHOOK_SECRET
+GHL_COO_USER_ID=YOUR_COO_USER_ID
+GHL_SDR_USER_ID=YOUR_SDR_USER_ID
 ```
 
 Never paste the private integration token or the Squarespace API key into frontend code, Squarespace page code, or committed files. If the generated **Square space GHL** API key is needed for future backend-only Squarespace API work, store it only as `SQUARESPACE_API_KEY` in Railway Variables.
@@ -102,14 +104,30 @@ Use:
   - assign user
   - create tasks
 
+## Railway Webhook Expansion
+
+The backend now includes a placeholder orchestration endpoint for future GHL outbound events:
+
+```text
+POST https://YOUR-RAILWAY-URL/api/ghl-webhook
+```
+
+Use it later for opportunity changes, appointment events, payments, missed calls, and task-completion events after live GHL payloads are confirmed.
+
 ## Final architecture
 
 ```text
 Squarespace
     ↓
-Railway Backend (/api/ghl-lead)
+Railway API Layer (/api/ghl-lead + /api/ghl-webhook)
     ↓
-GoHighLevel API
+GoHighLevel
     ↓
-CRM + Pipeline + Automations
+Operational Automations
+    ↓
+VA Execution
+    ↓
+Metrics + Audits
+    ↓
+Codex Optimization Loop
 ```

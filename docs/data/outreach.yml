@@ -1,0 +1,71 @@
+new_lead_sms:
+  trigger: opportunity_created
+  stage: New Lead
+  delay: 0m
+  owner: SDR
+  channel: sms
+  text: >
+    Hi {{contact.first_name}}, thanks for contacting Ready White.
+    We received your request and will review your photos shortly.
+    If you have more photos, reply here and send them over.
+
+new_lead_email:
+  trigger: opportunity_created
+  stage: New Lead
+  delay: 0m
+  owner: SDR
+  channel: email
+  subject: We Received Your Ready White Request
+  text: >
+    Hi {{contact.first_name}}, thanks for reaching out to Ready White.
+    We received your property refresh request and will review the details/photos so we can move quickly on the next step.
+
+photos_requested_sms:
+  trigger: stage_changed
+  stage: Photos Requested
+  delay: 0m
+  owner: SDR
+  channel: sms
+  text: >
+    Hi {{contact.first_name}}, Ready White can move faster if we have photos of the rooms/walls that need painting.
+    Please reply with wide room shots and close-ups of damaged areas.
+
+quote_follow_up_day_1_sms:
+  trigger: stage_changed
+  stage: Quote Sent
+  delay: 1d
+  owner: SDR
+  channel: sms
+  text: >
+    Hi {{contact.first_name}}, just checking in on the Ready White quote.
+    Do you want us to help get this scheduled?
+
+quote_follow_up_day_3_email:
+  trigger: stage_changed
+  stage: Quote Sent
+  delay: 3d
+  owner: SDR
+  channel: email
+  subject: Still need help with the property refresh?
+  text: >
+    Hi {{contact.first_name}}, just following up on the Ready White painting quote.
+    If you still need the property refreshed, reply with any questions or timing updates.
+
+quote_follow_up_day_7_sms:
+  trigger: stage_changed
+  stage: Follow-Up
+  delay: 7d
+  owner: SDR
+  channel: sms
+  text: >
+    Hi {{contact.first_name}}, should we keep this Ready White quote open for you, or pause follow-up for now?
+
+quote_follow_up_day_14_sms:
+  trigger: stage_changed
+  stage: Follow-Up
+  delay: 14d
+  owner: SDR
+  channel: sms
+  text: >
+    Hi {{contact.first_name}}, final check-in from Ready White on this property refresh.
+    Reply if you still want help getting it scheduled.

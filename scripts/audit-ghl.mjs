@@ -1,34 +1,16 @@
 #!/usr/bin/env node
 
+import { GHL_STANDARD } from './lib/ready-white-standards.mjs';
+
 const API_BASE = process.env.GHL_API_BASE || 'https://services.leadconnectorhq.com';
 const API_VERSION = process.env.GHL_API_VERSION || '2023-02-21';
 const TOKEN = process.env.GHL_PRIVATE_INTEGRATION_TOKEN || process.env.GHL_API_KEY;
 const LOCATION_ID = process.env.GHL_LOCATION_ID;
 
-const requiredPipeline = 'Ready White Customer Jobs';
+const requiredPipeline = GHL_STANDARD.pipeline;
 const requiredForm = 'Ready White Quote Request';
-const requiredWorkflows = [
-  'New Website Lead Workflow',
-  'Photos Needed Sequence',
-  'Quote Sent Follow-Up',
-  'Approved to Scheduled',
-  'Completed Job Review Loop'
-];
-const requiredStages = [
-  'New Lead',
-  'Contact Attempted',
-  'Photos Needed',
-  'Photos Received',
-  'Quote In Progress',
-  'Quote Sent',
-  'Follow-Up',
-  'Approved',
-  'Scheduled',
-  'In Progress',
-  'Completed',
-  'Closed Won',
-  'Closed Lost'
-];
+const requiredWorkflows = GHL_STANDARD.workflows;
+const requiredStages = GHL_STANDARD.stages;
 
 const results = [];
 
