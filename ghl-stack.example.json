@@ -16,31 +16,46 @@
     "highLevelOpportunityEndpoint": "POST /opportunities/"
   },
   "contactTags": [
-    "Website Lead",
-    "Property Refresh",
-    "Interior Estimate"
+    "source:squarespace",
+    "vertical:property-management",
+    "vertical:investor",
+    "timeline:asap",
+    "vacant:true",
+    "lead:new",
+    "lead:quoted",
+    "lead:won"
   ],
   "pipeline": {
-    "name": "Ready White Property Quotes",
+    "name": "Ready White Customer Jobs",
     "defaultStage": "New Lead",
     "stages": [
       "New Lead",
-      "Reviewing Photos",
+      "Photos Requested",
+      "Photos Received",
+      "Scope Review",
       "Quote Sent",
+      "Follow-Up",
+      "Approved",
+      "Vendor Assignment",
       "Scheduled",
-      "Completed"
+      "In Progress",
+      "Photo Proof Review",
+      "Completed",
+      "Review Requested",
+      "Closed Won",
+      "Closed Lost"
     ]
   },
   "workflowActions": [
     {
       "name": "Create or update contact",
       "trigger": "Website quote form submitted",
-      "notes": "Map name, email, phone, propertyAddress, propertyType, notes, and tags from the website payload."
+      "notes": "Map contact fields, source tags, pipeline name, canonicalJob, and submitted photo file names from the website payload."
     },
     {
       "name": "Create opportunity",
       "trigger": "Contact created or updated",
-      "notes": "Place the opportunity in the Ready White Property Quotes pipeline at the New Lead stage."
+      "notes": "Place the opportunity in the Ready White Customer Jobs pipeline at the New Lead stage."
     },
     {
       "name": "Send instant SMS",
@@ -57,10 +72,10 @@
     }
   ],
   "futureEnhancements": [
-    "AI estimator",
-    "Instant pricing logic",
-    "Automated quote builder",
-    "Calendar scheduling",
-    "Review request automation"
+    "Deterministic room-pricing engine",
+    "Estimate variance tracking",
+    "Vendor scorecards",
+    "Automated stale-lead recovery",
+    "AI-assisted scope review after rules are stable"
   ]
 }
