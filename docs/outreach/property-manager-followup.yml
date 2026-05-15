@@ -58,3 +58,14 @@ state_machine_recovery:
   variance_recorded:
     trigger: "job state VARIANCE_RECORDED"
     action: "send review request and property-manager relationship follow-up"
+
+calibration_phase_messages:
+  preliminary_estimate_review:
+    trigger: "estimate:calibration-review"
+    action: "send operator-review expectation: we are checking photos and will confirm a firm package price shortly"
+  premium_review:
+    trigger: "scope:premium-review"
+    action: "route to senior operator review before sending quote language"
+  vendor_onboarding_incomplete:
+    trigger: "vendor:onboarding-incomplete"
+    action: "do not dispatch; finish onboarding checklist or activate approved overflow vendor"

@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "check": "node --check server.js && node --check script.js && node --check api/ghl-lead.js && node --check api/photo-estimate.js && node --check lib/pricing.js && node --check lib/canonical-job.js && node --check lib/dispatch.js && node --check lib/control-system.js && node --check scripts/ops-audit.js && node --check scripts/control-check.js && node --check api/wall-corrections.js && node --check api/ops-dashboard.js && node --check lib/operational-store.js && node --check lib/queue.js && node --check lib/state-machine.js && node --check scripts/db-check.js && node --check lib/auth.js && node --check lib/observability.js && node --check scripts/worker.js && node --check scripts/dead-letter-check.js && node --check scripts/replay-events.js && node --check scripts/ai-eval.js && node --check lib/calibration.js && node --check scripts/calibration-report.js",
+    "check": "node --check server.js && node --check script.js && node --check api/ghl-lead.js && node --check api/photo-estimate.js && node --check lib/pricing.js && node --check lib/canonical-job.js && node --check lib/dispatch.js && node --check lib/control-system.js && node --check scripts/ops-audit.js && node --check scripts/control-check.js && node --check api/wall-corrections.js && node --check api/ops-dashboard.js && node --check lib/operational-store.js && node --check lib/queue.js && node --check lib/state-machine.js && node --check scripts/db-check.js && node --check lib/auth.js && node --check lib/observability.js && node --check scripts/worker.js && node --check scripts/dead-letter-check.js && node --check scripts/replay-events.js && node --check scripts/ai-eval.js && node --check lib/calibration.js && node --check scripts/calibration-report.js && node --check scripts/stabilization-check.js",
     "ops:check": "node scripts/ops-audit.js",
     "ops:control": "node scripts/control-check.js",
     "db:check": "node scripts/db-check.js",
@@ -13,7 +13,8 @@
     "queue:dead-letter": "node scripts/dead-letter-check.js",
     "events:replay": "node scripts/replay-events.js",
     "ai:eval": "node scripts/ai-eval.js",
-    "calibration:report": "node scripts/calibration-report.js"
+    "calibration:report": "node scripts/calibration-report.js",
+    "stabilization:check": "node scripts/stabilization-check.js"
   },
   "engines": {
     "node": ">=18"

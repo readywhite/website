@@ -120,3 +120,14 @@ When Railway Postgres is enabled, preserve these IDs in GHL custom fields or not
 - `rw_control_snapshot_version`
 
 GHL remains the workflow/relationship layer; the operational database becomes the audit and replay source of truth.
+
+## Stabilization tags
+
+During calibration, use these tags to protect quote discipline and reporting:
+
+- `estimate:calibration-review`
+- `scope:premium-review`
+- `vendor:onboarding-incomplete`
+- `vendor:onboarding-complete`
+
+`estimate:calibration-review` means the estimate is preliminary until an operator approves the quote.

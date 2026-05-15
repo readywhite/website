@@ -57,3 +57,9 @@ Vendor scorecards must feed the control system. If callback rate, proof-photo co
 - temporary market capacity hold.
 
 This converts vendor management from founder memory into a measurable execution network.
+
+## Vendor onboarding gate
+
+Use `docs/operations/vendor-onboarding.md` and `config/vendor-onboarding-checklist.json` before activating a vendor. Do not dispatch production work to vendors that have not acknowledged scope standards, package buy rates, photo proof requirements, response SLAs, callback policy, and completion rules.
+
+Additional scorecard fields now include QA failure rate and customer satisfaction so vendor quality can be managed as an execution network rather than local relationship memory.

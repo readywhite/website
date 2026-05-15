@@ -491,6 +491,14 @@ async function handleParsedRequest(req, res) {
   const market = normalizeMarket(req.body.market);
   const analysis = await analyzeWithOpenAI(files, req.body);
   const confidence = Math.min(analysis.measurementConfidence, analysis.damageConfidence, analysis.confidence);
+  const rolloutFlags = [];
+  if (pricingRules.rolloutControls?.requireOperatorApprovalForAllAiEstimates) {
+    rolloutFlags.push("calibration_phase_operator_review");
+  }
+  if (["luxury", "premium_customer", "high_value_pm"].includes(String(req.body.customerSegment || "").toLowerCase())) {
+    rolloutFlags.push("premium_customer_review");
+  }
+
   const estimate = calculateEstimate({
     squareFeet: analysis.totalWallSquareFeet,
     damageTier: analysis.damageTier,
@@ -500,6 +508,7 @@ async function handleParsedRequest(req, res) {
     walls: analysis.walls,
     exceptionFlags: [
       ...analysis.exceptionFlags,
+      ...rolloutFlags,
       ...(analysis.missingPhotoRequirements.length > 0 ? ["missing_required_photos"] : []),
     ],
   });

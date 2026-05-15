@@ -1,0 +1,43 @@
+{
+  "version": "2026-05-15.stabilization-v1",
+  "phase": "60_day_estimation_stabilization",
+  "primaryObjective": "Make the one-wall photo estimate flow operationally trustworthy before expanding automation or markets.",
+  "automationPolicy": {
+    "firmAutoQuotesEnabled": false,
+    "reason": "Calibration phase requires operator approval for all AI-assisted estimates until real-world variance targets are met.",
+    "manualReviewFlag": "calibration_phase_operator_review"
+  },
+  "realWorldSampleTargets": {
+    "minimumWallPhotos": 250,
+    "minimumCompletedJobs": 40,
+    "minimumMarkets": 1,
+    "requiredPropertyTypes": ["apartments", "student_housing", "turnovers", "investors", "multifamily_units"],
+    "requiredConditions": ["bright_lighting", "dark_lighting", "older_phone_camera", "newer_phone_camera", "occupied_unit", "vacant_unit"]
+  },
+  "correctionCoverageTargets": {
+    "minimumCorrectedWallsBps": 9000,
+    "requiredFields": ["estimated_sqft", "actual_sqft", "estimated_damage", "actual_damage", "estimated_complexity", "actual_labor_difficulty", "predicted_labor", "actual_labor", "operator_id", "variance_reason"]
+  },
+  "manualReviewDiscipline": {
+    "alwaysReviewFlags": [
+      "low_measurement_confidence",
+      "paper_not_detected",
+      "multiple_walls_visible",
+      "wall_edges_unclear",
+      "high_complexity_review",
+      "large_scope_review",
+      "water_damage",
+      "smoke_damage",
+      "stain_blocking",
+      "premium_customer_review",
+      "luxury_property_review"
+    ],
+    "minimumConfidenceBpsForFutureAutomation": 8500
+  },
+  "vendorOperatingSystemTargets": {
+    "minimumOnboardedVendorsPerActiveMarket": 3,
+    "minimumProofComplianceBps": 9500,
+    "maximumCallbackRateBps": 500,
+    "maximumAvgVarianceBps": 1200
+  }
+}

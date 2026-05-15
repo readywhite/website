@@ -45,6 +45,14 @@ function buildContactPayload(lead, locationId) {
     tags.push(`market:${lead.market || lead.estimate?.pricing?.market || lead.canonicalJob?.market}`);
   }
 
+  if ((lead.estimate?.pricing?.exceptionFlags || []).includes("calibration_phase_operator_review")) {
+    tags.push("estimate:calibration-review");
+  }
+
+  if ((lead.estimate?.pricing?.exceptionFlags || []).includes("premium_customer_review")) {
+    tags.push("scope:premium-review");
+  }
+
   if ((lead.estimate?.analysis?.walls || []).some((wall) => Number(wall.complexityScore) >= 0.75)) {
     tags.push("scope:high-complexity");
   }

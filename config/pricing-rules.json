@@ -20,14 +20,38 @@
     ]
   },
   "wallTypes": {
-    "standard_flat": { "label": "Standard flat wall", "laborMultiplierBps": 10000 },
-    "textured": { "label": "Textured wall", "laborMultiplierBps": 11500 },
-    "accent": { "label": "Accent/color-change wall", "laborMultiplierBps": 11250 },
-    "trim_heavy": { "label": "Trim-heavy wall", "laborMultiplierBps": 12000 },
-    "vaulted": { "label": "Vaulted/high wall", "laborMultiplierBps": 13500 },
-    "stairwell": { "label": "Stairwell wall", "laborMultiplierBps": 14500 },
-    "exterior": { "label": "Exterior wall", "laborMultiplierBps": 15000 },
-    "cabinet_area": { "label": "Cabinet-area wall", "laborMultiplierBps": 12500 }
+    "standard_flat": {
+      "label": "Standard flat wall",
+      "laborMultiplierBps": 10000
+    },
+    "textured": {
+      "label": "Textured wall",
+      "laborMultiplierBps": 11500
+    },
+    "accent": {
+      "label": "Accent/color-change wall",
+      "laborMultiplierBps": 11250
+    },
+    "trim_heavy": {
+      "label": "Trim-heavy wall",
+      "laborMultiplierBps": 12000
+    },
+    "vaulted": {
+      "label": "Vaulted/high wall",
+      "laborMultiplierBps": 13500
+    },
+    "stairwell": {
+      "label": "Stairwell wall",
+      "laborMultiplierBps": 14500
+    },
+    "exterior": {
+      "label": "Exterior wall",
+      "laborMultiplierBps": 15000
+    },
+    "cabinet_area": {
+      "label": "Cabinet-area wall",
+      "laborMultiplierBps": 12500
+    }
   },
   "markets": {
     "default": {
@@ -137,12 +161,47 @@
     "high_complexity_review",
     "large_scope_review",
     "ai_parse_failure",
-    "image_quality_review"
+    "image_quality_review",
+    "calibration_phase_operator_review",
+    "luxury_property_review",
+    "premium_customer_review"
   ],
   "sizeBands": [
-    { "name": "small_wall_scope", "maxSqft": 300, "mobilizationCents": 12500 },
-    { "name": "standard_room_scope", "maxSqft": 900, "mobilizationCents": 17500 },
-    { "name": "multi_room_scope", "maxSqft": 1800, "mobilizationCents": 27500 },
-    { "name": "large_turnover_scope", "maxSqft": null, "mobilizationCents": 42500 }
-  ]
+    {
+      "name": "small_wall_scope",
+      "maxSqft": 300,
+      "mobilizationCents": 12500
+    },
+    {
+      "name": "standard_room_scope",
+      "maxSqft": 900,
+      "mobilizationCents": 17500
+    },
+    {
+      "name": "multi_room_scope",
+      "maxSqft": 1800,
+      "mobilizationCents": 27500
+    },
+    {
+      "name": "large_turnover_scope",
+      "maxSqft": null,
+      "mobilizationCents": 42500
+    }
+  ],
+  "rolloutControls": {
+    "phase": "calibration",
+    "requireOperatorApprovalForAllAiEstimates": true,
+    "minimumRealWallSamplesBeforeAutomation": 250,
+    "minimumCorrectionCoverageBps": 9000,
+    "minimumVendorProofComplianceBps": 9500,
+    "allowedAutoQuoteCustomerSegments": [
+      "standard_turnover"
+    ],
+    "manualReviewCustomerSegments": [
+      "luxury",
+      "premium_customer",
+      "high_value_pm",
+      "unknown"
+    ]
+  }
 }

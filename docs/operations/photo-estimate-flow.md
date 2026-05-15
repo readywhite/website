@@ -41,3 +41,7 @@ AI extracts physical attributes only: wall dimensions, paper-reference detection
 ## Mobile guided capture guidance
 
 The current form now tells mobile users to keep one wall only in frame, include the full paper reference, avoid glare, and retake dark photos. Future guided capture should add overlays for wall boundary alignment, paper detection, lighting warnings, and one-wall-only enforcement.
+
+## Calibration-phase automation hold
+
+During the 60-day stabilization phase, AI estimates remain preliminary and must be operator-approved before becoming firm quotes. The system applies `calibration_phase_operator_review` while real wall photos, correction coverage, vendor proof compliance, and variance data mature.

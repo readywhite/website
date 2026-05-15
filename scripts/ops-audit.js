@@ -21,6 +21,8 @@ const requiredFiles = [
   "docs/operations/state-machine.md",
   "docs/operations/auth-rbac.md",
   "docs/operations/ai-evaluation.md",
+  "docs/operations/estimation-stabilization.md",
+  "docs/operations/vendor-onboarding.md",
   "docs/kpi/operational-kpis.md",
   "docs/outreach/property-manager-followup.yml",
   "docs/operations/system-checks.md",
@@ -31,6 +33,8 @@ const requiredFiles = [
   "config/ops-snapshot.example.json",
   "config/ai-eval-fixtures.json",
   "config/corrections.example.json",
+  "config/stabilization-plan.json",
+  "config/vendor-onboarding-checklist.json",
   "db/schema.sql",
   "api/photo-estimate.js",
   "api/wall-corrections.js",
@@ -50,6 +54,7 @@ const requiredFiles = [
   "scripts/replay-events.js",
   "scripts/ai-eval.js",
   "scripts/calibration-report.js",
+  "scripts/stabilization-check.js",
 ];
 
 const requiredGhlStages = [
@@ -80,6 +85,8 @@ const requiredEstimateTags = [
   "damage:basic",
   "damage:standard",
   "damage:heavy",
+  "estimate:calibration-review",
+  "scope:premium-review",
 ];
 const requiredWallFlags = [
   "paper_not_detected",
@@ -90,6 +97,8 @@ const requiredWallFlags = [
   "poor_lighting",
   "glare_reflection",
   "high_complexity_review",
+  "calibration_phase_operator_review",
+  "premium_customer_review",
 ];
 
 const requiredControlTags = [
@@ -149,6 +158,7 @@ assert(pricingRules.damageTiers.standard, "pricing rules missing standard damage
 assert(pricingRules.damageTiers.heavy, "pricing rules missing heavy damage tier");
 assert(pricingRules.targetMarginBps === 4200, "pricing rules must preserve 42% target margin in basis points");
 assert(pricingRules.maxAutoQuoteSquareFeet === 1200, "pricing rules must cap automatic quote sqft before review");
+assert(pricingRules.rolloutControls?.requireOperatorApprovalForAllAiEstimates === true, "pricing rollout controls must force operator approval during stabilization");
 assert(pricingRules.markets.dallas && pricingRules.markets.san_francisco, "pricing rules must include market configuration controls");
 assert(pricingRules.wallTypes.standard_flat && pricingRules.wallTypes.stairwell, "pricing rules must include approved wall types");
 for (const flag of requiredWallFlags) {
@@ -220,6 +230,16 @@ const authDocs = read("docs/operations/auth-rbac.md");
 assert(authDocs.includes("ADMIN_API_TOKEN") && authDocs.includes("OPS_READ_API_TOKEN"), "auth docs must document admin and read-only roles");
 const evalDocs = read("docs/operations/ai-evaluation.md");
 assert(evalDocs.includes("npm run ai:eval") && evalDocs.includes("calibration"), "AI evaluation docs must cover eval and calibration commands");
+const stabilization = JSON.parse(read("config/stabilization-plan.json"));
+assert(stabilization.automationPolicy.firmAutoQuotesEnabled === false, "stabilization plan must disable firm auto-quotes during calibration");
+assert(stabilization.realWorldSampleTargets.minimumWallPhotos >= 250, "stabilization plan must require real wall photo samples");
+const stabilizationDocs = read("docs/operations/estimation-stabilization.md");
+assert(stabilizationDocs.toLowerCase().includes("60-day") && stabilizationDocs.includes("Human calibration loop"), "stabilization docs must cover 60-day calibration and human corrections");
+const vendorOnboarding = JSON.parse(read("config/vendor-onboarding-checklist.json"));
+assert(vendorOnboarding.requiredBeforeActivation.includes("photo_proof_training_completed"), "vendor onboarding must require photo proof training");
+assert(vendorOnboarding.scorecardFields.includes("customer_satisfaction_bps"), "vendor onboarding scorecard must track customer satisfaction");
+const vendorOnboardingDocs = read("docs/operations/vendor-onboarding.md");
+assert(vendorOnboardingDocs.includes("Activation checklist") && vendorOnboardingDocs.includes("Response SLAs"), "vendor onboarding docs must include activation checklist and response SLAs");
 
 const systemChecks = read("docs/operations/system-checks.md");
 assert(systemChecks.includes("00:00, 12:00, and 18:00 Eastern Time"), "system checks must document required daily cadence");

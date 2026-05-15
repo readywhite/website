@@ -59,3 +59,13 @@ These metrics should feed `npm run ops:control` snapshots and future dashboards:
 - Event append success rate by workflow step.
 - Queue dead-letter count by queue name.
 - State-transition rejection count by market and operator.
+
+## Stabilization KPIs
+
+- Real wall photos collected toward the 250-wall calibration target.
+- Completed jobs collected toward the 40-job calibration target.
+- Percent of estimates with human correction coverage.
+- Percent of estimates held by `calibration_phase_operator_review`.
+- Manual review reasons by flag: low confidence, paper missing, lighting, multiple walls, high complexity, large scope, premium customer.
+- Vendor onboarding completion rate by market.
+- Vendor QA failure rate and customer satisfaction by market.

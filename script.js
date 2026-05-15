@@ -119,6 +119,14 @@ function buildTags(formData, estimate) {
     tags.push(`market:${formData.get("market")}`);
   }
 
+  if ((estimate?.pricing?.exceptionFlags || []).includes("calibration_phase_operator_review")) {
+    tags.push("estimate:calibration-review");
+  }
+
+  if ((estimate?.pricing?.exceptionFlags || []).includes("premium_customer_review")) {
+    tags.push("scope:premium-review");
+  }
+
   if ((estimate?.analysis?.walls || []).some((wall) => Number(wall.complexityScore) >= 0.75)) {
     tags.push("scope:high-complexity");
   }

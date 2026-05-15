@@ -291,3 +291,13 @@ npm run db:check
 - `lib/queue.js` defines future async queue contracts.
 
 Production admin endpoints require `ADMIN_API_TOKEN`.
+
+## 60-day stabilization discipline
+
+The current operating phase is calibration, not full automation. `config/stabilization-plan.json` and `config/pricing-rules.json` keep firm automatic quotes disabled through `calibration_phase_operator_review` until Ready White has enough real wall photos, correction coverage, vendor proof compliance, and variance history.
+
+Run:
+
+```bash
+npm run stabilization:check
+```
