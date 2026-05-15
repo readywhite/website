@@ -1,0 +1,33 @@
+# Ready White outreach standards for property-manager and investor relationship building.
+audience_segments:
+  property_management:
+    tag: vertical:property-management
+    value_proposition: Fast, standardized vacant-unit turnover painting with photo-based scope verification.
+    primary_cta: Send photos for a same-day turnover quote.
+  investor:
+    tag: vertical:investor
+    value_proposition: Package-based repainting that reduces vacancy downtime and protects margins.
+    primary_cta: Request market-ready pricing for the next vacancy.
+
+follow_up_sequences:
+  new_lead:
+    tag: lead:new
+    speed_to_lead_target_minutes: 5
+    actions:
+      - instant SMS confirmation
+      - confirmation email
+      - internal assignment notification
+      - photo checklist request if photos are missing
+  quoted_lead:
+    tag: lead:quoted
+    actions:
+      - quote sent SMS
+      - 24-hour follow-up
+      - stale-lead recovery if no response
+  won_lead:
+    tag: lead:won
+    actions:
+      - vendor assignment
+      - schedule confirmation
+      - completion photo proof request
+      - review request after completion

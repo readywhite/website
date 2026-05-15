@@ -1,0 +1,144 @@
+# Ready White operational source of truth.
+# Keep this file machine-readable so Railway scripts, GHL setup, SOPs, and future AI logic share the same standards.
+business_model:
+  company: Ready White
+  operating_model: standardized property-turnover operating system using subcontractor fulfillment
+  stack:
+    marketing_layer: Squarespace
+    orchestration_layer: Railway
+    crm_automation_layer: GoHighLevel
+  optimization_priorities:
+    - speed-to-lead
+    - operational reliability
+    - recurring property-management relationships
+    - standardized workflows
+    - reduced vacancy turnover time
+    - pipeline integrity
+    - fast execution
+    - scalable automation
+
+systems_checks:
+  timezone: America/New_York
+  daily_times:
+    - "00:00"
+    - "12:00"
+    - "18:00"
+  command: npm run ops:check
+  required_systems:
+    - railway_health_endpoint
+    - ghl_environment_variables
+    - ghl_pipeline_standard
+    - lead_payload_standard
+    - photo_policy_standard
+
+pricing_model:
+  early_stage_monthly_cost_estimate_usd:
+    low: 180
+    high: 300
+  quoting_strategy:
+    primary: package-based quoting
+    verification: photo-based scope verification
+    fulfillment: preset package buy rates by standard size band
+  hourly_or_change_order_allowed_only_for:
+    - severe prep
+    - water damage
+    - smoke or stain blocking
+    - custom repairs
+    - approved scope exceptions
+
+customer_photo_policy:
+  required_photos:
+    - one wide photo of each room
+    - one photo of the worst wall in each room
+    - ceilings
+    - trim
+    - stains
+    - peeling paint
+    - water damage
+    - smoke damage
+    - holes
+    - heavy prep areas
+  operational_uses:
+    - prevent scope drift
+    - protect margins
+    - detect exception jobs
+    - preserve quote speed
+
+vendor_policy:
+  do_not_use_as_primary_model: flat hourly labor
+  use_instead:
+    - preset package buy rates
+    - standard size bands
+    - standard add-ons
+    - exception escalation workflows
+  enforce:
+    - vendor scorecards
+    - response SLAs
+    - photo proof requirements
+    - standardized scopes
+    - callback tracking
+    - operational redundancy
+
+ghl:
+  pipeline:
+    name: Ready White Customer Jobs
+    default_stage: New Lead
+    stages:
+      - New Lead
+      - Photos Requested
+      - Photos Received
+      - Scope Review
+      - Quote Sent
+      - Follow-Up
+      - Approved
+      - Vendor Assignment
+      - Scheduled
+      - In Progress
+      - Photo Proof Review
+      - Completed
+      - Review Requested
+      - Closed Won
+      - Closed Lost
+  standard_tags:
+    - source:squarespace
+    - vertical:property-management
+    - vertical:investor
+    - timeline:asap
+    - vacant:true
+    - lead:new
+    - lead:quoted
+    - lead:won
+  default_lead_tags:
+    - source:squarespace
+    - lead:new
+  payload_fields:
+    required:
+      - name
+      - email
+      - phone
+      - propertyAddress
+      - propertyType
+    recommended:
+      - companyName
+      - serviceNeeded
+      - timeline
+      - vacant
+      - photoFileNames
+      - photoUrls
+      - notes
+      - submittedAt
+
+kpis:
+  speed_to_lead_minutes_target: 5
+  quote_turnaround_hours_target: 24
+  stale_lead_follow_up_hours: 24
+  missed_call_text_back_minutes_target: 1
+  photo_request_follow_up_hours: 2
+  review_request_after_completion_hours: 2
+  callback_tracking_required: true
+
+workflow_rules:
+  - If a workflow can be standardized, automate it.
+  - If a workflow creates operational drift, constrain it.
+  - Document operational logic before adding AI behavior.
+  - Preserve deterministic scripts, stable naming, standardized GHL objects, and environment-variable security.

@@ -1,6 +1,11 @@
 {
   "integrationStatus": "server-route-ready",
   "importantNote": "This file documents the intended GoHighLevel stack. Store the Private Integration Token in GHL_PRIVATE_INTEGRATION_TOKEN; do not commit the real token.",
+  "architecture": {
+    "marketingLayer": "Squarespace",
+    "orchestrationLayer": "Railway",
+    "crmAutomationLayer": "GoHighLevel"
+  },
   "webhook": {
     "configuredIn": "api/ghl-lead.js",
     "frontendEndpoint": "/api/ghl-lead",
@@ -10,37 +15,98 @@
     ],
     "optionalEnvironmentVariables": [
       "GHL_PIPELINE_ID",
-      "GHL_PIPELINE_STAGE_ID"
+      "GHL_PIPELINE_STAGE_ID",
+      "GHL_CONTACT_TAGS",
+      "ALLOWED_ORIGIN",
+      "RAILWAY_HEALTH_URL"
     ],
     "highLevelContactEndpoint": "POST /contacts/upsert",
     "highLevelOpportunityEndpoint": "POST /opportunities/"
   },
   "contactTags": [
-    "Website Lead",
-    "Property Refresh",
-    "Interior Estimate"
+    "source:squarespace",
+    "lead:new",
+    "vertical:property-management",
+    "vertical:investor",
+    "timeline:asap",
+    "vacant:true",
+    "lead:quoted",
+    "lead:won"
   ],
   "pipeline": {
-    "name": "Ready White Property Quotes",
+    "name": "Ready White Customer Jobs",
     "defaultStage": "New Lead",
     "stages": [
       "New Lead",
-      "Reviewing Photos",
+      "Photos Requested",
+      "Photos Received",
+      "Scope Review",
       "Quote Sent",
+      "Follow-Up",
+      "Approved",
+      "Vendor Assignment",
       "Scheduled",
-      "Completed"
+      "In Progress",
+      "Photo Proof Review",
+      "Completed",
+      "Review Requested",
+      "Closed Won",
+      "Closed Lost"
+    ]
+  },
+  "customerPhotoPolicy": {
+    "requiredPhotos": [
+      "one wide photo of each room",
+      "one photo of the worst wall in each room",
+      "ceilings",
+      "trim",
+      "stains",
+      "peeling paint",
+      "water damage",
+      "smoke damage",
+      "holes",
+      "heavy prep areas"
+    ],
+    "uses": [
+      "prevent scope drift",
+      "protect margins",
+      "detect exception jobs",
+      "preserve quote speed"
+    ]
+  },
+  "vendorPolicy": {
+    "primaryBuyRateModel": "preset package buy rates by standard size band",
+    "hourlyOrChangeOrderOnlyFor": [
+      "severe prep",
+      "water damage",
+      "smoke/stain blocking",
+      "custom repairs",
+      "approved scope exceptions"
+    ],
+    "controls": [
+      "vendor scorecards",
+      "response SLAs",
+      "photo proof requirements",
+      "standardized scopes",
+      "callback tracking",
+      "operational redundancy"
     ]
   },
   "workflowActions": [
     {
       "name": "Create or update contact",
       "trigger": "Website quote form submitted",
-      "notes": "Map name, email, phone, propertyAddress, propertyType, notes, and tags from the website payload."
+      "notes": "Map name, email, phone, propertyAddress, propertyType, notes, photo fields, source:squarespace, and lead:new from the website payload."
     },
     {
       "name": "Create opportunity",
       "trigger": "Contact created or updated",
-      "notes": "Place the opportunity in the Ready White Property Quotes pipeline at the New Lead stage."
+      "notes": "Place the opportunity in the Ready White Customer Jobs pipeline at the New Lead stage."
+    },
+    {
+      "name": "Request photos when missing",
+      "trigger": "New Lead lacks required room/worst-wall/exception photos",
+      "notes": "Move to Photos Requested and send the customer photo policy checklist."
     },
     {
       "name": "Send instant SMS",
@@ -49,18 +115,28 @@
     {
       "name": "Send confirmation email",
       "subject": "Ready White received your property request",
-      "message": "Hi {{contact.first_name}}, thanks for reaching out to Ready White. We\u2019ve received your property refresh request and our team is reviewing the details now."
+      "message": "Hi {{contact.first_name}}, thanks for reaching out to Ready White. We’ve received your property refresh request and our team is reviewing the details now."
     },
     {
       "name": "Send internal notification",
-      "notes": "Notify the Ready White team with contact details, property address, property type, notes, and submitted photo file names."
+      "notes": "Notify the Ready White team with contact details, property address, property type, notes, timeline, vacancy status, and submitted photo file names or URLs."
     }
   ],
+  "kpiReporting": {
+    "speedToLeadMinutesTarget": 5,
+    "quoteTurnaroundHoursTarget": 24,
+    "photoRequestFollowUpHours": 2,
+    "missedCallTextBackMinutesTarget": 1,
+    "staleLeadFollowUpHours": 24,
+    "reviewRequestAfterCompletionHours": 2
+  },
   "futureEnhancements": [
-    "AI estimator",
-    "Instant pricing logic",
+    "AI estimator after operational logic is machine-readable",
+    "Instant package pricing logic",
     "Automated quote builder",
     "Calendar scheduling",
-    "Review request automation"
+    "Review request automation",
+    "Vendor scorecards",
+    "Property-manager recurring account dashboard"
   ]
 }

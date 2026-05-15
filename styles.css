@@ -491,3 +491,9 @@ code {
     font-size: clamp(2.8rem, 16vw, 4rem);
   }
 }
+.field-help {
+  color: var(--muted);
+  font-size: 0.85rem;
+  line-height: 1.45;
+  margin: 0.45rem 0 0;
+}

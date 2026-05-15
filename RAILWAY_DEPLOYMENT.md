@@ -25,7 +25,8 @@ Optional but recommended if you want the opportunity to land in a specific first
 
 ```text
 GHL_PIPELINE_STAGE_ID=YOUR_NEW_LEAD_STAGE_ID
-GHL_CONTACT_TAGS=Website Lead,Property Refresh,Interior Estimate,ready-white
+GHL_CONTACT_TAGS=source:squarespace,lead:new
+RAILWAY_HEALTH_URL=https://YOUR-RAILWAY-URL/health
 GHL_CONTACT_ENDPOINT=/contacts/upsert
 ALLOWED_ORIGIN=https://your-squarespace-domain.com
 ```
@@ -75,8 +76,20 @@ Submit one test lead from Squarespace and confirm in GoHighLevel that:
 - contact created or updated
 - opportunity created
 - opportunity is in the **Ready White Customer Jobs** pipeline
+- contact includes standardized `source:squarespace` and `lead:new` tags
+- missing or incomplete photos move the lead to the photo request workflow
 
-## 6. Build GHL automation
+## 6. Schedule operational checks
+
+Run this systems audit at **00:00, 12:00, and 18:00 America/New_York time** daily from your scheduler of choice:
+
+```bash
+npm run ops:check
+```
+
+The command checks the Railway health URL when `RAILWAY_HEALTH_URL` is set, verifies GHL object standards, and warns when live GHL credentials are not present in the current environment.
+
+## 7. Build GHL automation
 
 In GoHighLevel, open **Automation → Workflows** and create **New Website Lead Workflow**.
 

@@ -18,6 +18,89 @@ function parseName(fullName = "") {
   };
 }
 
+const DEFAULT_CONTACT_TAGS = ["source:squarespace", "lead:new"];
+
+function compact(value) {
+  return Array.isArray(value) ? value.filter(Boolean) : value;
+}
+
+function firstPresent(source, keys) {
+  for (const key of keys) {
+    if (source[key] !== undefined && source[key] !== null && source[key] !== "") {
+      return source[key];
+    }
+  }
+
+  return "";
+}
+
+function parseBooleanLike(value) {
+  if (typeof value === "boolean") {
+    return value;
+  }
+
+  if (typeof value === "string") {
+    return ["true", "yes", "1", "vacant"].includes(value.trim().toLowerCase());
+  }
+
+  return false;
+}
+
+function parseList(value) {
+  if (Array.isArray(value)) {
+    return value.filter(Boolean);
+  }
+
+  if (typeof value === "string") {
+    return value
+      .split(/[\n,]/)
+      .map((item) => item.trim())
+      .filter(Boolean);
+  }
+
+  return [];
+}
+
+function getDefaultTags() {
+  const configuredTags = parseList(getEnv("GHL_CONTACT_TAGS"));
+  return configuredTags.length > 0 ? configuredTags : DEFAULT_CONTACT_TAGS;
+}
+
+function normalizeLead(rawLead) {
+  const fullName = firstPresent(rawLead, ["name", "fullName", "full_name"]);
+  const firstName = firstPresent(rawLead, ["firstName", "first_name"]);
+  const lastName = firstPresent(rawLead, ["lastName", "last_name"]);
+  const name = fullName || compact([firstName, lastName]).join(" ");
+  const vacant = parseBooleanLike(firstPresent(rawLead, ["vacant", "isVacant", "is_vacant"]));
+  const timeline = firstPresent(rawLead, ["timeline"]);
+  const rawTags = parseList(rawLead.tags);
+  const tags = Array.from(
+    new Set([
+      ...getDefaultTags(),
+      ...rawTags,
+      timeline && timeline.toLowerCase() === "asap" ? "timeline:asap" : "",
+      vacant ? "vacant:true" : "",
+    ].filter(Boolean))
+  );
+
+  return {
+    ...rawLead,
+    name,
+    email: firstPresent(rawLead, ["email"]),
+    phone: firstPresent(rawLead, ["phone"]),
+    companyName: firstPresent(rawLead, ["companyName", "company_name"]),
+    propertyAddress: firstPresent(rawLead, ["propertyAddress", "property_address", "address"]),
+    propertyType: firstPresent(rawLead, ["propertyType", "property_type"]),
+    serviceNeeded: firstPresent(rawLead, ["serviceNeeded", "service_needed", "service"]),
+    timeline,
+    vacant,
+    notes: firstPresent(rawLead, ["notes", "projectNotes", "project_notes"]),
+    photoFileNames: parseList(firstPresent(rawLead, ["photoFileNames", "photo_file_names"])),
+    photoUrls: parseList(firstPresent(rawLead, ["photoUrls", "photo_urls", "photos"])),
+    tags,
+  };
+}
+
 function buildContactPayload(lead, locationId) {
   const { firstName, lastName } = parseName(lead.name);
 
@@ -29,8 +112,18 @@ function buildContactPayload(lead, locationId) {
     email: lead.email,
     phone: lead.phone,
     address1: lead.propertyAddress,
+    companyName: lead.companyName || undefined,
     source: "Ready White Website",
-    tags: lead.tags || ["Website Lead", "Property Refresh", "Interior Estimate"],
+    tags: lead.tags,
+    customFields: [
+      { key: "property_type", field_value: lead.propertyType },
+      { key: "service_needed", field_value: lead.serviceNeeded },
+      { key: "timeline", field_value: lead.timeline },
+      { key: "vacant", field_value: lead.vacant ? "true" : "false" },
+      { key: "project_notes", field_value: lead.notes },
+      { key: "photo_file_names", field_value: lead.photoFileNames.join(", ") },
+      { key: "photo_urls", field_value: lead.photoUrls.join(", ") },
+    ].filter((field) => field.field_value !== undefined && field.field_value !== ""),
   };
 }
 
@@ -142,7 +235,7 @@ module.exports = async function handler(req, res) {
   }
 
   try {
-    const lead = await readRequestBody(req);
+    const lead = normalizeLead(await readRequestBody(req));
     const validationError = validateLead(lead);
 
     if (validationError) {

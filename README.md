@@ -2,11 +2,12 @@
 
 > **Important:** Do not paste a real GoHighLevel Private Integration Token into frontend code, commits, or public settings. This repo now includes a server-side API route that reads the token from environment variables and sends leads to GoHighLevel without exposing the token in the browser.
 
-A lightweight static landing page for the Ready White property-refresh funnel. The page is designed as a premium frontend that can send branded quote requests into GoHighLevel workflows instead of relying on an embedded form.
+A lightweight static landing page for the Ready White property-refresh funnel. The page is designed as a premium frontend that can send branded quote requests into GoHighLevel workflows instead of relying on an embedded form. This repo is also the AI-native operational platform source for Ready White's standardized property-turnover system.
 
 ## Funnel stack
 
-- **Website frontend:** hero, service packages, before/after gallery, CTA buttons, and lead form.
+- **Squarespace / website frontend:** hero, service packages, before/after gallery, CTA buttons, and lead form.
+- **Railway orchestration layer:** Express server, health endpoint, deterministic audit scripts, and secure GHL API route.
 - **GoHighLevel backend:** lead capture, CRM, automations, SMS/email follow-up, pipeline management, quote workflows, and appointment booking.
 - **Custom integration:** form submissions post to `api/ghl-lead.js`, which uses a GoHighLevel Private Integration Token from server-side environment variables.
 
@@ -14,8 +15,9 @@ A lightweight static landing page for the Ready White property-refresh funnel. T
 
 1. Visitor clicks **Get My Property Quote**.
 2. The form collects name, email, phone, property address, property type, notes, and uploaded photo names.
-3. The payload includes the tags `Website Lead`, `Property Refresh`, and `Interior Estimate`.
-4. The lead starts in the `New Lead` pipeline stage for follow-up workflows.
+3. The payload includes standardized tags such as `source:squarespace` and `lead:new`.
+4. The lead starts in the `New Lead` stage of the `Ready White Customer Jobs` pipeline for follow-up workflows.
+5. Missing photos trigger the photo request workflow; complete photos move toward scope review and package-based quoting.
 
 ## What is configured here
 
@@ -45,8 +47,19 @@ The browser posts quote requests to `/api/ghl-lead`. That route uses the token t
 
 With no deployed backend, local preview submissions run in demo mode and log the lead payload in the browser console.
 
-Use `ghl-stack.example.json` as the implementation checklist for the real GoHighLevel setup: tags, pipeline stages, workflow messages, notification expectations, and future enhancements.
+Use `ghl-stack.example.json` as the implementation checklist for the real GoHighLevel setup: tags, pipeline stages, workflow messages, notification expectations, and future enhancements. Use `config/ready-white-operations.yaml` as the machine-readable operational source of truth for SOPs, KPI reporting, vendor rules, and automation logic.
 
+
+
+## Operational system checks
+
+Run the deterministic operational audit before deployments and on the required daily schedule of **00:00, 12:00, and 18:00 America/New_York time**:
+
+```bash
+npm run ops:check
+```
+
+Set `RAILWAY_HEALTH_URL` to include the live Railway `/health` endpoint in the check. Without it, the script still validates local syntax, GHL object standards, photo policy standards, outreach YAML, and required environment-variable presence.
 
 ## API references
 
@@ -58,8 +71,8 @@ Use `ghl-stack.example.json` as the implementation checklist for the real GoHigh
 
 Before this form can drive live CRM automation, configure these items in GoHighLevel or in your middleware/integration layer:
 
-1. Create the tags `Website Lead`, `Property Refresh`, and `Interior Estimate`.
-2. Create a Ready White pipeline with `New Lead`, `Reviewing Photos`, `Quote Sent`, `Scheduled`, and `Completed` stages.
+1. Create standardized tags including `source:squarespace`, `vertical:property-management`, `vertical:investor`, `timeline:asap`, `vacant:true`, `lead:new`, `lead:quoted`, and `lead:won`.
+2. Create the `Ready White Customer Jobs` pipeline with the stages documented in `docs/OPERATIONS.md` and `ghl-stack.example.json`.
 3. Deploy the included `/api/ghl-lead` route with `GHL_PRIVATE_INTEGRATION_TOKEN` and `GHL_LOCATION_ID` set.
 4. Add `GHL_PIPELINE_ID` and `GHL_PIPELINE_STAGE_ID` if the route should create opportunities after contact upsert.
 5. Add workflow actions for confirmation SMS, confirmation email, and internal notification.
