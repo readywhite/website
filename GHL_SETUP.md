@@ -120,15 +120,38 @@ Use a simple, clean response confirming receipt and next steps.
 Create or confirm the pipeline named **Ready White Customer Jobs** with these stages:
 
 1. New Lead
-2. Photos Received
-3. Quote Sent
-4. Follow-Up
-5. Approved
-6. Scheduled
-7. In Progress
-8. Completed
-9. Closed Won
-10. Closed Lost
+2. Photos Requested
+3. Photos Received
+4. Scope Review
+5. Quote Sent
+6. Follow-Up
+7. Approved
+8. Vendor Assignment
+9. Scheduled
+10. In Progress
+11. Photo Proof Review
+12. Completed
+13. Review Requested
+14. Closed Won
+15. Closed Lost
+
+
+## Required Tags
+
+Use deterministic tags for routing and reporting. Approved examples:
+
+- `source:squarespace`
+- `vertical:property-management`
+- `vertical:investor`
+- `timeline:asap`
+- `vacant:true`
+- `lead:new`
+- `lead:quoted`
+- `lead:won`
+
+## Daily Operational Checks
+
+Schedule system checks at **00:00, 12:00, and 18:00 Eastern Time daily**. The check should verify Railway health, Squarespace form availability, GoHighLevel environment variables, pipeline stage integrity, stale leads, and recent capture failures. Use `npm run ops:check` as the deterministic repo-side check.
 
 ## Website and Railway Notes
 

@@ -1,0 +1,38 @@
+version: 1
+system: ready-white
+goals:
+  - speed-to-lead
+  - recurring-property-management-relationships
+  - stale-lead-recovery
+  - review-flywheel
+messages:
+  missed_call_text_back:
+    trigger: missed_call
+    stage: New Lead
+    channel: sms
+    body: "Hi {{contact.first_name}}, this is Ready White. Sorry we missed you — send photos of the rooms and the worst wall in each room, and we can move faster on your quote."
+  photo_request:
+    trigger: stage_entered_photos_requested
+    stage: Photos Requested
+    channel: sms
+    body: "Hi {{contact.first_name}}, to keep your Ready White quote fast and accurate, please send 1 wide photo of each room and 1 photo of the worst wall in each room. Include ceilings, trim, stains, peeling paint, water damage, smoke damage, holes, or heavy prep areas if relevant."
+  quote_follow_up:
+    trigger: quote_sent_no_response
+    stage: Follow-Up
+    channel: sms
+    body: "Hi {{contact.first_name}}, checking in on your Ready White quote. If the unit is still turning over, reply APPROVE and we can move toward scheduling."
+  property_manager_nurture:
+    trigger: completed_property_manager_job
+    stage: Review Requested
+    channel: email
+    subject: "Ready White can help with your next turnover"
+    body: "Thanks again for using Ready White. We standardize photo-based scopes, fast quotes, and subcontractor fulfillment for recurring property turns. Reply with the next address when you have another unit coming vacant."
+required_tags:
+  - source:squarespace
+  - vertical:property-management
+  - vertical:investor
+  - timeline:asap
+  - vacant:true
+  - lead:new
+  - lead:quoted
+  - lead:won
