@@ -2,7 +2,7 @@
 
 > **Important:** Do not paste a real GoHighLevel Private Integration Token into frontend code, commits, or public settings. This repo now includes a server-side API route that reads the token from environment variables and sends leads to GoHighLevel without exposing the token in the browser.
 
-A lightweight static landing page for the Ready White property-refresh funnel. The page is designed as a premium frontend that can send branded quote requests into GoHighLevel workflows instead of relying on an embedded form.
+A lightweight static landing page for the Ready White property-refresh funnel. The page is designed as a premium frontend that can send branded quote requests into GoHighLevel workflows instead of relying on an embedded form. This repo also stores Ready White operational memory in `AGENTS.md` and `docs/` so Codex can reference pricing rules, workflows, vendor standards, estimating rules, GHL processes, and Railway/GitHub architecture before making changes.
 
 ## Funnel stack
 
@@ -14,8 +14,9 @@ A lightweight static landing page for the Ready White property-refresh funnel. T
 
 1. Visitor clicks **Get My Property Quote**.
 2. The form collects name, email, phone, property address, property type, notes, and uploaded photo names.
-3. The payload includes the tags `Website Lead`, `Property Refresh`, and `Interior Estimate`.
+3. The payload includes standardized tags such as `source:squarespace` and `lead:new`.
 4. The lead starts in the `New Lead` pipeline stage for follow-up workflows.
+5. Missing or incomplete property photos should move the opportunity to `Photos Requested`; complete photo submissions should support `Photos Received` and `Scope Review`.
 
 ## What is configured here
 
@@ -29,6 +30,20 @@ This repo configures the public website experience, the browser-side lead payloa
 | Automations | Recommended SMS/email copy shown on the page | Actual workflow steps, senders, notifications, and timing |
 | Pipeline | Optional opportunity creation when pipeline env vars are set | Real pipeline ID, stage ID, assignee rules, and workflow automations |
 | Photos | File names included in JSON demo payload | File hosting/upload handling before sending production payloads |
+
+## Company context repository
+
+Ready White operational intelligence lives in structured markdown so Codex and operators can reference stable business rules instead of chat history. Review these files before changing workflow, automation, pricing, lead routing, CRM, estimating, or vendor behavior:
+
+- `AGENTS.md` — repository-wide Ready White operating rules for Codex.
+- `docs/README.md` — documentation map and source-of-truth usage standard.
+- `docs/pricing/room-pricing.md` — package pricing baseline and margin guardrails.
+- `docs/estimating/ai-estimate-rules.md` — photo-based estimating and exception detection.
+- `docs/workflows/customer-intake.md` — website-to-GHL intake workflow.
+- `docs/workflows/vendor-dispatch.md` — approved-job dispatch workflow.
+- `docs/vendors/vendor-standards.md` — subcontractor fulfillment standards and scorecards.
+- `docs/automation/ghl-workflows.md` — required GHL pipeline stages, tags, automations, and KPIs.
+- `docs/architecture/railway-github-ghl.md` — stack boundaries and environment-variable security.
 
 ## Connect GoHighLevel
 
@@ -45,7 +60,7 @@ The browser posts quote requests to `/api/ghl-lead`. That route uses the token t
 
 With no deployed backend, local preview submissions run in demo mode and log the lead payload in the browser console.
 
-Use `ghl-stack.example.json` as the implementation checklist for the real GoHighLevel setup: tags, pipeline stages, workflow messages, notification expectations, and future enhancements.
+Use `ghl-stack.example.json` as the implementation checklist for the real GoHighLevel setup: tags, pipeline stages, workflow messages, notification expectations, and future enhancements. Use `docs/` as the structured company context repository for operational rules and workflow design.
 
 
 ## API references
@@ -58,8 +73,8 @@ Use `ghl-stack.example.json` as the implementation checklist for the real GoHigh
 
 Before this form can drive live CRM automation, configure these items in GoHighLevel or in your middleware/integration layer:
 
-1. Create the tags `Website Lead`, `Property Refresh`, and `Interior Estimate`.
-2. Create a Ready White pipeline with `New Lead`, `Reviewing Photos`, `Quote Sent`, `Scheduled`, and `Completed` stages.
+1. Create standardized tags such as `source:squarespace`, `lead:new`, `vertical:property-management`, `vertical:investor`, `timeline:asap`, `vacant:true`, `lead:quoted`, and `lead:won`.
+2. Create the `Ready White Customer Jobs` pipeline with the canonical stages documented in `docs/automation/ghl-workflows.md`.
 3. Deploy the included `/api/ghl-lead` route with `GHL_PRIVATE_INTEGRATION_TOKEN` and `GHL_LOCATION_ID` set.
 4. Add `GHL_PIPELINE_ID` and `GHL_PIPELINE_STAGE_ID` if the route should create opportunities after contact upsert.
 5. Add workflow actions for confirmation SMS, confirmation email, and internal notification.
