@@ -108,3 +108,15 @@ Control-system alerts and anti-entropy workflows may add these standardized tags
 - `variance:vendor-drift`
 
 These tags should route work to operator review, vendor coaching, stale-lead recovery, pricing review, or QA sampling. They must not bypass the approved `Ready White Customer Jobs` pipeline stages.
+
+## Operational database identifiers
+
+When Railway Postgres is enabled, preserve these IDs in GHL custom fields or notes so CRM activity can be joined back to operational memory:
+
+- `rw_job_id`
+- `rw_wall_ids`
+- `rw_latest_event_id`
+- `rw_pricing_rules_version`
+- `rw_control_snapshot_version`
+
+GHL remains the workflow/relationship layer; the operational database becomes the audit and replay source of truth.

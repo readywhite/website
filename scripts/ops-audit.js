@@ -16,6 +16,9 @@ const requiredFiles = [
   "docs/operations/control-systems.md",
   "docs/operations/operational-visibility.md",
   "docs/operations/platform-expansion.md",
+  "docs/operations/operational-database.md",
+  "docs/operations/async-queue.md",
+  "docs/operations/state-machine.md",
   "docs/kpi/operational-kpis.md",
   "docs/outreach/property-manager-followup.yml",
   "docs/operations/system-checks.md",
@@ -24,10 +27,17 @@ const requiredFiles = [
   "config/vendors.example.json",
   "config/control-thresholds.json",
   "config/ops-snapshot.example.json",
+  "db/schema.sql",
   "api/photo-estimate.js",
+  "api/wall-corrections.js",
+  "api/ops-dashboard.js",
   "lib/dispatch.js",
   "lib/control-system.js",
+  "lib/operational-store.js",
+  "lib/queue.js",
+  "lib/state-machine.js",
   "scripts/control-check.js",
+  "scripts/db-check.js",
 ];
 
 const requiredGhlStages = [
@@ -151,6 +161,19 @@ assert(controlSystem.includes("decrease_dispatch_weight"), "control system must 
 assert(controlSystem.includes("increase_qa_sampling"), "control system must recommend QA sampling corrections");
 assert(controlSystem.includes("run_stale_lead_recovery"), "control system must preserve stale-lead recovery actions");
 
+const schema = read("db/schema.sql");
+for (const table of ["operational_events", "jobs", "walls", "ai_artifacts", "wall_corrections", "proof_of_work_artifacts", "qa_reviews", "operational_queue_jobs"]) {
+  assert(schema.includes(`CREATE TABLE IF NOT EXISTS ${table}`), `database schema missing table: ${table}`);
+}
+const store = read("lib/operational-store.js");
+assert(store.includes("recordWallCorrection"), "operational store must support human correction persistence");
+assert(store.includes("appendOperationalEvent"), "operational store must support immutable event appends");
+const stateMachine = read("lib/state-machine.js");
+assert(stateMachine.includes("NEW_LEAD") && stateMachine.includes("VARIANCE_RECORDED"), "state machine must define lifecycle states");
+assert(stateMachine.includes("STATE_TO_GHL_STAGE"), "state machine must map lifecycle states to GHL stages");
+const queue = read("lib/queue.js");
+assert(queue.includes("photo_estimation") && queue.includes("dead_letter"), "queue contract must define async processing and dead-letter handling");
+
 const proof = read("docs/operations/proof-of-work.md").toLowerCase();
 assert(proof.includes("before photos") && proof.includes("after photos"), "proof-of-work SOP must require before and after photos");
 
@@ -163,6 +186,12 @@ const visibilityDocs = read("docs/operations/operational-visibility.md");
 assert(visibilityDocs.includes("Vendor performance heatmap") && visibilityDocs.includes("Margin drift"), "operational visibility docs must define dashboard requirements");
 const platformExpansion = read("docs/operations/platform-expansion.md");
 assert(platformExpansion.includes("logistics and operations company") && platformExpansion.toLowerCase().includes("repaint is the wedge"), "platform expansion docs must preserve logistics-platform positioning");
+const dbDocs = read("docs/operations/operational-database.md");
+assert(dbDocs.includes("Railway Postgres") && dbDocs.includes("Immutable event rule"), "operational DB docs must cover Railway Postgres and immutable events");
+const queueDocs = read("docs/operations/async-queue.md");
+assert(queueDocs.includes("dead_letter") && queueDocs.includes("photo_estimation"), "async queue docs must cover queue names and dead-letter behavior");
+const stateDocs = read("docs/operations/state-machine.md");
+assert(stateDocs.includes("NEW_LEAD") && stateDocs.includes("VARIANCE_RECORDED"), "state machine docs must cover canonical lifecycle states");
 
 const systemChecks = read("docs/operations/system-checks.md");
 assert(systemChecks.includes("00:00, 12:00, and 18:00 Eastern Time"), "system checks must document required daily cadence");

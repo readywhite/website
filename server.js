@@ -5,6 +5,8 @@ require("dotenv").config();
 
 const ghlLeadHandler = require("./api/ghl-lead");
 const photoEstimateHandler = require("./api/photo-estimate");
+const wallCorrectionsHandler = require("./api/wall-corrections");
+const opsDashboardHandler = require("./api/ops-dashboard");
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -19,6 +21,8 @@ app.get("/health", (_req, res) => {
 
 app.post("/api/photo-estimate", photoEstimateHandler);
 app.post("/api/ghl-lead", ghlLeadHandler);
+app.post("/api/wall-corrections", wallCorrectionsHandler);
+app.get("/api/ops-dashboard", opsDashboardHandler);
 
 app.get("/", (_req, res) => {
   res.sendFile(path.join(__dirname, "index.html"));

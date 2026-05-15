@@ -51,3 +51,11 @@ These metrics should feed `npm run ops:control` snapshots and future dashboards:
 - QA sampling rate after anomaly detection.
 - Dispatch-weight reductions triggered by control rules.
 - Vendor probation count and correction-window outcomes.
+
+## Persistence KPIs
+
+- Percent of AI estimates with stored prompt/model/raw/normalized artifacts.
+- Percent of manually reviewed walls with structured correction records.
+- Event append success rate by workflow step.
+- Queue dead-letter count by queue name.
+- State-transition rejection count by market and operator.

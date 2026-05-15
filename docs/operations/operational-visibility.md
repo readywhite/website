@@ -30,3 +30,9 @@ A dashboard is not just reporting. It should eventually trigger gates:
 - proof backlog → block completion movement,
 - stale leads → run recovery workflows,
 - market capacity shortage → slow lead scaling or activate overflow vendors.
+
+## Early admin endpoint
+
+`GET /api/ops-dashboard` returns the current deterministic visibility payload. Until `DATABASE_URL` is connected, it uses `config/ops-snapshot.example.json`; after durable storage is connected, this endpoint should read from Railway Postgres and GHL-derived snapshots.
+
+Production access requires `ADMIN_API_TOKEN`.

@@ -275,3 +275,19 @@ npm run ops:control
 ```
 
 The control report evaluates a snapshot against `config/control-thresholds.json` and recommends actions such as stale-lead recovery, QA sampling increases, dispatch weight reductions, vendor probation, market pricing review, and proof-review escalation. See `docs/operations/control-systems.md` and `docs/operations/operational-visibility.md`.
+
+## Operational database, events, and corrections
+
+The repo now includes a Railway Postgres schema and optional admin endpoints for the next infrastructure layer:
+
+```bash
+npm run db:check
+```
+
+- Apply `db/schema.sql` to Railway Postgres when `DATABASE_URL` is available.
+- `POST /api/wall-corrections` validates and stores human wall corrections when `DATABASE_URL` is configured.
+- `GET /api/ops-dashboard` returns an early operational visibility payload.
+- `lib/state-machine.js` defines approved lifecycle transitions and GHL stage mapping.
+- `lib/queue.js` defines future async queue contracts.
+
+Production admin endpoints require `ADMIN_API_TOKEN`.

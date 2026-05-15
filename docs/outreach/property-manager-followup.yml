@@ -47,3 +47,14 @@ control_system_recovery:
   proof_backlog:
     trigger: "control tag qa:proof-backlog"
     action: "hold completion messaging until proof review clears"
+
+state_machine_recovery:
+  review_required:
+    trigger: "job state REVIEW_REQUIRED older than SLA"
+    action: "operator reviews wall corrections, missing photos, or exception flags before quote"
+  proof_submitted:
+    trigger: "job state PROOF_SUBMITTED awaiting QA"
+    action: "hold completion messaging until QA_REVIEW passes"
+  variance_recorded:
+    trigger: "job state VARIANCE_RECORDED"
+    action: "send review request and property-manager relationship follow-up"
