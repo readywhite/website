@@ -19,7 +19,7 @@ function buildPayload(form) {
     propertyAddress: formData.get("address"),
     propertyType: formData.get("propertyType"),
     notes: formData.get("notes"),
-    tags: ["Website Lead", "Property Refresh", "Interior Estimate"],
+    tags: ["source:squarespace", "lead:new"],
     pipelineStage: "New Lead",
     photoFileNames: photos.map((file) => file.name),
     submittedAt: new Date().toISOString(),

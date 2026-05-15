@@ -49,7 +49,7 @@
 
 ### Upload Photos
 
-Use a **File Upload Field** so property photos are attached to the contact/opportunity.
+Use a **File Upload Field** so property photos are attached to the contact/opportunity. Require 1 wide photo of each room and 1 photo of the worst wall in each room. Ask for ceilings, trim, stains, peeling paint, water damage, smoke damage, holes, and heavy prep areas when present.
 
 ### Project Notes
 
@@ -120,15 +120,20 @@ Use a simple, clean response confirming receipt and next steps.
 Create or confirm the pipeline named **Ready White Customer Jobs** with these stages:
 
 1. New Lead
-2. Photos Received
-3. Quote Sent
-4. Follow-Up
-5. Approved
-6. Scheduled
-7. In Progress
-8. Completed
-9. Closed Won
-10. Closed Lost
+2. Photos Requested
+3. Photos Received
+4. Scope Review
+5. Quote Sent
+6. Follow-Up
+7. Approved
+8. Vendor Assignment
+9. Scheduled
+10. In Progress
+11. Photo Proof Review
+12. Completed
+13. Review Requested
+14. Closed Won
+15. Closed Lost
 
 ## Website and Railway Notes
 
@@ -138,3 +143,7 @@ Create or confirm the pipeline named **Ready White Customer Jobs** with these st
 - If Squarespace owns the public form, point its submission/webhook to `https://YOUR-RAILWAY-URL/api/ghl-lead`; `server.js` will upsert the contact and create the opportunity via the GoHighLevel API.
 - If you have a GHL token locally, run `GHL_API_KEY="<token>" scripts/find-ghl-form-id.sh` to find the **Ready White Quote Request** form ID without committing the token.
 - Use the uploaded kitchen image as `assets/kitchen-hero.jpg` for the hero/trust-building visual.
+
+## Operational Documentation
+
+Use `AGENTS.md`, `docs/automation/ghl-workflows.md`, `docs/workflows/customer-intake.md`, and `docs/workflows/vendor-dispatch.md` as the source of truth when changing GHL objects, lead routing, pipeline stages, vendor dispatch, or automation behavior.

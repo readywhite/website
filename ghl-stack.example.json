@@ -16,51 +16,79 @@
     "highLevelOpportunityEndpoint": "POST /opportunities/"
   },
   "contactTags": [
-    "Website Lead",
-    "Property Refresh",
-    "Interior Estimate"
+    "source:squarespace",
+    "lead:new",
+    "vertical:property-management",
+    "vertical:investor",
+    "timeline:asap",
+    "vacant:true",
+    "lead:quoted",
+    "lead:won"
   ],
   "pipeline": {
-    "name": "Ready White Property Quotes",
+    "name": "Ready White Customer Jobs",
     "defaultStage": "New Lead",
     "stages": [
       "New Lead",
-      "Reviewing Photos",
+      "Photos Requested",
+      "Photos Received",
+      "Scope Review",
       "Quote Sent",
+      "Follow-Up",
+      "Approved",
+      "Vendor Assignment",
       "Scheduled",
-      "Completed"
+      "In Progress",
+      "Photo Proof Review",
+      "Completed",
+      "Review Requested",
+      "Closed Won",
+      "Closed Lost"
     ]
   },
   "workflowActions": [
     {
       "name": "Create or update contact",
       "trigger": "Website quote form submitted",
-      "notes": "Map name, email, phone, propertyAddress, propertyType, notes, and tags from the website payload."
+      "notes": "Map name, email, phone, propertyAddress, propertyType, notes, photo file names, and standardized source/lead tags from the website payload."
     },
     {
       "name": "Create opportunity",
       "trigger": "Contact created or updated",
-      "notes": "Place the opportunity in the Ready White Property Quotes pipeline at the New Lead stage."
+      "notes": "Place the opportunity in the Ready White Customer Jobs pipeline at the New Lead stage."
+    },
+    {
+      "name": "Request missing photos",
+      "trigger": "Lead submitted without complete room/worst-wall photos",
+      "notes": "Move the opportunity to Photos Requested and send the customer the required photo checklist."
     },
     {
       "name": "Send instant SMS",
-      "message": "Hi {{contact.first_name}}, thanks for contacting Ready White. We received your property request and are reviewing your photos now. We'll follow up shortly with next steps."
+      "message": "Hi {{contact.first_name}}, thanks for contacting Ready White. We received your property refresh request. Please send 1 wide photo of each room and 1 photo of the worst wall so we can verify scope quickly."
     },
     {
       "name": "Send confirmation email",
       "subject": "Ready White received your property request",
-      "message": "Hi {{contact.first_name}}, thanks for reaching out to Ready White. We\u2019ve received your property refresh request and our team is reviewing the details now."
+      "message": "Hi {{contact.first_name}}, thanks for reaching out to Ready White. We received your property refresh request and will review the photos, scope, and next steps."
     },
     {
       "name": "Send internal notification",
-      "notes": "Notify the Ready White team with contact details, property address, property type, notes, and submitted photo file names."
+      "notes": "Notify the Ready White team with contact details, property address, property type, timeline, notes, submitted photo file names, and missing-photo flags."
+    },
+    {
+      "name": "Stale lead recovery",
+      "trigger": "Lead remains in Photos Requested, Quote Sent, or Follow-Up beyond SLA",
+      "notes": "Prioritize SMS first, then email, then internal follow-up task for high-value property-manager or investor leads."
     }
   ],
   "futureEnhancements": [
     "AI estimator",
-    "Instant pricing logic",
+    "Instant package pricing logic",
     "Automated quote builder",
+    "Vendor dispatch automation",
     "Calendar scheduling",
-    "Review request automation"
+    "Review request automation",
+    "Vendor scorecards",
+    "Stale-lead audit reporting"
   ]
 }
