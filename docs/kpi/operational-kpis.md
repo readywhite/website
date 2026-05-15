@@ -36,3 +36,18 @@ Run documented operational system checks at 00:00, 12:00, and 18:00 Eastern Time
 - Callback rate by vendor, market, wall type, and damage tier.
 - Gross margin variance by market and pricing rules version.
 - Stale-lead recovery rate for `New Lead`, `Photos Requested`, `Quote Sent`, and `Follow-Up`.
+
+## Control-system KPIs
+
+These metrics should feed `npm run ops:control` snapshots and future dashboards:
+
+- Median speed-to-lead by market and source.
+- Stale lead counts by GHL stage.
+- Photo-estimate manual-review rate by market.
+- Gross margin variance by market and pricing rules version.
+- Proof-review backlog in `Photo Proof Review`.
+- Vendor assignment backlog by market.
+- Vendor callback rate, on-time rate, proof-photo compliance, and estimate variance.
+- QA sampling rate after anomaly detection.
+- Dispatch-weight reductions triggered by control rules.
+- Vendor probation count and correction-window outcomes.

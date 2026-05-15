@@ -33,3 +33,17 @@ stale_lead_recovery:
   quote_sent_48_hours:
     trigger: "Quote Sent older than 48 hours without approval"
     action: "send property-manager follow-up emphasizing vacancy-turn speed and standardized vendor availability"
+
+control_system_recovery:
+  speed_to_lead_breach:
+    trigger: "control tag sla:speed-to-lead"
+    action: "send immediate apology/confirmation SMS, notify operator, and prioritize property-manager callback"
+  stale_pipeline_anomaly:
+    trigger: "control tag pipeline:stale-leads"
+    action: "run stage-specific recovery message and owner assignment"
+  margin_drift_hold:
+    trigger: "control tag risk:margin-drift"
+    action: "pause firm automated quote language and send operator-reviewed estimate copy"
+  proof_backlog:
+    trigger: "control tag qa:proof-backlog"
+    action: "hold completion messaging until proof review clears"

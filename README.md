@@ -265,3 +265,13 @@ Daily operational system checks must be documented for 00:00, 12:00, and 18:00 E
 4. Confirm the GHL contact gets `source:squarespace`, `lead:new`, vertical, market, confidence, damage, and manual-review tags.
 5. Confirm the opportunity enters `Ready White Customer Jobs` at `New Lead`.
 6. Run `npm run check` and `npm run ops:check` before merging workflow changes.
+
+## Operational control systems
+
+Ready White now includes a deterministic control-system foundation for anti-entropy checks across markets and vendors:
+
+```bash
+npm run ops:control
+```
+
+The control report evaluates a snapshot against `config/control-thresholds.json` and recommends actions such as stale-lead recovery, QA sampling increases, dispatch weight reductions, vendor probation, market pricing review, and proof-review escalation. See `docs/operations/control-systems.md` and `docs/operations/operational-visibility.md`.

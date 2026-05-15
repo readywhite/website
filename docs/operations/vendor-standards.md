@@ -44,3 +44,16 @@ Ready White vendors are standardized execution units, not random subcontractors.
 ## Manual escalation
 
 Route severe prep, water damage, smoke/stain blocking, custom repairs, high complexity, missing proof photos, and callback-risk jobs to operator review before completion or additional dispatch.
+
+## Control-system feedback loops
+
+Vendor scorecards must feed the control system. If callback rate, proof-photo compliance, on-time rate, or variance crosses configured thresholds, the system should recommend one or more of:
+
+- increased QA sampling,
+- dispatch weight reduction,
+- vendor retraining,
+- vendor probation,
+- overflow vendor activation,
+- temporary market capacity hold.
+
+This converts vendor management from founder memory into a measurable execution network.

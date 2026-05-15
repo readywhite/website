@@ -11,6 +11,7 @@ Run these before deployment and during manual operating checks:
 ```bash
 npm run check
 npm run ops:check
+npm run ops:control
 curl https://YOUR-RAILWAY-DOMAIN/health
 ```
 
@@ -21,11 +22,12 @@ curl https://YOUR-RAILWAY-DOMAIN/health
 3. OpenAI photo estimate path returns either an estimate or a manual-review fallback.
 4. GoHighLevel contact/opportunity creation has no failed webhook/API events.
 5. `Ready White Customer Jobs` pipeline stages still match the object standards.
-6. Stale `New Lead`, `Photos Requested`, and `Quote Sent` opportunities are queued for recovery.
-7. Approved jobs without vendor assignment are escalated.
-8. In-progress jobs missing photo proof are escalated.
-9. Missed-call text-back workflow is active in GHL.
-10. Review request workflow is active for completed jobs.
+6. Control-system snapshot has no critical anomalies for speed-to-lead, stale leads, margin drift, vendor quality, or proof backlog.
+7. Stale `New Lead`, `Photos Requested`, and `Quote Sent` opportunities are queued for recovery.
+8. Approved jobs without vendor assignment are escalated.
+9. In-progress jobs missing photo proof are escalated.
+10. Missed-call text-back workflow is active in GHL.
+11. Review request workflow is active for completed jobs.
 
 ## Recommended future scheduling options
 

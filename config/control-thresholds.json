@@ -1,0 +1,27 @@
+{
+  "version": "2026-05-15.control-v1",
+  "cadence": "00:00, 12:00, and 18:00 Eastern Time daily",
+  "speedToLeadMedianMaxMinutes": 5,
+  "staleLeadMaxByStage": {
+    "New Lead": 3,
+    "Photos Requested": 8,
+    "Quote Sent": 6,
+    "Follow-Up": 10,
+    "Vendor Assignment": 2,
+    "Photo Proof Review": 5
+  },
+  "manualReviewRateWarnBps": 4000,
+  "manualReviewRateCriticalBps": 6000,
+  "grossMarginVarianceWarnBps": 500,
+  "grossMarginVarianceCriticalBps": 1000,
+  "proofReviewBacklogWarnCount": 5,
+  "vendorAssignmentBacklogWarnCount": 3,
+  "vendorCallbackWarnBps": 500,
+  "vendorCallbackCriticalBps": 1000,
+  "vendorPhotoComplianceMinBps": 9500,
+  "vendorOnTimeMinBps": 9200,
+  "vendorVarianceWarnBps": 1200,
+  "qaSamplingIncreaseBps": 2500,
+  "dispatchWeightPenaltyBps": 2000,
+  "probationDispatchWeightPenaltyBps": 5000
+}

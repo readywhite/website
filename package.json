@@ -5,8 +5,9 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "check": "node --check server.js && node --check script.js && node --check api/ghl-lead.js && node --check api/photo-estimate.js && node --check lib/pricing.js && node --check lib/canonical-job.js && node --check lib/dispatch.js && node --check scripts/ops-audit.js",
-    "ops:check": "node scripts/ops-audit.js"
+    "check": "node --check server.js && node --check script.js && node --check api/ghl-lead.js && node --check api/photo-estimate.js && node --check lib/pricing.js && node --check lib/canonical-job.js && node --check lib/dispatch.js && node --check lib/control-system.js && node --check scripts/ops-audit.js && node --check scripts/control-check.js",
+    "ops:check": "node scripts/ops-audit.js",
+    "ops:control": "node scripts/control-check.js"
   },
   "engines": {
     "node": ">=18"

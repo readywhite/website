@@ -89,3 +89,22 @@ Additional standardized tags for the wall-estimate and Vendor OS lifecycle:
 - `market:san_francisco`
 
 Wall-level estimates must remain attached to the canonical job payload as `walls[]` with wall ID, photo ID, square footage, damage tier, wall type, confidence, complexity score, manual-review status, and exception flags. GHL is the CRM/workflow layer; durable wall history should eventually live in Ready White operational storage.
+
+## Control-system tags
+
+Control-system alerts and anti-entropy workflows may add these standardized tags:
+
+- `control:anomaly`
+- `sla:speed-to-lead`
+- `pipeline:stale-leads`
+- `estimate:manual-review-spike`
+- `risk:margin-drift`
+- `dispatch:backlog`
+- `qa:proof-backlog`
+- `qa:sampling-increased`
+- `vendor:probation`
+- `vendor:sla-watch`
+- `proof:non-compliant`
+- `variance:vendor-drift`
+
+These tags should route work to operator review, vendor coaching, stale-lead recovery, pricing review, or QA sampling. They must not bypass the approved `Ready White Customer Jobs` pipeline stages.

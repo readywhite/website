@@ -13,14 +13,21 @@ const requiredFiles = [
   "docs/operations/proof-of-work.md",
   "docs/operations/lifecycle-system.md",
   "docs/operations/market-expansion.md",
+  "docs/operations/control-systems.md",
+  "docs/operations/operational-visibility.md",
+  "docs/operations/platform-expansion.md",
   "docs/kpi/operational-kpis.md",
   "docs/outreach/property-manager-followup.yml",
   "docs/operations/system-checks.md",
   "docs/operations/photo-estimate-flow.md",
   "config/pricing-rules.json",
   "config/vendors.example.json",
+  "config/control-thresholds.json",
+  "config/ops-snapshot.example.json",
   "api/photo-estimate.js",
   "lib/dispatch.js",
+  "lib/control-system.js",
+  "scripts/control-check.js",
 ];
 
 const requiredGhlStages = [
@@ -63,6 +70,14 @@ const requiredWallFlags = [
   "high_complexity_review",
 ];
 
+const requiredControlTags = [
+  "control:anomaly",
+  "vendor:probation",
+  "qa:sampling-increased",
+  "risk:margin-drift",
+  "pipeline:stale-leads",
+];
+
 function read(relativePath) {
   return fs.readFileSync(path.join(root, relativePath), "utf8");
 }
@@ -84,6 +99,9 @@ for (const stage of requiredGhlStages) {
 }
 for (const tag of requiredEstimateTags) {
   assert(ghlStandards.includes(tag), `GHL standards missing estimate tag: ${tag}`);
+}
+for (const tag of requiredControlTags) {
+  assert(ghlStandards.includes(tag), `GHL standards missing control tag: ${tag}`);
 }
 
 const script = read("script.js");
@@ -124,11 +142,27 @@ const dispatch = read("lib/dispatch.js");
 assert(dispatch.includes("rankVendors"), "Vendor OS must expose deterministic vendor ranking");
 assert(dispatch.includes("photo_compliance_rate_bps"), "Vendor OS must score proof-photo compliance");
 
+const controlThresholds = JSON.parse(read("config/control-thresholds.json"));
+assert(controlThresholds.vendorCallbackCriticalBps, "control thresholds must define vendor callback critical thresholds");
+assert(controlThresholds.grossMarginVarianceCriticalBps, "control thresholds must define margin variance critical thresholds");
+const controlSystem = read("lib/control-system.js");
+assert(controlSystem.includes("evaluateControlSnapshot"), "control system must expose deterministic snapshot evaluation");
+assert(controlSystem.includes("decrease_dispatch_weight"), "control system must recommend dispatch weight corrections");
+assert(controlSystem.includes("increase_qa_sampling"), "control system must recommend QA sampling corrections");
+assert(controlSystem.includes("run_stale_lead_recovery"), "control system must preserve stale-lead recovery actions");
+
 const proof = read("docs/operations/proof-of-work.md").toLowerCase();
 assert(proof.includes("before photos") && proof.includes("after photos"), "proof-of-work SOP must require before and after photos");
 
 const lifecycle = read("docs/operations/lifecycle-system.md");
 assert(lifecycle.includes("Lead") && lifecycle.includes("Vendor Scoring") && lifecycle.includes("KPI Reporting"), "lifecycle SOP must encode full operational lifecycle");
+
+const controlDocs = read("docs/operations/control-systems.md");
+assert(controlDocs.includes("feedback-loop") && controlDocs.includes("Anti-entropy"), "control systems SOP must document feedback loops and anti-entropy rules");
+const visibilityDocs = read("docs/operations/operational-visibility.md");
+assert(visibilityDocs.includes("Vendor performance heatmap") && visibilityDocs.includes("Margin drift"), "operational visibility docs must define dashboard requirements");
+const platformExpansion = read("docs/operations/platform-expansion.md");
+assert(platformExpansion.includes("logistics and operations company") && platformExpansion.toLowerCase().includes("repaint is the wedge"), "platform expansion docs must preserve logistics-platform positioning");
 
 const systemChecks = read("docs/operations/system-checks.md");
 assert(systemChecks.includes("00:00, 12:00, and 18:00 Eastern Time"), "system checks must document required daily cadence");

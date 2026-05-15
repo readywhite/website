@@ -41,3 +41,9 @@ Lead
 ## Persistent storage note
 
 GoHighLevel remains the CRM/workflow layer. Before nationwide production volume, add durable Railway Postgres job storage for wall-level estimate artifacts, normalized estimates, operator corrections, prompt versions, pricing versions, vendor assignments, proof-of-work records, and variance outcomes.
+
+## Feedback-loop control layer
+
+The lifecycle is not complete until each stage emits measurable control signals. `config/control-thresholds.json` and `lib/control-system.js` define the first deterministic control layer for speed-to-lead, stale stages, manual-review spikes, margin drift, proof backlog, dispatch backlog, vendor callbacks, proof compliance, on-time rate, and estimate variance.
+
+The goal is to move routine decisions from humans to system recommendations while keeping humans focused on edge cases, relationship management, and strategy.
