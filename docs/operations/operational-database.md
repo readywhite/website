@@ -59,3 +59,13 @@ Production admin endpoints require `ADMIN_API_TOKEN` using `Authorization: Beare
 - **Operational impact:** operators can correct AI estimates without losing the original values.
 - **Scalability impact:** wall, vendor, proof, QA, and pricing history become market-independent data assets.
 - **Risk reduction:** immutable events make disputes, callbacks, margin drift, and workflow regressions traceable.
+
+## Replay and artifact commands
+
+```bash
+npm run events:replay -- events.json
+npm run ai:eval
+npm run calibration:report
+```
+
+Replay tooling validates event shapes and state transitions from exported events. AI evaluation and calibration reporting are intentionally deterministic so they can run before production artifact storage is fully connected.

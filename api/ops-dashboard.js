@@ -1,6 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 const { evaluateControlSnapshot } = require("../lib/control-system");
+const { requireRole } = require("../lib/auth");
 
 function sendJson(res, statusCode, payload) {
   res.statusCode = statusCode;
@@ -8,11 +9,6 @@ function sendJson(res, statusCode, payload) {
   res.end(JSON.stringify(payload));
 }
 
-function isAuthorized(req) {
-  const token = process.env.ADMIN_API_TOKEN && process.env.ADMIN_API_TOKEN.trim();
-  if (!token && process.env.NODE_ENV !== "production") return true;
-  return req.headers.authorization === `Bearer ${token}`;
-}
 
 function loadExampleSnapshot() {
   const snapshotPath = path.join(__dirname, "..", "config", "ops-snapshot.example.json");
@@ -26,10 +22,8 @@ module.exports = function opsDashboardHandler(req, res) {
     return;
   }
 
-  if (!isAuthorized(req)) {
-    sendJson(res, 401, { error: "Unauthorized" });
-    return;
-  }
+  const auth = requireRole(req, res, ["read_only", "ops", "admin"]);
+  if (!auth) return;
 
   const controlReport = evaluateControlSnapshot(loadExampleSnapshot());
   sendJson(res, 200, {

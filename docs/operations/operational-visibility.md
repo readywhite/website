@@ -36,3 +36,7 @@ A dashboard is not just reporting. It should eventually trigger gates:
 `GET /api/ops-dashboard` returns the current deterministic visibility payload. Until `DATABASE_URL` is connected, it uses `config/ops-snapshot.example.json`; after durable storage is connected, this endpoint should read from Railway Postgres and GHL-derived snapshots.
 
 Production access requires `ADMIN_API_TOKEN`.
+
+## Observability contract
+
+`lib/observability.js` emits structured JSON logs and metric points for speed-to-lead, manual-review rate, margin variance, proof backlog, vendor assignment backlog, vendor callback rate, proof compliance, on-time rate, and vendor variance. These are designed to feed Railway logs first, then a dedicated observability stack later.

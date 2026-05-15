@@ -38,3 +38,12 @@ A job that exceeds `max_attempts` should move to `dead_letter`, append an immuta
 - **Operational impact:** operators can see stuck jobs instead of guessing where a workflow failed.
 - **Scalability impact:** workers smooth load as photo volume grows across markets.
 - **Risk reduction:** dead-letter handling prevents silent workflow loss.
+
+## Worker and dead-letter commands
+
+```bash
+npm run queue:work -- photo_estimation
+npm run queue:dead-letter
+```
+
+`queue:work` claims one available queue job from Railway Postgres and completes/fails it through the operational event store. `queue:dead-letter` reports dead-letter jobs and exits non-zero when any are present.

@@ -19,6 +19,8 @@ const requiredFiles = [
   "docs/operations/operational-database.md",
   "docs/operations/async-queue.md",
   "docs/operations/state-machine.md",
+  "docs/operations/auth-rbac.md",
+  "docs/operations/ai-evaluation.md",
   "docs/kpi/operational-kpis.md",
   "docs/outreach/property-manager-followup.yml",
   "docs/operations/system-checks.md",
@@ -27,17 +29,27 @@ const requiredFiles = [
   "config/vendors.example.json",
   "config/control-thresholds.json",
   "config/ops-snapshot.example.json",
+  "config/ai-eval-fixtures.json",
+  "config/corrections.example.json",
   "db/schema.sql",
   "api/photo-estimate.js",
   "api/wall-corrections.js",
   "api/ops-dashboard.js",
   "lib/dispatch.js",
+  "lib/auth.js",
+  "lib/observability.js",
+  "lib/calibration.js",
   "lib/control-system.js",
   "lib/operational-store.js",
   "lib/queue.js",
   "lib/state-machine.js",
   "scripts/control-check.js",
   "scripts/db-check.js",
+  "scripts/worker.js",
+  "scripts/dead-letter-check.js",
+  "scripts/replay-events.js",
+  "scripts/ai-eval.js",
+  "scripts/calibration-report.js",
 ];
 
 const requiredGhlStages = [
@@ -173,6 +185,18 @@ assert(stateMachine.includes("NEW_LEAD") && stateMachine.includes("VARIANCE_RECO
 assert(stateMachine.includes("STATE_TO_GHL_STAGE"), "state machine must map lifecycle states to GHL stages");
 const queue = read("lib/queue.js");
 assert(queue.includes("photo_estimation") && queue.includes("dead_letter"), "queue contract must define async processing and dead-letter handling");
+const worker = read("scripts/worker.js");
+assert(worker.includes("claimNextQueueJob") && worker.includes("failQueueJob"), "queue worker must claim jobs and fail safely");
+const deadLetter = read("scripts/dead-letter-check.js");
+assert(deadLetter.includes("listDeadLetterJobs"), "dead-letter tooling must inspect failed queue jobs");
+const auth = read("lib/auth.js");
+assert(auth.includes("ROLE_HIERARCHY") && auth.includes("requireRole"), "auth layer must define RBAC role hierarchy and requireRole");
+const observability = read("lib/observability.js");
+assert(observability.includes("emitOperationalLog") && observability.includes("buildOperationalTelemetry"), "observability layer must emit logs and telemetry metrics");
+const aiEval = read("scripts/ai-eval.js");
+assert(aiEval.includes("manualReviewRequired"), "AI eval harness must test manual-review behavior");
+const calibration = read("lib/calibration.js");
+assert(calibration.includes("summarizeCorrections"), "calibration analytics must summarize human corrections");
 
 const proof = read("docs/operations/proof-of-work.md").toLowerCase();
 assert(proof.includes("before photos") && proof.includes("after photos"), "proof-of-work SOP must require before and after photos");
@@ -192,6 +216,10 @@ const queueDocs = read("docs/operations/async-queue.md");
 assert(queueDocs.includes("dead_letter") && queueDocs.includes("photo_estimation"), "async queue docs must cover queue names and dead-letter behavior");
 const stateDocs = read("docs/operations/state-machine.md");
 assert(stateDocs.includes("NEW_LEAD") && stateDocs.includes("VARIANCE_RECORDED"), "state machine docs must cover canonical lifecycle states");
+const authDocs = read("docs/operations/auth-rbac.md");
+assert(authDocs.includes("ADMIN_API_TOKEN") && authDocs.includes("OPS_READ_API_TOKEN"), "auth docs must document admin and read-only roles");
+const evalDocs = read("docs/operations/ai-evaluation.md");
+assert(evalDocs.includes("npm run ai:eval") && evalDocs.includes("calibration"), "AI evaluation docs must cover eval and calibration commands");
 
 const systemChecks = read("docs/operations/system-checks.md");
 assert(systemChecks.includes("00:00, 12:00, and 18:00 Eastern Time"), "system checks must document required daily cadence");

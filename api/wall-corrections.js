@@ -1,4 +1,5 @@
 const { recordWallCorrection } = require("../lib/operational-store");
+const { requireRole } = require("../lib/auth");
 
 function sendJson(res, statusCode, payload) {
   res.statusCode = statusCode;
@@ -13,11 +14,6 @@ async function readRequestBody(req) {
   return JSON.parse(Buffer.concat(chunks).toString("utf8"));
 }
 
-function isAuthorized(req) {
-  const token = process.env.ADMIN_API_TOKEN && process.env.ADMIN_API_TOKEN.trim();
-  if (!token && process.env.NODE_ENV !== "production") return true;
-  return req.headers.authorization === `Bearer ${token}`;
-}
 
 module.exports = async function wallCorrectionsHandler(req, res) {
   if (req.method !== "POST") {
@@ -26,10 +22,8 @@ module.exports = async function wallCorrectionsHandler(req, res) {
     return;
   }
 
-  if (!isAuthorized(req)) {
-    sendJson(res, 401, { error: "Unauthorized" });
-    return;
-  }
+  const auth = requireRole(req, res, ["ops", "admin"]);
+  if (!auth) return;
 
   try {
     const body = await readRequestBody(req);

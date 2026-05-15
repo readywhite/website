@@ -1,0 +1,12 @@
+{
+  "corrections": [
+    {
+      "job_id": "job_123",
+      "wall_id": "wall_1",
+      "operator_id": "operator_7",
+      "reason": "visible holes underestimated",
+      "original_values": { "sqft": 96, "damage_tier": "standard" },
+      "corrected_values": { "sqft": 104, "damage_tier": "heavy", "callback_required": false }
+    }
+  ]
+}

@@ -37,3 +37,7 @@ AI extracts physical attributes only: wall dimensions, paper-reference detection
 - **Operational impact:** operators review wall-level exceptions instead of ambiguous room photos.
 - **Scalability impact:** every market receives the same intake geometry and pricing inputs.
 - **Risk reduction:** low-confidence, complex, high-dollar, or exception jobs fall into manual review before a firm quote.
+
+## Mobile guided capture guidance
+
+The current form now tells mobile users to keep one wall only in frame, include the full paper reference, avoid glare, and retake dark photos. Future guided capture should add overlays for wall boundary alignment, paper detection, lighting warnings, and one-wall-only enforcement.
