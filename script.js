@@ -28,17 +28,27 @@ function setEstimatePreview(estimate) {
   const pricing = estimate.pricing || {};
   const analysis = estimate.analysis || {};
   const manualReview = estimate.quote?.manualReviewRequired || pricing.manualReviewRequired;
+  const walls = Array.isArray(analysis.walls) ? analysis.walls : [];
+  const wallRows = walls.map((wall) => `
+    <li>
+      <strong>${wall.wallId}</strong>: ${wall.estimatedSquareFeet || "review"} sqft,
+      ${wall.damageTier || "damage review"}, ${wall.wallType || "standard_flat"},
+      confidence ${Math.round((wall.confidence || 0) * 100)}%
+    </li>
+  `).join("");
   estimatePreview.hidden = false;
   estimatePreview.innerHTML = `
-    <h3>Photo estimate preview</h3>
+    <h3>Wall-by-wall estimate preview</h3>
     <dl>
-      <div><dt>Estimated wall sqft</dt><dd>${pricing.squareFeet || analysis.totalWallSquareFeet || "Review needed"}</dd></div>
-      <div><dt>Damage tier</dt><dd>${pricing.damageTier || analysis.damageTier || "Review needed"}</dd></div>
+      <div><dt>Total wall sqft</dt><dd>${pricing.squareFeet || analysis.totalWallSquareFeet || "Review needed"}</dd></div>
+      <div><dt>Worst damage tier</dt><dd>${pricing.damageTier || analysis.damageTier || "Review needed"}</dd></div>
       <div><dt>Paint</dt><dd>${pricing.paintLabel || "Ready White Standard White"}</dd></div>
+      <div><dt>Market</dt><dd>${pricing.marketLabel || "Default Market"}</dd></div>
       <div><dt>Estimate</dt><dd>${pricing.priceToCustomerCents ? formatMoney(pricing.priceToCustomerCents) : "Manual review"}</dd></div>
     </dl>
+    ${wallRows ? `<ul class="wall-preview-list">${wallRows}</ul>` : ""}
     <p class="${manualReview ? "estimate-warning" : "estimate-success"}">
-      ${manualReview ? "Operator review required before this becomes a firm quote." : "Enough photo confidence for package-based quote review."}
+      ${manualReview ? "Operator review required before this becomes a firm quote." : "Enough wall-photo confidence for package-based quote review."}
     </p>
   `;
 }
@@ -87,12 +97,30 @@ function buildTags(formData, estimate) {
     tags.push("vacant:true");
   }
 
+  if (estimate) {
+    tags.push("estimate:ai-assisted");
+  }
+
   if (estimate?.quote?.manualReviewRequired || estimate?.pricing?.manualReviewRequired) {
-    tags.push("estimate:manual-review");
+    tags.push("estimate:manual-review", "estimate:confidence-low");
+  } else if (estimate) {
+    tags.push("estimate:confidence-high");
+  }
+
+  if (formData.get("manualSquareFeet")) {
+    tags.push("estimate:manual-override");
   }
 
   if (estimate?.pricing?.damageTier) {
     tags.push(`damage:${estimate.pricing.damageTier}`);
+  }
+
+  if (formData.get("market")) {
+    tags.push(`market:${formData.get("market")}`);
+  }
+
+  if ((estimate?.analysis?.walls || []).some((wall) => Number(wall.complexityScore) >= 0.75)) {
+    tags.push("scope:high-complexity");
   }
 
   return Array.from(new Set(tags));
@@ -115,6 +143,19 @@ function buildCanonicalJob(formData, photos, estimate) {
     occupancy_status: formData.get("occupancyStatus") || "unknown",
     room_count: formData.get("roomCount") ? Number(formData.get("roomCount")) : null,
     sqft: pricing.squareFeet || null,
+    market: pricing.market || formData.get("market") || "default",
+    estimate_unit: estimate?.analysis?.estimateUnit || "one_wall_one_estimate_unit",
+    walls: (estimate?.analysis?.walls || []).map((wall) => ({
+      wall_id: wall.wallId,
+      photo_id: wall.photoId,
+      sqft: wall.estimatedSquareFeet,
+      damage_tier: wall.damageTier,
+      wall_type: wall.wallType,
+      complexity_score: wall.complexityScore,
+      confidence: wall.confidence,
+      manual_review_required: wall.manualReviewRequired,
+      exception_flags: wall.exceptionFlags || [],
+    })),
     condition_tier: pricing.conditionTier || "unknown",
     repair_tier: pricing.repairTier || "unknown",
     timeline: formData.get("timeline") || "standard",
@@ -128,6 +169,8 @@ function buildCanonicalJob(formData, photos, estimate) {
           materials_estimated_cents: pricing.materialCostCents,
           price_to_customer_cents: pricing.priceToCustomerCents,
           vendor_buy_rate_cents: pricing.vendorBuyRateCents,
+          gross_margin_cents: pricing.grossMarginCents,
+          pricing_rules_version: pricing.pricingRulesVersion,
         }
       : null,
   };
@@ -142,6 +185,7 @@ function buildPhotoEstimateFormData(form) {
   }
 
   estimateData.append("paintOption", formData.get("paintOption") || "ready_white_standard");
+  estimateData.append("market", formData.get("market") || "default");
   estimateData.append("manualSquareFeet", formData.get("manualSquareFeet") || "");
   estimateData.append("notes", formData.get("notes") || "");
   estimateData.append("propertyType", formData.get("propertyType") || "");
@@ -161,6 +205,7 @@ function buildPayload(form, estimate) {
     propertyAddress: formData.get("address"),
     propertyType: formData.get("propertyType"),
     paintOption: formData.get("paintOption"),
+    market: formData.get("market") || "default",
     occupancyStatus: formData.get("occupancyStatus"),
     timeline: formData.get("timeline"),
     roomCount: formData.get("roomCount") ? Number(formData.get("roomCount")) : null,

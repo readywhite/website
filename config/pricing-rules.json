@@ -1,15 +1,77 @@
 {
-  "version": "2026-05-15",
+  "version": "2026-05-15.wall-v2",
   "currency": "USD",
-  "targetMargin": 0.42,
+  "targetMarginBps": 4200,
   "minimumCustomerPriceCents": 32500,
-  "manualReviewConfidenceThreshold": 0.7,
+  "manualReviewConfidenceThresholdBps": 7500,
+  "maxAutoQuoteSquareFeet": 1200,
+  "maxWallSquareFeet": 450,
+  "maxTotalSquareFeet": 10000,
+  "highComplexityThresholdBps": 7500,
   "photoPolicy": {
+    "estimateUnit": "one_wall_one_estimate_unit",
+    "requiredReference": "one flat 8.5 x 11 inch sheet of paper taped portrait on the same wall in every uploaded wall photo",
     "required": [
-      "1 wide photo of each room",
-      "1 photo of the worst wall in each room",
-      "photos of ceilings, trim, stains, peeling paint, water damage, smoke damage, holes, and heavy prep areas"
+      "one straight-on photo per wall",
+      "one 8.5 x 11 inch paper reference taped flat in portrait orientation on each wall",
+      "entire wall visible with floor and ceiling visible when possible",
+      "no room-level, apartment-level, or multi-wall image sets for automated wall estimates",
+      "manual room/worst-wall/ceiling/trim/stain photos remain required for exception scope review outside automated wall pricing"
     ]
+  },
+  "wallTypes": {
+    "standard_flat": { "label": "Standard flat wall", "laborMultiplierBps": 10000 },
+    "textured": { "label": "Textured wall", "laborMultiplierBps": 11500 },
+    "accent": { "label": "Accent/color-change wall", "laborMultiplierBps": 11250 },
+    "trim_heavy": { "label": "Trim-heavy wall", "laborMultiplierBps": 12000 },
+    "vaulted": { "label": "Vaulted/high wall", "laborMultiplierBps": 13500 },
+    "stairwell": { "label": "Stairwell wall", "laborMultiplierBps": 14500 },
+    "exterior": { "label": "Exterior wall", "laborMultiplierBps": 15000 },
+    "cabinet_area": { "label": "Cabinet-area wall", "laborMultiplierBps": 12500 }
+  },
+  "markets": {
+    "default": {
+      "label": "Default Market",
+      "laborMultiplierBps": 10000,
+      "materialMultiplierBps": 10000,
+      "mobilizationMultiplierBps": 10000,
+      "targetMarginBps": 4200
+    },
+    "dallas": {
+      "label": "Dallas / Fort Worth",
+      "laborMultiplierBps": 10000,
+      "materialMultiplierBps": 10000,
+      "mobilizationMultiplierBps": 10000,
+      "targetMarginBps": 4200
+    },
+    "houston": {
+      "label": "Houston",
+      "laborMultiplierBps": 10250,
+      "materialMultiplierBps": 10100,
+      "mobilizationMultiplierBps": 10000,
+      "targetMarginBps": 4200
+    },
+    "atlanta": {
+      "label": "Atlanta",
+      "laborMultiplierBps": 10500,
+      "materialMultiplierBps": 10250,
+      "mobilizationMultiplierBps": 10250,
+      "targetMarginBps": 4300
+    },
+    "phoenix": {
+      "label": "Phoenix",
+      "laborMultiplierBps": 10750,
+      "materialMultiplierBps": 10400,
+      "mobilizationMultiplierBps": 10500,
+      "targetMarginBps": 4300
+    },
+    "san_francisco": {
+      "label": "San Francisco Bay Area",
+      "laborMultiplierBps": 18000,
+      "materialMultiplierBps": 12000,
+      "mobilizationMultiplierBps": 14000,
+      "targetMarginBps": 4600
+    }
   },
   "paintOptions": {
     "ready_white_standard": {
@@ -64,7 +126,18 @@
     "ceiling_damage",
     "trim_damage",
     "missing_required_photos",
-    "low_measurement_confidence"
+    "low_measurement_confidence",
+    "paper_not_detected",
+    "multiple_walls_visible",
+    "wall_edges_unclear",
+    "wall_partially_obstructed",
+    "severe_perspective_angle",
+    "poor_lighting",
+    "glare_reflection",
+    "high_complexity_review",
+    "large_scope_review",
+    "ai_parse_failure",
+    "image_quality_review"
   ],
   "sizeBands": [
     { "name": "small_wall_scope", "maxSqft": 300, "mobilizationCents": 12500 },

@@ -24,3 +24,15 @@ Track KPIs that improve cash flow, close rate, automation, recurring revenue, an
 ## Daily system checks
 
 Run documented operational system checks at 00:00, 12:00, and 18:00 Eastern Time. At each check, review Railway health, OpenAI photo estimate fallback rate, GHL pipeline integrity, stale leads, failed webhooks, unassigned approved jobs, overdue photo proof, and missed-call text-back status.
+
+## Nationwide operating KPIs
+
+- Speed-to-lead by market and source.
+- Photo estimate completion rate and manual-review rate.
+- Wall-level estimate variance: estimated sqft vs corrected/actual sqft.
+- Damage-tier variance: AI tier vs operator/vendor actual tier.
+- Vendor response SLA by market.
+- Vendor proof-photo compliance rate.
+- Callback rate by vendor, market, wall type, and damage tier.
+- Gross margin variance by market and pricing rules version.
+- Stale-lead recovery rate for `New Lead`, `Photos Requested`, `Quote Sent`, and `Follow-Up`.

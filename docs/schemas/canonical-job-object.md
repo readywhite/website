@@ -96,3 +96,29 @@ Website leads may include an `estimate` object alongside the canonical job objec
 ```
 
 When `estimate.pricing.manualReviewRequired` is true, `canonicalJob.photo_policy_status` should be `exception_review` and the job must not proceed to firm quote without operator approval.
+
+## Wall-level estimate extension
+
+Automated estimate payloads must use `estimate_unit: one_wall_one_estimate_unit` and persist `walls[]` for future correction, proof-of-work, variance tracking, and training data.
+
+```json
+{
+  "market": "dallas",
+  "estimate_unit": "one_wall_one_estimate_unit",
+  "walls": [
+    {
+      "wall_id": "wall_1",
+      "photo_id": "photo_1",
+      "sqft": 96,
+      "damage_tier": "standard",
+      "wall_type": "standard_flat",
+      "complexity_score": 0.34,
+      "confidence": 0.88,
+      "manual_review_required": false,
+      "exception_flags": []
+    }
+  ]
+}
+```
+
+Operator corrections should preserve original AI values, corrected values, correction reason, operator, timestamp, vendor assignment, callback result, and actual labor/material variance by `wall_id`.

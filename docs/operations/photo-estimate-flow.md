@@ -1,61 +1,39 @@
 # Photo Estimate Flow SOP
 
-## Purpose
+## Operating rule: one wall = one estimate unit
 
-Use uploaded wall photos to accelerate quote intake while protecting Ready White from scope drift, margin leakage, and unmanaged vendor exceptions.
+Automated photo pricing is constrained to one wall per uploaded image. Every uploaded image must include one standard 8.5 x 11 inch sheet of paper taped flat in portrait orientation on the same wall. The paper is the primary scale anchor. A room-level or apartment-level image set is not eligible for automated firm pricing.
 
-## Operating sequence
+Customer capture steps:
 
-1. Customer submits contact, property, paint, timeline, occupancy, room count, notes, and wall photos.
-2. `/api/photo-estimate` validates image type/size and sends images to OpenAI vision analysis.
-3. OpenAI returns structured wall square footage, wall dimensions, damage tier, confidence, missing-photo requirements, and exception flags.
-4. Backend calculates price with `config/pricing-rules.json`.
-5. Browser submits the standardized lead, canonical job object, estimate, and GHL tags to `/api/ghl-lead`.
-6. GoHighLevel automation starts in `Ready White Customer Jobs` / `New Lead`.
-7. Low-confidence or exception jobs remain in `Scope Review` until operator approval.
+1. Tape one 8.5 x 11 inch sheet of paper flat on the wall in portrait orientation.
+2. Take one straight-on photo of the full wall with floor and ceiling visible when possible.
+3. Repeat for each wall: `wall_1`, `wall_2`, `wall_3`.
+4. Upload each wall photo individually in the same intake.
 
-## Photo intake requirements
+## Manual-review triggers
 
-- 1 wide photo of each room.
-- 1 photo of the worst wall in each room.
-- Photos of ceilings, trim, stains, peeling paint, water damage, smoke damage, holes, and heavy prep areas.
+| Trigger | Reason |
+| --- | --- |
+| `paper_not_detected` | no same-wall scale anchor |
+| `multiple_walls_visible` | ambiguous geometry |
+| `wall_edges_unclear` | dimensions unreliable |
+| `wall_partially_obstructed` | incomplete estimate |
+| `severe_perspective_angle` | distorted scaling |
+| `poor_lighting` | damage unreliable |
+| `glare_reflection` | surface ambiguity |
+| confidence below 0.75 | low reliability |
+| total sqft above 1,200 | high-dollar/large-scope review |
+| high complexity score >= 0.75 | labor complexity review |
+| heavy damage or exception prep | margin protection |
 
-## Damage tiers
+## AI role vs rules engine role
 
-| Tier | Definition | Package intent |
-| --- | --- | --- |
-| `basic` | Minimal nail holes, light scuffs, small blemishes. | `basic_turn` |
-| `standard` | Moderate patching, multiple holes, visible surface wear. | `standard_turn` |
-| `heavy` | Significant damage, large repairs, texture issues, major prep. | `heavy_turn` or exception review |
+AI extracts physical attributes only: wall dimensions, paper-reference detection, wall type, damage tier, complexity score, quality flags, and confidence. The deterministic repository pricing engine sets customer price, vendor buy rate, gross margin, market multipliers, and package routing.
 
-## Manual review triggers
+## ROI / operational impact / scalability / risk reduction
 
-- Measurement confidence below `0.70`.
-- Missing required photos.
-- Water damage, smoke damage, stain blocking, peeling paint, large holes, texture repair, ceiling damage, or trim damage.
-- Quote below target margin.
-- Customer notes conflict with AI image assessment.
-- Any occupied-unit access risk or rush timeline with insufficient scope evidence.
-
-## ROI impact
-
-- Faster speed-to-lead by producing a preliminary package estimate immediately.
-- Better close rate because property managers get quick, structured next steps.
-- Stronger margins because exceptions are flagged before vendor dispatch.
-
-## Operational impact
-
-- Standardizes intake fields and damage tiers before GHL handoff.
-- Keeps deterministic pricing in repo config instead of ad hoc founder judgment.
-- Creates structured variance data for future pricing improvements.
-
-## Scalability impact
-
-- Makes photo review repeatable across leads and future intake channels.
-- Creates stable payloads for CRM automation, KPI reporting, and vendor scorecards.
-
-## Risk reduction
-
-- AI can assist, but cannot bypass confidence gates or invent pricing.
-- Low-confidence measurements route to manual review instead of firm quotes.
-- Severe prep and damage remain exception workflows.
+- **ROI impact:** faster photo-based lead response without exposing margin logic to AI.
+- **Operational impact:** operators review wall-level exceptions instead of ambiguous room photos.
+- **Scalability impact:** every market receives the same intake geometry and pricing inputs.
+- **Risk reduction:** low-confidence, complex, high-dollar, or exception jobs fall into manual review before a firm quote.

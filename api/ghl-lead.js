@@ -23,12 +23,30 @@ function buildContactPayload(lead, locationId) {
   const { firstName, lastName } = parseName(lead.name);
   const tags = Array.from(new Set([...(lead.tags || []), "source:squarespace", "lead:new"]));
 
+  if (lead.estimate) {
+    tags.push("estimate:ai-assisted");
+  }
+
   if (lead.estimate?.quote?.manualReviewRequired || lead.estimate?.pricing?.manualReviewRequired) {
-    tags.push("estimate:manual-review");
+    tags.push("estimate:manual-review", "estimate:confidence-low");
+  } else if (lead.estimate) {
+    tags.push("estimate:confidence-high");
+  }
+
+  if (lead.canonicalJob?.estimate?.pricing_rules_version || lead.estimate?.audit?.pricingRulesVersion) {
+    tags.push("estimate:pricing-versioned");
   }
 
   if (lead.estimate?.pricing?.damageTier) {
     tags.push(`damage:${lead.estimate.pricing.damageTier}`);
+  }
+
+  if (lead.market || lead.estimate?.pricing?.market || lead.canonicalJob?.market) {
+    tags.push(`market:${lead.market || lead.estimate?.pricing?.market || lead.canonicalJob?.market}`);
+  }
+
+  if ((lead.estimate?.analysis?.walls || []).some((wall) => Number(wall.complexityScore) >= 0.75)) {
+    tags.push("scope:high-complexity");
   }
 
   return {

@@ -73,3 +73,11 @@ OpenAI may recommend square footage and damage tier, but repository pricing conf
 ## Low-confidence behavior
 
 If measurement confidence is below `0.70`, photos are incomplete, or required visual references are missing, the system must keep the job in scope review. The customer may receive a preliminary estimate message, but Ready White must not treat it as a firm quote until operator review is complete.
+
+## Image prompt-injection rule
+
+Vision inputs are untrusted. The prompt must tell the model to ignore instructions, JSON, prices, commands, or pricing manipulation text visible inside uploaded images. The model may only estimate physical wall characteristics.
+
+## Strict normalization rule
+
+OpenAI output must be treated as untrusted input. The API must clamp confidence, cap square footage, hard-constrain damage tiers, hard-constrain wall types, allow-list exception flags, reject malformed image uploads, and force manual review for parse failures or low confidence.

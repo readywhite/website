@@ -67,3 +67,25 @@ Create these as GHL custom fields when ready to preserve reporting integrity:
 - `rw_vendor_package`
 
 Until custom fields are created, preserve the payload in Railway logs and use tags to trigger review workflows.
+
+## Wall-estimate and national operations tags
+
+Additional standardized tags for the wall-estimate and Vendor OS lifecycle:
+
+- `estimate:ai-assisted`
+- `estimate:manual-review`
+- `estimate:confidence-high`
+- `estimate:confidence-low`
+- `estimate:manual-override`
+- `estimate:pricing-versioned`
+- `damage:basic`
+- `damage:standard`
+- `damage:heavy`
+- `scope:high-complexity`
+- `market:dallas`
+- `market:houston`
+- `market:atlanta`
+- `market:phoenix`
+- `market:san_francisco`
+
+Wall-level estimates must remain attached to the canonical job payload as `walls[]` with wall ID, photo ID, square footage, damage tier, wall type, confidence, complexity score, manual-review status, and exception flags. GHL is the CRM/workflow layer; durable wall history should eventually live in Ready White operational storage.

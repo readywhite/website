@@ -49,3 +49,8 @@ Use a production monitor such as Better Stack, Cronitor, or UptimeRobot to call 
 - Any photo estimate hard failure: alert and route new submissions to manual review.
 - Any GHL API failure: alert and preserve payload logs without exposing secrets.
 - Any stale lead over SOP threshold: trigger recovery sequence.
+- OpenAI timeout/quota spike or malformed-response spike: route estimates to manual review and notify operator.
+- Manual-review rate above baseline: inspect wall photo quality, market mix, and prompt/schema drift.
+- Vendor assignment backlog: run Vendor OS ranking and escalate markets with insufficient capacity.
+- Proof-of-work backlog in `Photo Proof Review`: alert operations before moving jobs to `Completed`.
+- Market margin variance above threshold: freeze automatic quoting for that market until pricing config is reviewed.

@@ -551,3 +551,12 @@ small {
     grid-template-columns: 1fr;
   }
 }
+
+.wall-preview-list {
+  margin: 0.75rem 0 0;
+  padding-left: 1.25rem;
+}
+
+.wall-preview-list li {
+  margin-bottom: 0.35rem;
+}

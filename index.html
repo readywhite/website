@@ -166,7 +166,7 @@
           <p class="eyebrow">Custom GHL-ready intake</p>
           <h2>Get My Property Quote</h2>
           <p>
-            This branded form uploads wall photos to a secure server-side API route for OpenAI vision analysis, deterministic package pricing, and GoHighLevel lead capture without exposing credentials in the browser.
+            This branded form uploads one straight-on photo per wall to a secure server-side API route for OpenAI vision analysis, deterministic package pricing, and GoHighLevel lead capture without exposing credentials in the browser.
           </p>
           <p class="integration-note">
             Integration status: this site submits photos to /api/photo-estimate, then sends the standardized lead and estimate payload to /api/ghl-lead when deployed. Add OpenAI and GoHighLevel variables server-side only.
@@ -204,12 +204,23 @@
               </select>
             </div>
             <div>
-              <label for="photos">Upload Wall Photos</label>
+              <label for="photos">Upload One Photo Per Wall</label>
               <input id="photos" name="photos" type="file" accept="image/jpeg,image/png,image/webp,image/gif" multiple />
-              <small>Required: one wide room photo and one worst-wall photo per room.</small>
+              <small>Required: tape one 8.5&quot; x 11&quot; paper sheet flat in portrait orientation on each wall, then upload one straight-on photo per wall.</small>
             </div>
           </div>
           <div class="form-row two-col">
+            <div>
+              <label for="market">Service Market</label>
+              <select id="market" name="market" required>
+                <option value="default">Default Market</option>
+                <option value="dallas">Dallas / Fort Worth</option>
+                <option value="houston">Houston</option>
+                <option value="atlanta">Atlanta</option>
+                <option value="phoenix">Phoenix</option>
+                <option value="san_francisco">San Francisco Bay Area</option>
+              </select>
+            </div>
             <div>
               <label for="paint-option">Paint Selection</label>
               <select id="paint-option" name="paintOption" required>
@@ -218,12 +229,12 @@
                 <option value="premium_scrubbable">Premium Scrubbable Finish</option>
               </select>
             </div>
+          </div>
+          <div class="form-row two-col">
             <div>
               <label for="manual-square-feet">Known Wall Sqft (optional)</label>
               <input id="manual-square-feet" name="manualSquareFeet" type="number" min="1" step="1" placeholder="Use if already measured" />
             </div>
-          </div>
-          <div class="form-row two-col">
             <div>
               <label for="occupancy-status">Occupancy</label>
               <select id="occupancy-status" name="occupancyStatus" required>
