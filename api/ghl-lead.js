@@ -30,7 +30,7 @@ function buildContactPayload(lead, locationId) {
     phone: lead.phone,
     address1: lead.propertyAddress,
     source: "Ready White Website",
-    tags: lead.tags || ["Website Lead", "Property Refresh", "Interior Estimate"],
+    tags: lead.tags || ["source:squarespace", "lead:new"],
   };
 }
 

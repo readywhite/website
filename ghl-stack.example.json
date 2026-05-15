@@ -16,19 +16,34 @@
     "highLevelOpportunityEndpoint": "POST /opportunities/"
   },
   "contactTags": [
-    "Website Lead",
-    "Property Refresh",
-    "Interior Estimate"
+    "source:squarespace",
+    "vertical:property-management",
+    "vertical:investor",
+    "timeline:asap",
+    "vacant:true",
+    "lead:new",
+    "lead:quoted",
+    "lead:won"
   ],
   "pipeline": {
-    "name": "Ready White Property Quotes",
+    "name": "Ready White Customer Jobs",
     "defaultStage": "New Lead",
     "stages": [
       "New Lead",
-      "Reviewing Photos",
+      "Photos Requested",
+      "Photos Received",
+      "Scope Review",
       "Quote Sent",
+      "Follow-Up",
+      "Approved",
+      "Vendor Assignment",
       "Scheduled",
-      "Completed"
+      "In Progress",
+      "Photo Proof Review",
+      "Completed",
+      "Review Requested",
+      "Closed Won",
+      "Closed Lost"
     ]
   },
   "workflowActions": [
@@ -40,11 +55,11 @@
     {
       "name": "Create opportunity",
       "trigger": "Contact created or updated",
-      "notes": "Place the opportunity in the Ready White Property Quotes pipeline at the New Lead stage."
+      "notes": "Place the opportunity in the Ready White Customer Jobs pipeline at the New Lead stage."
     },
     {
       "name": "Send instant SMS",
-      "message": "Hi {{contact.first_name}}, thanks for contacting Ready White. We received your property request and are reviewing your photos now. We'll follow up shortly with next steps."
+      "message": "Hi {{contact.first_name}}, thanks for contacting Ready White. We received your property request. Please send 1 wide photo of each room and 1 photo of the worst wall in each room so we can quote quickly."
     },
     {
       "name": "Send confirmation email",
@@ -58,9 +73,11 @@
   ],
   "futureEnhancements": [
     "AI estimator",
-    "Instant pricing logic",
+    "Instant package pricing logic",
     "Automated quote builder",
     "Calendar scheduling",
-    "Review request automation"
+    "Review request automation",
+    "Stale-lead recovery",
+    "Daily operational system checks"
   ]
 }

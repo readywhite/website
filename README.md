@@ -192,3 +192,29 @@ git push
 ```
 
 Do not type `readywhite` by itself; it is a folder name, not a command. Use `cd readywhite` to enter it. If you see paste characters like `^[[200~cd`, type the command manually instead of pasting with bracketed-paste artifacts.
+
+## Ready White operational documentation
+
+This repo is the AI-native operational platform for Ready White, not only a website. The current production architecture remains:
+
+```text
+Squarespace = marketing layer
+Railway = backend orchestration layer
+GoHighLevel = CRM + automation system
+```
+
+Operational standards live in these docs:
+
+- `docs/architecture/railway-github-ghl.md` for stack responsibilities and security boundaries.
+- `docs/automation/ghl-workflows.md` for the Ready White Customer Jobs pipeline, stages, tags, workflows, and daily system checks.
+- `docs/workflows/customer-intake.md` for speed-to-lead and photo intake SOP.
+- `docs/workflows/vendor-dispatch.md` for subcontractor dispatch SOP.
+- `docs/vendors/vendor-standards.md` for vendor scorecards, SLAs, and buy-rate standards.
+- `docs/pricing/room-pricing.md` and `docs/estimating/ai-estimate-rules.md` for package-based estimating.
+- `docs/ops/kpi-reporting.md` for pipeline and operating KPI review.
+
+Run operational checks at 00:00, 12:00, and 18:00 Eastern Time daily:
+
+```bash
+npm run ops:check
+```

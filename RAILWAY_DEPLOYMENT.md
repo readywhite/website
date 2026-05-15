@@ -25,7 +25,7 @@ Optional but recommended if you want the opportunity to land in a specific first
 
 ```text
 GHL_PIPELINE_STAGE_ID=YOUR_NEW_LEAD_STAGE_ID
-GHL_CONTACT_TAGS=Website Lead,Property Refresh,Interior Estimate,ready-white
+GHL_CONTACT_TAGS=source:squarespace,lead:new
 GHL_CONTACT_ENDPOINT=/contacts/upsert
 ALLOWED_ORIGIN=https://your-squarespace-domain.com
 ```
@@ -102,3 +102,7 @@ GoHighLevel API
     ↓
 CRM + Pipeline + Automations
 ```
+
+## 7. Operational checks
+
+Schedule `npm run ops:check` at **00:00, 12:00, and 18:00 Eastern Time daily** from your preferred scheduler. Set `RAILWAY_HEALTH_URL` to the deployed `/health` route and `SQUARESPACE_FORM_URL` to the production form URL so the check covers the marketing layer and Railway backend. GoHighLevel pipeline integrity should be reviewed against the documented **Ready White Customer Jobs** stages in `docs/automation/ghl-workflows.md`.
