@@ -8,6 +8,65 @@ function setStatus(message, type = "success") {
   formStatus.className = `form-status ${type}`;
 }
 
+
+function normalizePropertyType(propertyType) {
+  const normalized = String(propertyType || "").toLowerCase();
+
+  if (normalized.includes("multi") || normalized.includes("rental")) {
+    return "multifamily";
+  }
+
+  if (normalized.includes("condo") || normalized.includes("townhouse")) {
+    return "condo_townhouse";
+  }
+
+  if (normalized.includes("commercial")) {
+    return "commercial";
+  }
+
+  return "single_family";
+}
+
+function inferCustomerVertical(propertyType) {
+  const normalized = String(propertyType || "").toLowerCase();
+
+  if (normalized.includes("rental") || normalized.includes("multi")) {
+    return "property-management";
+  }
+
+  return "investor";
+}
+
+function buildTags(formData) {
+  const vertical = inferCustomerVertical(formData.get("propertyType"));
+
+  return ["source:squarespace", `vertical:${vertical}`, "lead:new"];
+}
+
+function buildCanonicalJob(formData, photos) {
+  const propertyType = formData.get("propertyType");
+  const vertical = inferCustomerVertical(propertyType);
+
+  return {
+    lead_source: "source:squarespace",
+    pipeline_name: "Ready White Customer Jobs",
+    pipeline_stage: "New Lead",
+    job_type: "make_ready_refresh",
+    property_type: normalizePropertyType(propertyType),
+    customer_vertical: vertical,
+    occupancy_status: "unknown",
+    room_count: null,
+    sqft: null,
+    condition_tier: "unknown",
+    repair_tier: "unknown",
+    timeline: "standard",
+    vendor_package: "standard_turn",
+    target_margin: 0.42,
+    photo_policy_status: photos.length > 0 ? "partial" : "requested",
+    exception_flags: [],
+  };
+}
+
 function buildPayload(form) {
   const formData = new FormData(form);
   const photos = formData.getAll("photos").filter((file) => file.name);
@@ -19,8 +78,10 @@ function buildPayload(form) {
     propertyAddress: formData.get("address"),
     propertyType: formData.get("propertyType"),
     notes: formData.get("notes"),
-    tags: ["Website Lead", "Property Refresh", "Interior Estimate"],
+    tags: buildTags(formData),
+    pipelineName: "Ready White Customer Jobs",
     pipelineStage: "New Lead",
+    canonicalJob: buildCanonicalJob(formData, photos),
     photoFileNames: photos.map((file) => file.name),
     submittedAt: new Date().toISOString(),
   };

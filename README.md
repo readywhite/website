@@ -14,8 +14,8 @@ A lightweight static landing page for the Ready White property-refresh funnel. T
 
 1. Visitor clicks **Get My Property Quote**.
 2. The form collects name, email, phone, property address, property type, notes, and uploaded photo names.
-3. The payload includes the tags `Website Lead`, `Property Refresh`, and `Interior Estimate`.
-4. The lead starts in the `New Lead` pipeline stage for follow-up workflows.
+3. The payload includes standardized tags such as `source:squarespace`, `vertical:property-management` or `vertical:investor`, and `lead:new`, plus a canonical job object for downstream pricing and dispatch logic.
+4. The lead starts in the `New Lead` stage of the `Ready White Customer Jobs` pipeline for follow-up workflows.
 
 ## What is configured here
 
@@ -45,8 +45,25 @@ The browser posts quote requests to `/api/ghl-lead`. That route uses the token t
 
 With no deployed backend, local preview submissions run in demo mode and log the lead payload in the browser console.
 
-Use `ghl-stack.example.json` as the implementation checklist for the real GoHighLevel setup: tags, pipeline stages, workflow messages, notification expectations, and future enhancements.
+Use `ghl-stack.example.json` and the `docs/` operating memory as the implementation checklist for the real GoHighLevel setup: tags, pipeline stages, workflow messages, notification expectations, canonical job fields, pricing rules, and future enhancements.
 
+
+## Operational memory
+
+This repo now includes the deterministic operating rules that should come before AI automation:
+
+- `AGENTS.md` defines the Ready White operating constitution and repo-wide workflow guardrails.
+- `docs/schemas/canonical-job-object.md` defines the canonical job object used for pricing, dispatch, KPI reporting, and future AI assistance.
+- `docs/operations/room-pricing.md` defines package-first pricing rules, condition tiers, repair tiers, add-ons, and estimate variance tracking.
+- `docs/operations/ai-estimate-rules.md` defines where AI can assist and where deterministic gates must stay in control.
+- `docs/ghl/object-standards.md` defines the required GoHighLevel pipeline, stages, tags, and stage movement rules.
+- `docs/kpi/operational-kpis.md` defines the KPI loop for speed-to-lead, stale leads, vendor reliability, margin, and reviews.
+
+Run the operational audit before deploying workflow changes:
+
+```bash
+npm run ops:check
+```
 
 ## API references
 
@@ -58,8 +75,8 @@ Use `ghl-stack.example.json` as the implementation checklist for the real GoHigh
 
 Before this form can drive live CRM automation, configure these items in GoHighLevel or in your middleware/integration layer:
 
-1. Create the tags `Website Lead`, `Property Refresh`, and `Interior Estimate`.
-2. Create a Ready White pipeline with `New Lead`, `Reviewing Photos`, `Quote Sent`, `Scheduled`, and `Completed` stages.
+1. Create the standardized tags documented in `docs/ghl/object-standards.md`, including `source:squarespace`, vertical tags, vacancy tags, timeline tags, and lead lifecycle tags.
+2. Create the `Ready White Customer Jobs` pipeline with the exact stage names documented in `docs/ghl/object-standards.md`.
 3. Deploy the included `/api/ghl-lead` route with `GHL_PRIVATE_INTEGRATION_TOKEN` and `GHL_LOCATION_ID` set.
 4. Add `GHL_PIPELINE_ID` and `GHL_PIPELINE_STAGE_ID` if the route should create opportunities after contact upsert.
 5. Add workflow actions for confirmation SMS, confirmation email, and internal notification.

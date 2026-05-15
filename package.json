@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "check": "node --check server.js && node --check script.js && node --check api/ghl-lead.js"
+    "check": "node --check server.js && node --check script.js && node --check api/ghl-lead.js && node --check scripts/ops-audit.js",
+    "ops:check": "node scripts/ops-audit.js"
   },
   "engines": {
     "node": ">=18"
