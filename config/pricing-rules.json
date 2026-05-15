@@ -1,0 +1,75 @@
+{
+  "version": "2026-05-15",
+  "currency": "USD",
+  "targetMargin": 0.42,
+  "minimumCustomerPriceCents": 32500,
+  "manualReviewConfidenceThreshold": 0.7,
+  "photoPolicy": {
+    "required": [
+      "1 wide photo of each room",
+      "1 photo of the worst wall in each room",
+      "photos of ceilings, trim, stains, peeling paint, water damage, smoke damage, holes, and heavy prep areas"
+    ]
+  },
+  "paintOptions": {
+    "ready_white_standard": {
+      "label": "Ready White Standard White",
+      "materialRatePerSqftCents": 42,
+      "baseMaterialCents": 4500
+    },
+    "warm_neutral": {
+      "label": "Warm Neutral",
+      "materialRatePerSqftCents": 48,
+      "baseMaterialCents": 5200
+    },
+    "premium_scrubbable": {
+      "label": "Premium Scrubbable Finish",
+      "materialRatePerSqftCents": 62,
+      "baseMaterialCents": 6500
+    }
+  },
+  "damageTiers": {
+    "basic": {
+      "description": "Minimal nail holes, light scuffs, and small blemishes.",
+      "laborRatePerSqftCents": 105,
+      "prepAddOnCents": 0,
+      "vendorPackage": "basic_turn",
+      "conditionTier": "A",
+      "repairTier": "minor"
+    },
+    "standard": {
+      "description": "Moderate patching, multiple holes, and visible surface wear.",
+      "laborRatePerSqftCents": 145,
+      "prepAddOnCents": 8500,
+      "vendorPackage": "standard_turn",
+      "conditionTier": "B",
+      "repairTier": "moderate"
+    },
+    "heavy": {
+      "description": "Significant damage, large repairs, texture issues, or major prep work.",
+      "laborRatePerSqftCents": 210,
+      "prepAddOnCents": 22000,
+      "vendorPackage": "heavy_turn",
+      "conditionTier": "C",
+      "repairTier": "moderate"
+    }
+  },
+  "exceptionFlags": [
+    "water_damage",
+    "smoke_damage",
+    "stain_blocking",
+    "peeling_paint",
+    "large_holes",
+    "texture_repair",
+    "ceiling_damage",
+    "trim_damage",
+    "missing_required_photos",
+    "low_measurement_confidence"
+  ],
+  "sizeBands": [
+    { "name": "small_wall_scope", "maxSqft": 300, "mobilizationCents": 12500 },
+    { "name": "standard_room_scope", "maxSqft": 900, "mobilizationCents": 17500 },
+    { "name": "multi_room_scope", "maxSqft": 1800, "mobilizationCents": 27500 },
+    { "name": "large_turnover_scope", "maxSqft": null, "mobilizationCents": 42500 }
+  ]
+}

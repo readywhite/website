@@ -1,5 +1,6 @@
 const HIGHLEVEL_API_BASE_URL = "https://services.leadconnectorhq.com";
 const HIGHLEVEL_API_VERSION = "2021-07-28";
+const { validateCanonicalJob } = require("../lib/canonical-job");
 
 function getEnv(name) {
   return process.env[name] && process.env[name].trim();
@@ -20,6 +21,15 @@ function parseName(fullName = "") {
 
 function buildContactPayload(lead, locationId) {
   const { firstName, lastName } = parseName(lead.name);
+  const tags = Array.from(new Set([...(lead.tags || []), "source:squarespace", "lead:new"]));
+
+  if (lead.estimate?.quote?.manualReviewRequired || lead.estimate?.pricing?.manualReviewRequired) {
+    tags.push("estimate:manual-review");
+  }
+
+  if (lead.estimate?.pricing?.damageTier) {
+    tags.push(`damage:${lead.estimate.pricing.damageTier}`);
+  }
 
   return {
     locationId,
@@ -30,7 +40,7 @@ function buildContactPayload(lead, locationId) {
     phone: lead.phone,
     address1: lead.propertyAddress,
     source: "Ready White Website",
-    tags: lead.tags || ["Website Lead", "Property Refresh", "Interior Estimate"],
+    tags: Array.from(new Set(tags)),
   };
 }
 
@@ -60,7 +70,9 @@ function buildOpportunityPayload(lead, contactId, locationId) {
     name: `${lead.name || "Website lead"} - Property Quote`,
     source: "Ready White Website",
     status: "open",
-    monetaryValue: 0,
+    monetaryValue: lead.estimate?.pricing?.priceToCustomerCents
+      ? Math.round(lead.estimate.pricing.priceToCustomerCents / 100)
+      : 0,
   };
 }
 
@@ -88,6 +100,16 @@ function validateLead(lead) {
 
   if (missingFields.length > 0) {
     return `Missing required fields: ${missingFields.join(", ")}`;
+  }
+
+  const canonicalErrors = validateCanonicalJob(lead.canonicalJob || {});
+
+  if (canonicalErrors.length > 0) {
+    return canonicalErrors.join("; ");
+  }
+
+  if (lead.estimate && typeof lead.estimate !== "object") {
+    return "estimate must be an object when provided";
   }
 
   return null;

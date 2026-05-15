@@ -1,0 +1,24 @@
+name: property_manager_followup
+purpose: Convert property-management leads into recurring turnover relationships.
+standards:
+  pipeline: Ready White Customer Jobs
+  primary_tags:
+    - source:squarespace
+    - vertical:property-management
+    - lead:new
+  estimate_tags:
+    - estimate:manual-review
+    - damage:basic
+    - damage:standard
+    - damage:heavy
+messages:
+  new_lead_sms: "Hi {{contact.first_name}}, this is Ready White. We received your turnover request and can review photos for fast package pricing. Please send one wide photo and one worst-wall photo per room."
+  photos_received_sms: "Hi {{contact.first_name}}, we received your Ready White photos and are checking wall size, damage tier, and paint package now. If anything needs manual review, we'll flag it before quoting."
+  manual_review_sms: "Hi {{contact.first_name}}, we received your photos. A Ready White operator is reviewing the scope because the photos show possible exceptions or need measurement confirmation."
+  photos_requested_email_subject: "Photos needed for your Ready White turnover quote"
+  stale_lead_sms: "Hi {{contact.first_name}}, checking back on your Ready White quote. If the unit is still vacant, send photos and we can keep the turnover moving."
+recovery_rules:
+  stale_new_lead_hours: 4
+  stale_photos_requested_hours: 24
+  stale_quote_sent_hours: 48
+roi_impact: Faster follow-up, fewer stale leads, stronger property-manager conversion, and better recurring-revenue capture.
