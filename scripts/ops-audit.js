@@ -62,6 +62,9 @@ const requiredFiles = [
   "scripts/calibration-report.js",
   "scripts/stabilization-check.js",
   "scripts/validation-check.js",
+  "docs/kpi/operational-kpis.md",
+  "docs/outreach/property-manager-followup.yml",
+  "docs/operations/system-checks.md",
 ];
 
 const requiredGhlStages = [
@@ -125,6 +128,9 @@ function read(relativePath) {
 
 function assert(condition, message) {
   if (!condition) throw new Error(message);
+  if (!condition) {
+    throw new Error(message);
+  }
 }
 
 for (const file of requiredFiles) {

@@ -15,6 +15,8 @@ messages:
   new_lead_sms: "Hi {{contact.first_name}}, this is Ready White. We received your turnover request and can review photos for fast package pricing. Please send one wide photo and one worst-wall photo per room."
   photos_received_sms: "Hi {{contact.first_name}}, we received your Ready White photos and are checking wall size, damage tier, and paint package now. If anything needs manual review, we'll flag it before quoting."
   manual_review_sms: "Hi {{contact.first_name}}, we received your photos. A Ready White operator is reviewing the scope because the photos show possible exceptions or need measurement confirmation."
+messages:
+  new_lead_sms: "Hi {{contact.first_name}}, this is Ready White. We received your turnover request and can review photos for fast package pricing. Please send one wide photo and one worst-wall photo per room."
   photos_requested_email_subject: "Photos needed for your Ready White turnover quote"
   stale_lead_sms: "Hi {{contact.first_name}}, checking back on your Ready White quote. If the unit is still vacant, send photos and we can keep the turnover moving."
 recovery_rules:

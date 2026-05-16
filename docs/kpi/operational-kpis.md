@@ -79,3 +79,4 @@ These metrics should feed `npm run ops:control` snapshots and future dashboards:
 - Vendor scorecard completeness by market.
 - Callback clusters by vendor, wall type, damage tier, and property type.
 - Margin variance by actual material/labor usage.
+Run operational system checks at 00:00, 12:00, and 18:00 Eastern Time. At each check, review Railway health, GHL pipeline integrity, stale leads, failed webhooks, unassigned approved jobs, overdue photo proof, and missed-call text-back status.

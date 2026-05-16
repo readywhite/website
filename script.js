@@ -140,6 +140,18 @@ function buildCanonicalJob(formData, photos, estimate) {
   const pricing = estimate?.pricing || {};
   const photoPolicyStatus = estimate?.photoPolicyStatus || (photos.length > 0 ? "partial" : "requested");
   const manualReview = estimate?.quote?.manualReviewRequired || pricing.manualReviewRequired;
+  return "investor";
+}
+
+function buildTags(formData) {
+  const vertical = inferCustomerVertical(formData.get("propertyType"));
+
+  return ["source:squarespace", `vertical:${vertical}`, "lead:new"];
+}
+
+function buildCanonicalJob(formData, photos) {
+  const propertyType = formData.get("propertyType");
+  const vertical = inferCustomerVertical(propertyType);
 
   return {
     lead_source: "source:squarespace",
@@ -203,6 +215,20 @@ function buildPhotoEstimateFormData(form) {
 }
 
 function buildPayload(form, estimate) {
+    occupancy_status: "unknown",
+    room_count: null,
+    sqft: null,
+    condition_tier: "unknown",
+    repair_tier: "unknown",
+    timeline: "standard",
+    vendor_package: "standard_turn",
+    target_margin: 0.42,
+    photo_policy_status: photos.length > 0 ? "partial" : "requested",
+    exception_flags: [],
+  };
+}
+
+function buildPayload(form) {
   const formData = new FormData(form);
   const photos = formData.getAll("photos").filter((file) => file.name);
 
@@ -224,6 +250,10 @@ function buildPayload(form, estimate) {
     canonicalJob: buildCanonicalJob(formData, photos, estimate),
     estimate,
     photoUrls: (estimate?.photos || []).map((photo) => photo.photoUrl).filter(Boolean),
+    tags: buildTags(formData),
+    pipelineName: "Ready White Customer Jobs",
+    pipelineStage: "New Lead",
+    canonicalJob: buildCanonicalJob(formData, photos),
     photoFileNames: photos.map((file) => file.name),
     submittedAt: new Date().toISOString(),
   };
