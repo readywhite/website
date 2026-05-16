@@ -1,6 +1,7 @@
 const HIGHLEVEL_API_BASE_URL = "https://services.leadconnectorhq.com";
 const HIGHLEVEL_API_VERSION = "2021-07-28";
 const { validateCanonicalJob } = require("../lib/canonical-job");
+const { verifySignedEstimate } = require("../lib/estimate-signing");
 
 function getEnv(name) {
   return process.env[name] && process.env[name].trim();
@@ -96,8 +97,8 @@ function buildOpportunityPayload(lead, contactId, locationId) {
     name: `${lead.name || "Website lead"} - Property Quote`,
     source: "Ready White Website",
     status: "open",
-    monetaryValue: lead.estimate?.pricing?.priceToCustomerCents
-      ? Math.round(lead.estimate.pricing.priceToCustomerCents / 100)
+    monetaryValue: lead.trustedEstimate?.pricing?.priceToCustomerCents
+      ? Math.round(lead.trustedEstimate.pricing.priceToCustomerCents / 100)
       : 0,
   };
 }
@@ -136,6 +137,10 @@ function validateLead(lead) {
 
   if (lead.estimate && typeof lead.estimate !== "object") {
     return "estimate must be an object when provided";
+  }
+
+  if (lead.photoFileNames?.length && !lead.photoUrls?.length) {
+    return "photoUrls are required; Ready White cannot run manual review from filenames only";
   }
 
   return null;
@@ -191,6 +196,21 @@ module.exports = async function handler(req, res) {
 
   try {
     const lead = await readRequestBody(req);
+    const signatureResult = verifySignedEstimate(lead.estimate);
+    if (!signatureResult.ok) {
+      sendJson(res, 400, { error: signatureResult.error });
+      return;
+    }
+    lead.trustedEstimate = signatureResult.trustedEstimate;
+    if (lead.trustedEstimate) {
+      lead.estimate = {
+        ...lead.trustedEstimate,
+        pricing: lead.trustedEstimate.pricing,
+        quote: lead.trustedEstimate.quote,
+        analysis: lead.trustedEstimate.analysis,
+      };
+    }
+
     const validationError = validateLead(lead);
 
     if (validationError) {

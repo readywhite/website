@@ -8,6 +8,7 @@ const photoEstimateHandler = require("./api/photo-estimate");
 const wallCorrectionsHandler = require("./api/wall-corrections");
 const opsDashboardHandler = require("./api/ops-dashboard");
 const jobActualsHandler = require("./api/job-actuals");
+const photoUploadHandler = require("./api/photo-upload");
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -25,6 +26,7 @@ app.post("/api/ghl-lead", ghlLeadHandler);
 app.post("/api/wall-corrections", wallCorrectionsHandler);
 app.get("/api/ops-dashboard", opsDashboardHandler);
 app.post("/api/job-actuals", jobActualsHandler);
+app.get("/api/photo-upload", photoUploadHandler);
 
 app.get("/", (_req, res) => {
   res.sendFile(path.join(__dirname, "index.html"));

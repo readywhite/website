@@ -45,3 +45,13 @@ The current form now tells mobile users to keep one wall only in frame, include 
 ## Calibration-phase automation hold
 
 During the 60-day stabilization phase, AI estimates remain preliminary and must be operator-approved before becoming firm quotes. The system applies `calibration_phase_operator_review` while real wall photos, correction coverage, vendor proof compliance, and variance data mature.
+
+## Production hardening requirements added before merge
+
+- The photo-estimate endpoint must parse Responses API output from `output[].content[].type === "output_text"`; SDK-only `output_text` fields are not a source of truth for raw REST responses.
+- Rate limiting must run before multipart buffering so repeated large image uploads are rejected before Multer stores image buffers.
+- Unsafe upload failures are hard validation errors, not manual-review fallbacks. Spoofed MIME types, unverifiable dimensions, oversized images, and animated GIFs return 4xx responses.
+- Uploaded estimate photos must be durably persisted before lead submission. Railway Postgres can act as the initial database blob store via `operational_photo_uploads`; future S3/R2 storage can replace it behind the same `photoUrl` contract.
+- `/api/photo-estimate` returns `estimateId`, `photoUrls`, `signedEstimatePayload`, and `estimateSignature`. `/api/ghl-lead` must trust only verified signed estimate pricing when creating opportunity values.
+- Manual square footage without photos is always operator-review only and carries missing-photo requirements until the required wide-room, worst-wall, ceiling/trim/damage photos are received.
+- Heavy damage is deterministically escalated with `heavy_damage_operator_review`; the model may identify damage, but it cannot decide to bypass operator review for heavy scope.

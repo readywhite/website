@@ -39,11 +39,14 @@ const requiredFiles = [
   "config/operational-validation-plan.json",
   "db/schema.sql",
   "api/photo-estimate.js",
+  "api/photo-upload.js",
   "api/wall-corrections.js",
   "api/ops-dashboard.js",
   "api/job-actuals.js",
   "lib/dispatch.js",
   "lib/auth.js",
+  "lib/estimate-signing.js",
+  "lib/photo-storage.js",
   "lib/observability.js",
   "lib/calibration.js",
   "lib/control-system.js",
@@ -144,6 +147,9 @@ for (const tag of requiredControlTags) {
 
 const script = read("script.js");
 const api = read("api/ghl-lead.js");
+assert(api.includes("verifySignedEstimate"), "GHL lead route must verify signed estimate pricing before CRM opportunity creation");
+assert(api.includes("photoUrls"), "GHL lead route must require durable photo URLs instead of filenames only");
+
 for (const tag of requiredTags) {
   assert(script.includes(tag), `script.js missing required tag: ${tag}`);
   assert(api.includes(tag), `api/ghl-lead.js missing required default tag: ${tag}`);
@@ -158,6 +164,10 @@ assert(photoEstimate.includes("sniffImage"), "photo estimate route must content-
 assert(photoEstimate.includes("stripJpegMetadata"), "photo estimate route must strip JPEG metadata before image analysis");
 assert(photoEstimate.includes("one_wall_one_estimate_unit"), "photo estimate route must preserve one-wall estimate units");
 assert(photoEstimate.includes("8.5 x 11 inch"), "photo estimate route must require the paper reference");
+assert(photoEstimate.includes("output_text"), "photo estimate route must parse Responses API output_text content blocks");
+assert(photoEstimate.includes("estimateSignature"), "photo estimate route must sign trusted estimates for CRM submission");
+assert(photoEstimate.includes("persistEstimatePhotos"), "photo estimate route must persist uploaded photo evidence");
+assert(photoEstimate.includes("heavy_damage_operator_review"), "photo estimate route must deterministically escalate heavy damage");
 
 const pricingRules = JSON.parse(read("config/pricing-rules.json"));
 assert(pricingRules.damageTiers.basic, "pricing rules missing basic damage tier");
@@ -191,7 +201,7 @@ assert(controlSystem.includes("increase_qa_sampling"), "control system must reco
 assert(controlSystem.includes("run_stale_lead_recovery"), "control system must preserve stale-lead recovery actions");
 
 const schema = read("db/schema.sql");
-for (const table of ["operational_events", "jobs", "walls", "ai_artifacts", "wall_corrections", "job_actuals", "proof_of_work_artifacts", "qa_reviews", "operational_queue_jobs"]) {
+for (const table of ["operational_events", "jobs", "walls", "ai_artifacts", "wall_corrections", "job_actuals", "proof_of_work_artifacts", "qa_reviews", "operational_queue_jobs", "operational_photo_uploads"]) {
   assert(schema.includes(`CREATE TABLE IF NOT EXISTS ${table}`), `database schema missing table: ${table}`);
 }
 const store = read("lib/operational-store.js");

@@ -75,3 +75,7 @@ Replay tooling validates event shapes and state transitions from exported events
 `job_actuals` stores actual labor, material, completion, callback, QA, repaint, satisfaction, and variance fields. This table is required before predictive dispatch, dynamic pricing, or market optimization should be trusted.
 
 Use `POST /api/job-actuals` for structured actual capture once jobs complete.
+
+## Estimate photo persistence
+
+`operational_photo_uploads` stores validated estimate images with `photo_id`, `wall_id`, MIME type, byte size, dimensions, SHA-256 digest, metadata, and `BYTEA` image bytes. This gives manual review operators visual evidence instead of browser-supplied filenames and preserves auditability while Ready White is still on the early Railway orchestration layer. Returned `photoUrl` values point to the protected `/api/photo-upload?id=...` retrieval endpoint and require ops/read-only RBAC.

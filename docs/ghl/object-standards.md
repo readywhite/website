@@ -142,3 +142,7 @@ Use these tags during operational truth collection:
 - `validation:operational-truth`
 
 Do not move a completed job into reporting-ready status until actuals are recorded or an approved exception is documented.
+
+## Trusted estimate and photo evidence policy
+
+GoHighLevel opportunity value must be derived from server-verified `signedEstimatePayload.pricing.priceToCustomerCents`, never from mutable browser pricing fields. Lead payloads with uploaded photos must include durable `photoUrls`; filenames alone are insufficient for Scope Review, Photo Proof Review, variance review, or callback defense.

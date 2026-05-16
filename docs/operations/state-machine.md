@@ -36,3 +36,7 @@ NEW_LEAD
 - **Operational impact:** managers know exactly which gate is blocking a job.
 - **Scalability impact:** markets follow the same lifecycle, reducing regional drift.
 - **Risk reduction:** invalid progression is constrained before customer experience or margin is harmed.
+
+## Scheduling stage guardrail
+
+Lifecycle transitions now include `SCHEDULED` between `APPROVED` and `DISPATCHED` so Ready White can separate customer scheduling from vendor assignment. Event replay must verify that each transition's `fromState` matches the current replayed state for that job before accepting the transition.

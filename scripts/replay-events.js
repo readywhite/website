@@ -15,8 +15,13 @@ const stateByJob = new Map();
 for (const event of normalized) {
   if (event.event_type.startsWith("state_transitioned:")) {
     const { fromState, toState } = event.payload;
+    const jobKey = event.job_id || event.aggregate_id;
+    const currentState = stateByJob.get(jobKey) || fromState;
+    if (currentState !== fromState) {
+      throw new Error(`Replay chain mismatch for ${jobKey}: expected ${currentState}, event declared ${fromState}`);
+    }
     assertTransition(fromState, toState);
-    stateByJob.set(event.job_id || event.aggregate_id, toState);
+    stateByJob.set(jobKey, toState);
   }
 }
 

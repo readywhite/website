@@ -223,6 +223,7 @@ function buildPayload(form, estimate) {
     pipelineStage: "New Lead",
     canonicalJob: buildCanonicalJob(formData, photos, estimate),
     estimate,
+    photoUrls: (estimate?.photos || []).map((photo) => photo.photoUrl).filter(Boolean),
     photoFileNames: photos.map((file) => file.name),
     submittedAt: new Date().toISOString(),
   };

@@ -13,6 +13,7 @@ const requiredTables = [
   "proof_of_work_artifacts",
   "qa_reviews",
   "operational_queue_jobs",
+  "operational_photo_uploads",
 ];
 
 for (const table of requiredTables) {

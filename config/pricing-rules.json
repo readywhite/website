@@ -160,6 +160,7 @@
     "glare_reflection",
     "high_complexity_review",
     "large_scope_review",
+    "heavy_damage_operator_review",
     "ai_parse_failure",
     "image_quality_review",
     "calibration_phase_operator_review",

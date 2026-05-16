@@ -145,3 +145,21 @@ CREATE TABLE IF NOT EXISTS operational_queue_jobs (
 );
 
 CREATE INDEX IF NOT EXISTS idx_operational_queue_available ON operational_queue_jobs (queue_name, status, available_at);
+
+CREATE TABLE IF NOT EXISTS operational_photo_uploads (
+  photo_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  job_id TEXT,
+  wall_id TEXT,
+  original_name TEXT NOT NULL,
+  mime_type TEXT NOT NULL,
+  byte_size INTEGER NOT NULL,
+  width INTEGER,
+  height INTEGER,
+  sha256 TEXT NOT NULL,
+  image_bytes BYTEA NOT NULL,
+  metadata JSONB NOT NULL DEFAULT '{}'::jsonb,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+
+CREATE INDEX IF NOT EXISTS idx_operational_photo_uploads_job_wall ON operational_photo_uploads (job_id, wall_id, created_at);
+CREATE INDEX IF NOT EXISTS idx_operational_photo_uploads_sha ON operational_photo_uploads (sha256);

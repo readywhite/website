@@ -56,3 +56,7 @@ Use a production monitor such as Better Stack, Cronitor, or UptimeRobot to call 
 - Vendor assignment backlog: run Vendor OS ranking and escalate markets with insufficient capacity.
 - Proof-of-work backlog in `Photo Proof Review`: alert operations before moving jobs to `Completed`.
 - Market margin variance above threshold: freeze automatic quoting for that market until pricing config is reviewed.
+
+## Daily automated check schedule requirement
+
+When scheduler ownership is activated, configure system checks for **00:00, 12:00, and 18:00 America/New_York daily**. Each run should execute syntax checks, ops audit, control checks, health checks, dashboard snapshot validation, stale-lead recovery review, missed-call text-back verification, and review-request workflow verification. Until a scheduler is explicitly activated, this document remains the operating schedule of record and the commands above are the manual runbook.
