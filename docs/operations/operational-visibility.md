@@ -40,3 +40,7 @@ Production access requires `ADMIN_API_TOKEN`.
 ## Observability contract
 
 `lib/observability.js` emits structured JSON logs and metric points for speed-to-lead, manual-review rate, margin variance, proof backlog, vendor assignment backlog, vendor callback rate, proof compliance, on-time rate, and vendor variance. These are designed to feed Railway logs first, then a dedicated observability stack later.
+
+## Operational truth visibility
+
+The dashboard must prioritize operational truth before feature metrics: correction coverage, actuals coverage, manual-review backlog, vendor scorecard completion, queue dead-letter rate, callback clusters, QA failures, and margin variance.

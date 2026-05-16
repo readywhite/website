@@ -131,3 +131,14 @@ During calibration, use these tags to protect quote discipline and reporting:
 - `vendor:onboarding-complete`
 
 `estimate:calibration-review` means the estimate is preliminary until an operator approves the quote.
+
+## Actuals and validation tags
+
+Use these tags during operational truth collection:
+
+- `actuals:required`
+- `actuals:recorded`
+- `validation:feature-freeze`
+- `validation:operational-truth`
+
+Do not move a completed job into reporting-ready status until actuals are recorded or an approved exception is documented.

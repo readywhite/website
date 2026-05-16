@@ -301,3 +301,15 @@ Run:
 ```bash
 npm run stabilization:check
 ```
+
+## Operational validation phase
+
+The platform is under feature freeze while Ready White collects operational truth from real jobs, vendors, corrections, QA, callbacks, and actuals.
+
+Run:
+
+```bash
+npm run validation:check
+```
+
+`POST /api/job-actuals` captures actual labor/material/completion/callback/QA/satisfaction data when `DATABASE_URL` is configured.

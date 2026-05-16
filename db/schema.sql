@@ -105,6 +105,30 @@ CREATE TABLE IF NOT EXISTS qa_reviews (
   created_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 
+
+CREATE TABLE IF NOT EXISTS job_actuals (
+  actual_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  job_id TEXT NOT NULL,
+  wall_id TEXT,
+  vendor_id TEXT,
+  actual_sqft INTEGER,
+  actual_damage_tier TEXT,
+  actual_complexity_score NUMERIC(4, 3),
+  actual_labor_hours NUMERIC(8, 2),
+  actual_material_cents INTEGER,
+  actual_completion_minutes INTEGER,
+  callback_required BOOLEAN NOT NULL DEFAULT false,
+  qa_failure BOOLEAN NOT NULL DEFAULT false,
+  repaint_required BOOLEAN NOT NULL DEFAULT false,
+  customer_satisfaction_bps INTEGER,
+  variance_reason TEXT,
+  recorded_by TEXT NOT NULL,
+  recorded_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+
+CREATE INDEX IF NOT EXISTS idx_job_actuals_job_wall ON job_actuals (job_id, wall_id, recorded_at);
+CREATE INDEX IF NOT EXISTS idx_job_actuals_vendor ON job_actuals (vendor_id, recorded_at);
+
 CREATE TABLE IF NOT EXISTS operational_queue_jobs (
   queue_job_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   queue_name TEXT NOT NULL,

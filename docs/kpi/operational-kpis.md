@@ -69,3 +69,13 @@ These metrics should feed `npm run ops:control` snapshots and future dashboards:
 - Manual review reasons by flag: low confidence, paper missing, lighting, multiple walls, high complexity, large scope, premium customer.
 - Vendor onboarding completion rate by market.
 - Vendor QA failure rate and customer satisfaction by market.
+
+## Operational truth KPIs
+
+- Actuals coverage rate by completed job and wall.
+- Completed jobs with actual labor/material/completion time captured.
+- Queue dead-letter rate by queue name.
+- Manual-review backlog count and age.
+- Vendor scorecard completeness by market.
+- Callback clusters by vendor, wall type, damage tier, and property type.
+- Margin variance by actual material/labor usage.

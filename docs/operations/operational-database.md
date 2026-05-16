@@ -69,3 +69,9 @@ npm run calibration:report
 ```
 
 Replay tooling validates event shapes and state transitions from exported events. AI evaluation and calibration reporting are intentionally deterministic so they can run before production artifact storage is fully connected.
+
+## Actuals capture
+
+`job_actuals` stores actual labor, material, completion, callback, QA, repaint, satisfaction, and variance fields. This table is required before predictive dispatch, dynamic pricing, or market optimization should be trusted.
+
+Use `POST /api/job-actuals` for structured actual capture once jobs complete.

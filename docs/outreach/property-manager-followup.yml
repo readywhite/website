@@ -69,3 +69,11 @@ calibration_phase_messages:
   vendor_onboarding_incomplete:
     trigger: "vendor:onboarding-incomplete"
     action: "do not dispatch; finish onboarding checklist or activate approved overflow vendor"
+
+operational_truth:
+  actuals_required:
+    trigger: "actuals:required"
+    action: "internal operator task to capture labor, material, completion, callback, QA, and satisfaction actuals before reporting-ready closeout"
+  feature_freeze:
+    trigger: "validation:feature-freeze"
+    action: "avoid promising new automation, service lines, or unvalidated market workflows until operating data clears validation gates"

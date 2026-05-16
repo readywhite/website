@@ -23,6 +23,7 @@ const requiredFiles = [
   "docs/operations/ai-evaluation.md",
   "docs/operations/estimation-stabilization.md",
   "docs/operations/vendor-onboarding.md",
+  "docs/operations/operational-truth.md",
   "docs/kpi/operational-kpis.md",
   "docs/outreach/property-manager-followup.yml",
   "docs/operations/system-checks.md",
@@ -35,10 +36,12 @@ const requiredFiles = [
   "config/corrections.example.json",
   "config/stabilization-plan.json",
   "config/vendor-onboarding-checklist.json",
+  "config/operational-validation-plan.json",
   "db/schema.sql",
   "api/photo-estimate.js",
   "api/wall-corrections.js",
   "api/ops-dashboard.js",
+  "api/job-actuals.js",
   "lib/dispatch.js",
   "lib/auth.js",
   "lib/observability.js",
@@ -55,6 +58,7 @@ const requiredFiles = [
   "scripts/ai-eval.js",
   "scripts/calibration-report.js",
   "scripts/stabilization-check.js",
+  "scripts/validation-check.js",
 ];
 
 const requiredGhlStages = [
@@ -87,6 +91,9 @@ const requiredEstimateTags = [
   "damage:heavy",
   "estimate:calibration-review",
   "scope:premium-review",
+  "actuals:required",
+  "actuals:recorded",
+  "validation:feature-freeze",
 ];
 const requiredWallFlags = [
   "paper_not_detected",
@@ -184,11 +191,12 @@ assert(controlSystem.includes("increase_qa_sampling"), "control system must reco
 assert(controlSystem.includes("run_stale_lead_recovery"), "control system must preserve stale-lead recovery actions");
 
 const schema = read("db/schema.sql");
-for (const table of ["operational_events", "jobs", "walls", "ai_artifacts", "wall_corrections", "proof_of_work_artifacts", "qa_reviews", "operational_queue_jobs"]) {
+for (const table of ["operational_events", "jobs", "walls", "ai_artifacts", "wall_corrections", "job_actuals", "proof_of_work_artifacts", "qa_reviews", "operational_queue_jobs"]) {
   assert(schema.includes(`CREATE TABLE IF NOT EXISTS ${table}`), `database schema missing table: ${table}`);
 }
 const store = read("lib/operational-store.js");
 assert(store.includes("recordWallCorrection"), "operational store must support human correction persistence");
+assert(store.includes("recordJobActual"), "operational store must support actuals persistence");
 assert(store.includes("appendOperationalEvent"), "operational store must support immutable event appends");
 const stateMachine = read("lib/state-machine.js");
 assert(stateMachine.includes("NEW_LEAD") && stateMachine.includes("VARIANCE_RECORDED"), "state machine must define lifecycle states");
@@ -230,6 +238,10 @@ const authDocs = read("docs/operations/auth-rbac.md");
 assert(authDocs.includes("ADMIN_API_TOKEN") && authDocs.includes("OPS_READ_API_TOKEN"), "auth docs must document admin and read-only roles");
 const evalDocs = read("docs/operations/ai-evaluation.md");
 assert(evalDocs.includes("npm run ai:eval") && evalDocs.includes("calibration"), "AI evaluation docs must cover eval and calibration commands");
+const validationPlan = JSON.parse(read("config/operational-validation-plan.json"));
+assert(validationPlan.featureFreeze.enabled === true, "operational validation plan must enforce feature freeze");
+assert(validationPlan.operationalTruthTargets.minimumWallPhotos >= 1000, "operational validation plan must target operational truth collection");
+assert(validationPlan.requiredActualFields.includes("actual_labor_hours"), "operational validation plan must require actual labor capture");
 const stabilization = JSON.parse(read("config/stabilization-plan.json"));
 assert(stabilization.automationPolicy.firmAutoQuotesEnabled === false, "stabilization plan must disable firm auto-quotes during calibration");
 assert(stabilization.realWorldSampleTargets.minimumWallPhotos >= 250, "stabilization plan must require real wall photo samples");
@@ -240,6 +252,8 @@ assert(vendorOnboarding.requiredBeforeActivation.includes("photo_proof_training_
 assert(vendorOnboarding.scorecardFields.includes("customer_satisfaction_bps"), "vendor onboarding scorecard must track customer satisfaction");
 const vendorOnboardingDocs = read("docs/operations/vendor-onboarding.md");
 assert(vendorOnboardingDocs.includes("Activation checklist") && vendorOnboardingDocs.includes("Response SLAs"), "vendor onboarding docs must include activation checklist and response SLAs");
+const truthDocs = read("docs/operations/operational-truth.md");
+assert(truthDocs.includes("Feature freeze rule") && truthDocs.includes("Actuals required immediately"), "operational truth docs must cover feature freeze and actuals capture");
 
 const systemChecks = read("docs/operations/system-checks.md");
 assert(systemChecks.includes("00:00, 12:00, and 18:00 Eastern Time"), "system checks must document required daily cadence");

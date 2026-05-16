@@ -1,0 +1,54 @@
+{
+  "version": "2026-05-15.validation-v1",
+  "phase": "90_120_day_operational_truth",
+  "featureFreeze": {
+    "enabled": true,
+    "reason": "Architecture is sufficient; operational validation must mature before adding feature surface area.",
+    "blockedUntilCriteriaMet": [
+      "minimum_real_wall_photos_collected",
+      "minimum_correction_coverage_met",
+      "minimum_completed_jobs_with_actuals",
+      "vendor_scorecards_populated",
+      "manual_review_backlog_under_control",
+      "queue_dead_letter_rate_under_control"
+    ]
+  },
+  "operationalTruthTargets": {
+    "minimumWallPhotos": 1000,
+    "minimumCompletedJobsWithActuals": 100,
+    "minimumActiveVendorsWithScorecardsPerMarket": 3,
+    "minimumCorrectionCoverageBps": 9000,
+    "minimumActualsCoverageBps": 9000,
+    "maximumQueueDeadLetterRateBps": 100,
+    "maximumManualReviewBacklog": 15
+  },
+  "requiredActualFields": [
+    "actual_sqft",
+    "actual_damage_tier",
+    "actual_complexity_score",
+    "actual_labor_hours",
+    "actual_material_cents",
+    "actual_completion_minutes",
+    "callback_required",
+    "qa_failure",
+    "repaint_required",
+    "customer_satisfaction_bps",
+    "variance_reason",
+    "vendor_id",
+    "recorded_by"
+  ],
+  "vendorIntelligenceQuestions": [
+    "best_repaint_vendor_by_market",
+    "lowest_callback_vendor_by_market",
+    "fastest_turnaround_vendor_by_market",
+    "highest_margin_vendor_by_market",
+    "most_reliable_multifamily_vendor_by_market"
+  ],
+  "doNotExpand": [
+    "new_service_lines",
+    "new_unvalidated_markets",
+    "firm_auto_quotes",
+    "premium_or_luxury_auto_quotes",
+    "vendor_dispatch_without_completed_onboarding"
+  ]
+}

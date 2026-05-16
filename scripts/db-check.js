@@ -9,6 +9,7 @@ const requiredTables = [
   "walls",
   "ai_artifacts",
   "wall_corrections",
+  "job_actuals",
   "proof_of_work_artifacts",
   "qa_reviews",
   "operational_queue_jobs",
