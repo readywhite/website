@@ -75,3 +75,22 @@ Capture these fields on every completed job:
 - callback status
 
 Variance data is the future pricing intelligence engine. It improves scope accuracy, vendor scoring, margin forecasting, and AI estimation quality.
+
+
+## Current pricing configuration
+
+The executable pricing source is `config/pricing-rules.json`. Update that file when Ready White changes package economics, paint/material costs, damage-tier labor assumptions, size bands, minimum price, confidence threshold, or target margin.
+
+## Photo-estimate pricing formula
+
+1. Normalize AI/manual square footage.
+2. Normalize selected paint option.
+3. Normalize AI damage tier into `basic`, `standard`, or `heavy`.
+4. Calculate labor/prep from damage-tier rate and prep add-on.
+5. Calculate materials from paint option base cost and rate per square foot.
+6. Add size-band mobilization cost.
+7. Convert vendor buy rate into customer price using target margin.
+8. Apply minimum customer price.
+9. Flag manual review for low confidence or exceptions.
+
+AI may classify the scope, but deterministic code calculates the customer estimate.

@@ -1,0 +1,208 @@
+{
+  "version": "2026-05-15.wall-v2",
+  "currency": "USD",
+  "targetMarginBps": 4200,
+  "minimumCustomerPriceCents": 32500,
+  "manualReviewConfidenceThresholdBps": 7500,
+  "maxAutoQuoteSquareFeet": 1200,
+  "maxWallSquareFeet": 450,
+  "maxTotalSquareFeet": 10000,
+  "highComplexityThresholdBps": 7500,
+  "photoPolicy": {
+    "estimateUnit": "one_wall_one_estimate_unit",
+    "requiredReference": "one flat 8.5 x 11 inch sheet of paper taped portrait on the same wall in every uploaded wall photo",
+    "required": [
+      "one straight-on photo per wall",
+      "one 8.5 x 11 inch paper reference taped flat in portrait orientation on each wall",
+      "entire wall visible with floor and ceiling visible when possible",
+      "no room-level, apartment-level, or multi-wall image sets for automated wall estimates",
+      "manual room/worst-wall/ceiling/trim/stain photos remain required for exception scope review outside automated wall pricing"
+    ]
+  },
+  "wallTypes": {
+    "standard_flat": {
+      "label": "Standard flat wall",
+      "laborMultiplierBps": 10000
+    },
+    "textured": {
+      "label": "Textured wall",
+      "laborMultiplierBps": 11500
+    },
+    "accent": {
+      "label": "Accent/color-change wall",
+      "laborMultiplierBps": 11250
+    },
+    "trim_heavy": {
+      "label": "Trim-heavy wall",
+      "laborMultiplierBps": 12000
+    },
+    "vaulted": {
+      "label": "Vaulted/high wall",
+      "laborMultiplierBps": 13500
+    },
+    "stairwell": {
+      "label": "Stairwell wall",
+      "laborMultiplierBps": 14500
+    },
+    "exterior": {
+      "label": "Exterior wall",
+      "laborMultiplierBps": 15000
+    },
+    "cabinet_area": {
+      "label": "Cabinet-area wall",
+      "laborMultiplierBps": 12500
+    }
+  },
+  "markets": {
+    "default": {
+      "label": "Default Market",
+      "laborMultiplierBps": 10000,
+      "materialMultiplierBps": 10000,
+      "mobilizationMultiplierBps": 10000,
+      "targetMarginBps": 4200
+    },
+    "dallas": {
+      "label": "Dallas / Fort Worth",
+      "laborMultiplierBps": 10000,
+      "materialMultiplierBps": 10000,
+      "mobilizationMultiplierBps": 10000,
+      "targetMarginBps": 4200
+    },
+    "houston": {
+      "label": "Houston",
+      "laborMultiplierBps": 10250,
+      "materialMultiplierBps": 10100,
+      "mobilizationMultiplierBps": 10000,
+      "targetMarginBps": 4200
+    },
+    "atlanta": {
+      "label": "Atlanta",
+      "laborMultiplierBps": 10500,
+      "materialMultiplierBps": 10250,
+      "mobilizationMultiplierBps": 10250,
+      "targetMarginBps": 4300
+    },
+    "phoenix": {
+      "label": "Phoenix",
+      "laborMultiplierBps": 10750,
+      "materialMultiplierBps": 10400,
+      "mobilizationMultiplierBps": 10500,
+      "targetMarginBps": 4300
+    },
+    "san_francisco": {
+      "label": "San Francisco Bay Area",
+      "laborMultiplierBps": 18000,
+      "materialMultiplierBps": 12000,
+      "mobilizationMultiplierBps": 14000,
+      "targetMarginBps": 4600
+    }
+  },
+  "paintOptions": {
+    "ready_white_standard": {
+      "label": "Ready White Standard White",
+      "materialRatePerSqftCents": 42,
+      "baseMaterialCents": 4500
+    },
+    "warm_neutral": {
+      "label": "Warm Neutral",
+      "materialRatePerSqftCents": 48,
+      "baseMaterialCents": 5200
+    },
+    "premium_scrubbable": {
+      "label": "Premium Scrubbable Finish",
+      "materialRatePerSqftCents": 62,
+      "baseMaterialCents": 6500
+    }
+  },
+  "damageTiers": {
+    "basic": {
+      "description": "Minimal nail holes, light scuffs, and small blemishes.",
+      "laborRatePerSqftCents": 105,
+      "prepAddOnCents": 0,
+      "vendorPackage": "basic_turn",
+      "conditionTier": "A",
+      "repairTier": "minor"
+    },
+    "standard": {
+      "description": "Moderate patching, multiple holes, and visible surface wear.",
+      "laborRatePerSqftCents": 145,
+      "prepAddOnCents": 8500,
+      "vendorPackage": "standard_turn",
+      "conditionTier": "B",
+      "repairTier": "moderate"
+    },
+    "heavy": {
+      "description": "Significant damage, large repairs, texture issues, or major prep work.",
+      "laborRatePerSqftCents": 210,
+      "prepAddOnCents": 22000,
+      "vendorPackage": "heavy_turn",
+      "conditionTier": "C",
+      "repairTier": "moderate"
+    }
+  },
+  "exceptionFlags": [
+    "water_damage",
+    "smoke_damage",
+    "stain_blocking",
+    "peeling_paint",
+    "large_holes",
+    "texture_repair",
+    "ceiling_damage",
+    "trim_damage",
+    "missing_required_photos",
+    "low_measurement_confidence",
+    "paper_not_detected",
+    "multiple_walls_visible",
+    "wall_edges_unclear",
+    "wall_partially_obstructed",
+    "severe_perspective_angle",
+    "poor_lighting",
+    "glare_reflection",
+    "high_complexity_review",
+    "large_scope_review",
+    "heavy_damage_operator_review",
+    "ai_parse_failure",
+    "image_quality_review",
+    "calibration_phase_operator_review",
+    "luxury_property_review",
+    "premium_customer_review"
+  ],
+  "sizeBands": [
+    {
+      "name": "small_wall_scope",
+      "maxSqft": 300,
+      "mobilizationCents": 12500
+    },
+    {
+      "name": "standard_room_scope",
+      "maxSqft": 900,
+      "mobilizationCents": 17500
+    },
+    {
+      "name": "multi_room_scope",
+      "maxSqft": 1800,
+      "mobilizationCents": 27500
+    },
+    {
+      "name": "large_turnover_scope",
+      "maxSqft": null,
+      "mobilizationCents": 42500
+    }
+  ],
+  "rolloutControls": {
+    "phase": "calibration",
+    "requireOperatorApprovalForAllAiEstimates": true,
+    "minimumRealWallSamplesBeforeAutomation": 250,
+    "minimumCorrectionCoverageBps": 9000,
+    "minimumVendorProofComplianceBps": 9500,
+    "allowedAutoQuoteCustomerSegments": [
+      "standard_turnover"
+    ],
+    "manualReviewCustomerSegments": [
+      "luxury",
+      "premium_customer",
+      "high_value_pm",
+      "unknown"
+    ]
+  }
+}

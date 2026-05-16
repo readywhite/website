@@ -1,0 +1,44 @@
+{
+  "version": "2026-05-15.vendor-os-v1",
+  "vendors": [
+    {
+      "vendor_id": "vendor_dallas_a",
+      "name": "Dallas Turn Team A",
+      "markets": ["dallas"],
+      "services": ["interior_repaint", "make_ready_refresh"],
+      "score": 92,
+      "on_time_rate_bps": 9600,
+      "callback_rate_bps": 300,
+      "photo_compliance_rate_bps": 9800,
+      "avg_variance_bps": 700,
+      "capacity_open_jobs": 4,
+      "avg_response_minutes": 18
+    },
+    {
+      "vendor_id": "vendor_houston_b",
+      "name": "Houston Refresh Team B",
+      "markets": ["houston"],
+      "services": ["interior_repaint", "make_ready_refresh"],
+      "score": 88,
+      "on_time_rate_bps": 9300,
+      "callback_rate_bps": 500,
+      "photo_compliance_rate_bps": 9500,
+      "avg_variance_bps": 900,
+      "capacity_open_jobs": 2,
+      "avg_response_minutes": 25
+    },
+    {
+      "vendor_id": "vendor_national_overflow",
+      "name": "National Overflow Partner",
+      "markets": ["default", "dallas", "houston", "atlanta", "phoenix", "san_francisco"],
+      "services": ["interior_repaint", "make_ready_refresh", "exception_review"],
+      "score": 82,
+      "on_time_rate_bps": 9000,
+      "callback_rate_bps": 700,
+      "photo_compliance_rate_bps": 9200,
+      "avg_variance_bps": 1200,
+      "capacity_open_jobs": 8,
+      "avg_response_minutes": 45
+    }
+  ]
+}

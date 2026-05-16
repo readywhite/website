@@ -1,5 +1,7 @@
 const HIGHLEVEL_API_BASE_URL = "https://services.leadconnectorhq.com";
 const HIGHLEVEL_API_VERSION = "2021-07-28";
+const { validateCanonicalJob } = require("../lib/canonical-job");
+const { verifySignedEstimate } = require("../lib/estimate-signing");
 
 function getEnv(name) {
   return process.env[name] && process.env[name].trim();
@@ -20,6 +22,41 @@ function parseName(fullName = "") {
 
 function buildContactPayload(lead, locationId) {
   const { firstName, lastName } = parseName(lead.name);
+  const tags = Array.from(new Set([...(lead.tags || []), "source:squarespace", "lead:new"]));
+
+  if (lead.estimate) {
+    tags.push("estimate:ai-assisted");
+  }
+
+  if (lead.estimate?.quote?.manualReviewRequired || lead.estimate?.pricing?.manualReviewRequired) {
+    tags.push("estimate:manual-review", "estimate:confidence-low");
+  } else if (lead.estimate) {
+    tags.push("estimate:confidence-high");
+  }
+
+  if (lead.canonicalJob?.estimate?.pricing_rules_version || lead.estimate?.audit?.pricingRulesVersion) {
+    tags.push("estimate:pricing-versioned");
+  }
+
+  if (lead.estimate?.pricing?.damageTier) {
+    tags.push(`damage:${lead.estimate.pricing.damageTier}`);
+  }
+
+  if (lead.market || lead.estimate?.pricing?.market || lead.canonicalJob?.market) {
+    tags.push(`market:${lead.market || lead.estimate?.pricing?.market || lead.canonicalJob?.market}`);
+  }
+
+  if ((lead.estimate?.pricing?.exceptionFlags || []).includes("calibration_phase_operator_review")) {
+    tags.push("estimate:calibration-review");
+  }
+
+  if ((lead.estimate?.pricing?.exceptionFlags || []).includes("premium_customer_review")) {
+    tags.push("scope:premium-review");
+  }
+
+  if ((lead.estimate?.analysis?.walls || []).some((wall) => Number(wall.complexityScore) >= 0.75)) {
+    tags.push("scope:high-complexity");
+  }
 
   return {
     locationId,
@@ -30,7 +67,7 @@ function buildContactPayload(lead, locationId) {
     phone: lead.phone,
     address1: lead.propertyAddress,
     source: "Ready White Website",
-    tags: lead.tags || ["source:squarespace", "lead:new"],
+    tags: Array.from(new Set(tags)),
   };
 }
 
@@ -60,7 +97,9 @@ function buildOpportunityPayload(lead, contactId, locationId) {
     name: `${lead.name || "Website lead"} - Property Quote`,
     source: "Ready White Website",
     status: "open",
-    monetaryValue: 0,
+    monetaryValue: lead.trustedEstimate?.pricing?.priceToCustomerCents
+      ? Math.round(lead.trustedEstimate.pricing.priceToCustomerCents / 100)
+      : 0,
   };
 }
 
@@ -88,6 +127,20 @@ function validateLead(lead) {
 
   if (missingFields.length > 0) {
     return `Missing required fields: ${missingFields.join(", ")}`;
+  }
+
+  const canonicalErrors = validateCanonicalJob(lead.canonicalJob || {});
+
+  if (canonicalErrors.length > 0) {
+    return canonicalErrors.join("; ");
+  }
+
+  if (lead.estimate && typeof lead.estimate !== "object") {
+    return "estimate must be an object when provided";
+  }
+
+  if (lead.photoFileNames?.length && !lead.photoUrls?.length) {
+    return "photoUrls are required; Ready White cannot run manual review from filenames only";
   }
 
   return null;
@@ -143,6 +196,21 @@ module.exports = async function handler(req, res) {
 
   try {
     const lead = await readRequestBody(req);
+    const signatureResult = verifySignedEstimate(lead.estimate);
+    if (!signatureResult.ok) {
+      sendJson(res, 400, { error: signatureResult.error });
+      return;
+    }
+    lead.trustedEstimate = signatureResult.trustedEstimate;
+    if (lead.trustedEstimate) {
+      lead.estimate = {
+        ...lead.trustedEstimate,
+        pricing: lead.trustedEstimate.pricing,
+        quote: lead.trustedEstimate.quote,
+        analysis: lead.trustedEstimate.analysis,
+      };
+    }
+
     const validationError = validateLead(lead);
 
     if (validationError) {

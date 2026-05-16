@@ -1,0 +1,31 @@
+{
+  "version": "2026-05-15.ai-eval-v1",
+  "fixtures": [
+    {
+      "name": "valid_basic_wall",
+      "normalizedOutput": {
+        "estimateUnit": "one_wall_one_estimate_unit",
+        "totalWallSquareFeet": 96,
+        "damageTier": "basic",
+        "confidence": 0.88,
+        "walls": [
+          { "wallId": "wall_1", "estimatedSquareFeet": 96, "damageTier": "basic", "confidence": 0.88, "referenceSheetDetected": true }
+        ]
+      },
+      "expected": { "manualReviewRequired": false, "damageTier": "basic" }
+    },
+    {
+      "name": "missing_paper_reference",
+      "normalizedOutput": {
+        "estimateUnit": "one_wall_one_estimate_unit",
+        "totalWallSquareFeet": 110,
+        "damageTier": "standard",
+        "confidence": 0.62,
+        "walls": [
+          { "wallId": "wall_1", "estimatedSquareFeet": 110, "damageTier": "standard", "confidence": 0.62, "referenceSheetDetected": false, "exceptionFlags": ["paper_not_detected"] }
+        ]
+      },
+      "expected": { "manualReviewRequired": true, "exceptionFlag": "paper_not_detected" }
+    }
+  ]
+}

@@ -66,3 +66,59 @@ A consistent job object makes pricing, dispatch, reporting, follow-up, vendor as
 ## Operational rule
 
 No job should move from `Scope Review` to `Quote Sent` until the job object has enough data for deterministic pricing or has been marked as an approved exception.
+
+
+## Photo estimate payload extension
+
+Website leads may include an `estimate` object alongside the canonical job object:
+
+```json
+{
+  "estimate": {
+    "photos": [{ "id": "photo_1", "fileName": "living-room.jpg", "mimeType": "image/jpeg", "bytes": 384000 }],
+    "analysis": {
+      "totalWallSquareFeet": 420,
+      "damageTier": "standard",
+      "measurementConfidence": 0.66,
+      "damageConfidence": 0.82,
+      "manualReviewRequired": true,
+      "exceptionFlags": ["low_measurement_confidence"]
+    },
+    "pricing": {
+      "pricingVersion": "2026-05-15",
+      "priceToCustomerCents": 188000,
+      "vendorBuyRateCents": 109040,
+      "targetMargin": 0.42,
+      "manualReviewRequired": true
+    }
+  }
+}
+```
+
+When `estimate.pricing.manualReviewRequired` is true, `canonicalJob.photo_policy_status` should be `exception_review` and the job must not proceed to firm quote without operator approval.
+
+## Wall-level estimate extension
+
+Automated estimate payloads must use `estimate_unit: one_wall_one_estimate_unit` and persist `walls[]` for future correction, proof-of-work, variance tracking, and training data.
+
+```json
+{
+  "market": "dallas",
+  "estimate_unit": "one_wall_one_estimate_unit",
+  "walls": [
+    {
+      "wall_id": "wall_1",
+      "photo_id": "photo_1",
+      "sqft": 96,
+      "damage_tier": "standard",
+      "wall_type": "standard_flat",
+      "complexity_score": 0.34,
+      "confidence": 0.88,
+      "manual_review_required": false,
+      "exception_flags": []
+    }
+  ]
+}
+```
+
+Operator corrections should preserve original AI values, corrected values, correction reason, operator, timestamp, vendor assignment, callback result, and actual labor/material variance by `wall_id`.

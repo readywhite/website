@@ -1,19 +1,22 @@
 {
   "integrationStatus": "server-route-ready",
-  "importantNote": "This file documents the intended GoHighLevel stack. Store the Private Integration Token in GHL_PRIVATE_INTEGRATION_TOKEN; do not commit the real token.",
+  "importantNote": "This file documents the intended GoHighLevel stack. Store OpenAI and GHL credentials in server-side environment variables; do not commit real secrets.",
   "webhook": {
     "configuredIn": "api/ghl-lead.js",
     "frontendEndpoint": "/api/ghl-lead",
     "requiredEnvironmentVariables": [
       "GHL_PRIVATE_INTEGRATION_TOKEN",
-      "GHL_LOCATION_ID"
+      "GHL_LOCATION_ID",
+      "OPENAI_API_KEY"
     ],
     "optionalEnvironmentVariables": [
       "GHL_PIPELINE_ID",
-      "GHL_PIPELINE_STAGE_ID"
+      "GHL_PIPELINE_STAGE_ID",
+      "OPENAI_VISION_MODEL"
     ],
     "highLevelContactEndpoint": "POST /contacts/upsert",
-    "highLevelOpportunityEndpoint": "POST /opportunities/"
+    "highLevelOpportunityEndpoint": "POST /opportunities/",
+    "photoEstimateEndpoint": "/api/photo-estimate"
   },
   "contactTags": [
     "source:squarespace",
@@ -23,7 +26,11 @@
     "vacant:true",
     "lead:new",
     "lead:quoted",
-    "lead:won"
+    "lead:won",
+    "estimate:manual-review",
+    "damage:basic",
+    "damage:standard",
+    "damage:heavy"
   ],
   "pipeline": {
     "name": "Ready White Customer Jobs",
@@ -48,9 +55,14 @@
   },
   "workflowActions": [
     {
+      "name": "Analyze uploaded wall photos",
+      "trigger": "Website quote form submitted with photos or manual square footage",
+      "notes": "Call /api/photo-estimate to classify wall sqft, damage tier, confidence, manual-review flags, and deterministic package price before GHL handoff."
+    },
+    {
       "name": "Create or update contact",
       "trigger": "Website quote form submitted",
-      "notes": "Map contact fields, source tags, pipeline name, canonicalJob, and submitted photo file names from the website payload."
+      "notes": "Map contact fields, source tags, pipeline name, canonicalJob, estimate analysis, pricing output, and submitted photo file names from the website payload."
     },
     {
       "name": "Create opportunity",
@@ -72,10 +84,20 @@
     }
   ],
   "futureEnhancements": [
-    "Deterministic room-pricing engine",
-    "Estimate variance tracking",
-    "Vendor scorecards",
+    "Live GHL configuration drift audit",
+    "Durable photo storage if GHL attachments or long-term image retention are required",
+    "Estimate variance tracking from completed jobs",
+    "Vendor scorecards tied to damage tier and package",
     "Automated stale-lead recovery",
-    "AI-assisted scope review after rules are stable"
+    "Missed-call text-back and review flywheel verification"
+  ],
+  "customFields": [
+    "rw_estimated_wall_sqft",
+    "rw_damage_tier",
+    "rw_paint_option",
+    "rw_estimate_confidence",
+    "rw_manual_review_required",
+    "rw_price_to_customer_cents",
+    "rw_vendor_package"
   ]
 }

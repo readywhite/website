@@ -8,6 +8,8 @@ Track KPIs that improve cash flow, close rate, automation, recurring revenue, an
 | --- | --- |
 | speed-to-lead | Contact every new lead immediately through GHL automation. |
 | photo completion rate | Increase complete photo submissions before scope review. |
+| AI estimate confidence | Increase percentage of estimates above confidence threshold through better photo instructions. |
+| manual review rate | Keep exception reviews focused on true scope risk, not missing intake fields. |
 | quote cycle time | Reduce time from photos received to quote sent. |
 | quote approval rate | Identify pricing or follow-up issues. |
 | stale lead count | Trigger recovery before pipeline decay. |
@@ -21,4 +23,60 @@ Track KPIs that improve cash flow, close rate, automation, recurring revenue, an
 
 ## Daily system checks
 
+Run documented operational system checks at 00:00, 12:00, and 18:00 Eastern Time. At each check, review Railway health, OpenAI photo estimate fallback rate, GHL pipeline integrity, stale leads, failed webhooks, unassigned approved jobs, overdue photo proof, and missed-call text-back status.
+
+## Nationwide operating KPIs
+
+- Speed-to-lead by market and source.
+- Photo estimate completion rate and manual-review rate.
+- Wall-level estimate variance: estimated sqft vs corrected/actual sqft.
+- Damage-tier variance: AI tier vs operator/vendor actual tier.
+- Vendor response SLA by market.
+- Vendor proof-photo compliance rate.
+- Callback rate by vendor, market, wall type, and damage tier.
+- Gross margin variance by market and pricing rules version.
+- Stale-lead recovery rate for `New Lead`, `Photos Requested`, `Quote Sent`, and `Follow-Up`.
+
+## Control-system KPIs
+
+These metrics should feed `npm run ops:control` snapshots and future dashboards:
+
+- Median speed-to-lead by market and source.
+- Stale lead counts by GHL stage.
+- Photo-estimate manual-review rate by market.
+- Gross margin variance by market and pricing rules version.
+- Proof-review backlog in `Photo Proof Review`.
+- Vendor assignment backlog by market.
+- Vendor callback rate, on-time rate, proof-photo compliance, and estimate variance.
+- QA sampling rate after anomaly detection.
+- Dispatch-weight reductions triggered by control rules.
+- Vendor probation count and correction-window outcomes.
+
+## Persistence KPIs
+
+- Percent of AI estimates with stored prompt/model/raw/normalized artifacts.
+- Percent of manually reviewed walls with structured correction records.
+- Event append success rate by workflow step.
+- Queue dead-letter count by queue name.
+- State-transition rejection count by market and operator.
+
+## Stabilization KPIs
+
+- Real wall photos collected toward the 250-wall calibration target.
+- Completed jobs collected toward the 40-job calibration target.
+- Percent of estimates with human correction coverage.
+- Percent of estimates held by `calibration_phase_operator_review`.
+- Manual review reasons by flag: low confidence, paper missing, lighting, multiple walls, high complexity, large scope, premium customer.
+- Vendor onboarding completion rate by market.
+- Vendor QA failure rate and customer satisfaction by market.
+
+## Operational truth KPIs
+
+- Actuals coverage rate by completed job and wall.
+- Completed jobs with actual labor/material/completion time captured.
+- Queue dead-letter rate by queue name.
+- Manual-review backlog count and age.
+- Vendor scorecard completeness by market.
+- Callback clusters by vendor, wall type, damage tier, and property type.
+- Margin variance by actual material/labor usage.
 Run operational system checks at 00:00, 12:00, and 18:00 Eastern Time. At each check, review Railway health, GHL pipeline integrity, stale leads, failed webhooks, unassigned approved jobs, overdue photo proof, and missed-call text-back status.

@@ -6,6 +6,15 @@ standards:
     - source:squarespace
     - vertical:property-management
     - lead:new
+  estimate_tags:
+    - estimate:manual-review
+    - damage:basic
+    - damage:standard
+    - damage:heavy
+messages:
+  new_lead_sms: "Hi {{contact.first_name}}, this is Ready White. We received your turnover request and can review photos for fast package pricing. Please send one wide photo and one worst-wall photo per room."
+  photos_received_sms: "Hi {{contact.first_name}}, we received your Ready White photos and are checking wall size, damage tier, and paint package now. If anything needs manual review, we'll flag it before quoting."
+  manual_review_sms: "Hi {{contact.first_name}}, we received your photos. A Ready White operator is reviewing the scope because the photos show possible exceptions or need measurement confirmation."
 messages:
   new_lead_sms: "Hi {{contact.first_name}}, this is Ready White. We received your turnover request and can review photos for fast package pricing. Please send one wide photo and one worst-wall photo per room."
   photos_requested_email_subject: "Photos needed for your Ready White turnover quote"
@@ -15,3 +24,58 @@ recovery_rules:
   stale_photos_requested_hours: 24
   stale_quote_sent_hours: 48
 roi_impact: Faster follow-up, fewer stale leads, stronger property-manager conversion, and better recurring-revenue capture.
+
+stale_lead_recovery:
+  new_lead_15_minutes:
+    trigger: "New Lead older than 15 minutes without first response"
+    action: "send missed-call/text-back style SMS and internal speed-to-lead alert"
+  photos_requested_24_hours:
+    trigger: "Photos Requested older than 24 hours"
+    action: "send wall-photo instructions with 8.5x11 paper reference reminder"
+  quote_sent_48_hours:
+    trigger: "Quote Sent older than 48 hours without approval"
+    action: "send property-manager follow-up emphasizing vacancy-turn speed and standardized vendor availability"
+
+control_system_recovery:
+  speed_to_lead_breach:
+    trigger: "control tag sla:speed-to-lead"
+    action: "send immediate apology/confirmation SMS, notify operator, and prioritize property-manager callback"
+  stale_pipeline_anomaly:
+    trigger: "control tag pipeline:stale-leads"
+    action: "run stage-specific recovery message and owner assignment"
+  margin_drift_hold:
+    trigger: "control tag risk:margin-drift"
+    action: "pause firm automated quote language and send operator-reviewed estimate copy"
+  proof_backlog:
+    trigger: "control tag qa:proof-backlog"
+    action: "hold completion messaging until proof review clears"
+
+state_machine_recovery:
+  review_required:
+    trigger: "job state REVIEW_REQUIRED older than SLA"
+    action: "operator reviews wall corrections, missing photos, or exception flags before quote"
+  proof_submitted:
+    trigger: "job state PROOF_SUBMITTED awaiting QA"
+    action: "hold completion messaging until QA_REVIEW passes"
+  variance_recorded:
+    trigger: "job state VARIANCE_RECORDED"
+    action: "send review request and property-manager relationship follow-up"
+
+calibration_phase_messages:
+  preliminary_estimate_review:
+    trigger: "estimate:calibration-review"
+    action: "send operator-review expectation: we are checking photos and will confirm a firm package price shortly"
+  premium_review:
+    trigger: "scope:premium-review"
+    action: "route to senior operator review before sending quote language"
+  vendor_onboarding_incomplete:
+    trigger: "vendor:onboarding-incomplete"
+    action: "do not dispatch; finish onboarding checklist or activate approved overflow vendor"
+
+operational_truth:
+  actuals_required:
+    trigger: "actuals:required"
+    action: "internal operator task to capture labor, material, completion, callback, QA, and satisfaction actuals before reporting-ready closeout"
+  feature_freeze:
+    trigger: "validation:feature-freeze"
+    action: "avoid promising new automation, service lines, or unvalidated market workflows until operating data clears validation gates"

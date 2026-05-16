@@ -1,0 +1,39 @@
+{
+  "generatedAt": "2026-05-15T18:00:00.000Z",
+  "market": "dallas",
+  "metrics": {
+    "speedToLeadMedianMinutes": 4,
+    "photoEstimateManualReviewRateBps": 3100,
+    "grossMarginVarianceBps": 250,
+    "proofReviewBacklog": 2,
+    "vendorAssignmentBacklog": 1,
+    "staleLeadsByStage": {
+      "New Lead": 1,
+      "Photos Requested": 4,
+      "Quote Sent": 3,
+      "Follow-Up": 5,
+      "Vendor Assignment": 0,
+      "Photo Proof Review": 1
+    }
+  },
+  "vendors": [
+    {
+      "vendor_id": "vendor_dallas_a",
+      "market": "dallas",
+      "callback_rate_bps": 300,
+      "photo_compliance_rate_bps": 9800,
+      "on_time_rate_bps": 9600,
+      "avg_variance_bps": 700,
+      "active_jobs": 3
+    },
+    {
+      "vendor_id": "vendor_national_overflow",
+      "market": "dallas",
+      "callback_rate_bps": 700,
+      "photo_compliance_rate_bps": 9300,
+      "on_time_rate_bps": 9000,
+      "avg_variance_bps": 1300,
+      "active_jobs": 5
+    }
+  ]
+}
